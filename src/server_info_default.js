@@ -1,0 +1,1 @@
+export const SERVER_INFO = [ {ip_address: "INSERT_ADDRESS_HERE", port: "INSERT_PORT_HERE", app_name: "INSERT_APP_NAME_HERE" }];
