@@ -36,17 +36,11 @@ function Computer(props) {
 
     function companyToJSON(company) {
 
-        console.log(company)
-
         if (company=="") {
-
-            console.log("IF")
             return {id:0, name:""};
         }
         else {
-            console.log("ELSE")
-            const jsonCompany = JSON.parse(company)
-            return jsonCompany;
+            return JSON.parse(company)
         }
     }
 
@@ -78,9 +72,9 @@ function Computer(props) {
 
                         {companies && companies.map(elt => {
 
-                            const magic = '{"id":' + elt.id + ',"name":"'+elt.name+'"}';
+                            const jsonString = '{"id":' + elt.id + ',"name":"'+elt.name+'"}';
                             return (
-                                    <option value={magic}>
+                                    <option value={jsonString}>
                                         {elt.name}
                                     </option>
                                 )
