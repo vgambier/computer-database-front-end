@@ -19,6 +19,8 @@ function Dashboard() {
     const [{ company_data }] = useAxios(`${server_url}/companies`); // Connecting to the server (back-end)
     const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
+    const [dashboard, setDashboard] = useState(data);
+
     // HTML Add, Delete, Edit requests
 
     const [{ data: dataAdd }, executeAdd] = useAxios({
@@ -26,10 +28,11 @@ function Dashboard() {
         method: "POST"
     }, { manual: true });
 
-    const [{ }, executeDelete] = useAxios({
-        url: `${server_url}/computers`,
+    const [{ }, executeDelete] = useAxios(
+        {
         method: "DELETE"
-    }, { manual: true });
+        }
+    , { manual: true });
 
     const [{ data: dataEdit }, executeEdit] = useAxios({
         url: `${server_url}/computers`,
@@ -39,11 +42,15 @@ function Dashboard() {
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
 
-
     // Editing logic
     function editComputer(updatedComputer) {
         executeEdit({ data: updatedComputer });
         computers.push(updatedComputer);
+    }
+
+    function deleteComputer(id){
+        executeDelete({url :`${server_url}/computers/${id}`})
+        setDashboard(dashboard.filter(computer => computer.id !== id))
     }
 
     return (
@@ -74,14 +81,12 @@ function Dashboard() {
                 <tbody>
                     <tr>
                         {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer => <Computer computer={computer} companies={companies} edit={editComputer}/>
+                            computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer}/>
                         )}
                     </tr>
                 </tbody>
 
             </table>
-
-
 
         </div>
   );

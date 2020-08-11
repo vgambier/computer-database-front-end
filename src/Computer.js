@@ -53,6 +53,7 @@ function Computer(props) {
                     <td> {printDate({introduced}.introduced)} </td>
                     <td> {printDate({discontinued}.discontinued)} </td>
                     <td> {printCompany({company})} </td>
+                    <Button onClick={() => props.delete(id)}>Delete</Button>
                     <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
                 </>
                 :
