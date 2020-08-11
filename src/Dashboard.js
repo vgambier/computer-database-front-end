@@ -19,8 +19,6 @@ function Dashboard() {
     const [{ company_data }] = useAxios(`${server_url}/companies`); // Connecting to the server (back-end)
     const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
-    const [dashboard, setDashboard] = useState(data);
-
     // HTML Add, Delete, Edit requests
 
     const [{ data: dataAdd }, executeAdd] = useAxios({
@@ -50,7 +48,7 @@ function Dashboard() {
 
     function deleteComputer(id){
         executeDelete({url :`${server_url}/computers/${id}`})
-        setDashboard(dashboard.filter(computer => computer.id !== id))
+        setComputers(computers.filter(computer => computer.id !== id))
     }
 
     return (
