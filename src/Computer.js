@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Input, Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from 'reactstrap';
+import {Button, Input} from 'reactstrap';
 
 function Computer(props) {
 
@@ -7,10 +7,6 @@ function Computer(props) {
     const [companies] = useState(props.companies);
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
-
-    // Dropdown logic
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggle = () => setDropdownOpen(prevState => !prevState);
 
     function printDate(date) {
         return date !== null ? date.dayOfMonth + "-" + date.month + "-" + date.year : "";
@@ -22,18 +18,17 @@ function Computer(props) {
 
     function dateToJSON(string) {
 
-        // TODO if null send "", otherwise send well-formated JSON
+        // TODO if null send "", otherwise send well-formatted JSON
 
         if (true) {
             return "";
         } else {
             const date = new Date(string);
-            const jsonDate = {
+            return {
                 "year": date.getFullYear(),
                 "month": date.getMonth() + 1,
                 "dayOfMonth": date.getUTCDate()
             };
-            return jsonDate;
         }
     }
 
