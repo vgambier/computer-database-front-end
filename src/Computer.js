@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, Input, Dropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap';
+import {Button, Input, Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from 'reactstrap';
 
 function Computer(props) {
 
@@ -13,7 +13,7 @@ function Computer(props) {
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
     function printDate(date) {
-        return date !== null ? date.dayOfMonth+"-"+date.month+"-"+date.year : "";
+        return date !== null ? date.dayOfMonth + "-" + date.month + "-" + date.year : "";
     }
 
     function printCompany(company) {
@@ -26,25 +26,27 @@ function Computer(props) {
 
         if (true) {
             return "";
-        }
-        else {
+        } else {
             const date = new Date(string);
-            const jsonDate = {"year": date.getFullYear(), "month": date.getMonth()+1, "dayOfMonth": date.getUTCDate()};
+            const jsonDate = {
+                "year": date.getFullYear(),
+                "month": date.getMonth() + 1,
+                "dayOfMonth": date.getUTCDate()
+            };
             return jsonDate;
         }
     }
 
     function companyToJSON(company) {
 
-        if (company=="") {
-            return {id:0, name:""};
-        }
-        else {
+        if (company == "") {
+            return {id: 0, name: ""};
+        } else {
             return JSON.parse(company)
         }
     }
 
-        return (
+    return (
 
         <div className="Computer">
 
@@ -62,31 +64,42 @@ function Computer(props) {
                 </>
                 :
                 <>
-                    <Input defaultValue = {name} onChange={elt => setComputer({ ...computer, name: elt.target.value })} />
-                    <Input defaultValue = {printDate({introduced}.introduced)} onChange={elt => setComputer({ ...computer, introduced: dateToJSON(elt.target.value) })} />
-                    <Input defaultValue = {printDate({discontinued}.discontinued)} onChange={elt => setComputer({ ...computer, discontinued: dateToJSON(elt.target.value) })} />
+                    <Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/>
+                    <Input defaultValue={printDate({introduced}.introduced)}
+                           onChange={elt => setComputer({...computer, introduced: dateToJSON(elt.target.value)})}/>
+                    <Input defaultValue={printDate({discontinued}.discontinued)}
+                           onChange={elt => setComputer({...computer, discontinued: dateToJSON(elt.target.value)})}/>
 
-                    <select onChange={elt => setComputer({ ...computer, company: companyToJSON(elt.target.value) })} >
+                    <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
 
                         <option value="">--</option>
 
                         {companies && companies.map(elt => {
 
-                            const jsonString = '{"id":' + elt.id + ',"name":"'+elt.name+'"}';
-                            return (
-                                    <option value={jsonString}>
-                                        {elt.name}
-                                    </option>
-                                )
+                                const jsonString = '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
+
+                                if ({company}.company && elt.id == {company}.company.id) {
+                                    return (
+                                        <option selected="selected" value={jsonString}> {elt.name} </option>
+                                    )
+                                } else {
+                                    return (
+                                        <option value={jsonString}> {elt.name} </option>
+                                    )
+                                }
                             }
                         )}
 
                     </select>
 
-                    <Button onClick={() => { setEditMode(!editMode); props.edit(computer) }}>Confirm</Button>
+                    <Button onClick={() => {
+                        setEditMode(!editMode);
+                        props.edit(computer)
+                    }}>Confirm</Button>
                 </>
             }
         </div>
     );
 }
+
 export default Computer;
