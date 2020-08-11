@@ -36,19 +36,17 @@ function Computer(props) {
 
     function companyToJSON(company) {
 
-        console.log(company);
+        console.log(company)
 
-        const jsonCompany = JSON.parse(company)
-        // TODO
-        console.log(jsonCompany);
+        if (company=="") {
 
-        return jsonCompany;
-
-        if (company.company_id !== null && company.company_name !== null) {
-            return {id:company.company_id, name:company.company_name}
+            console.log("IF")
+            return {id:0, name:""};
         }
         else {
-            return {id: 0, name:""};
+            console.log("ELSE")
+            const jsonCompany = JSON.parse(company)
+            return jsonCompany;
         }
     }
 
@@ -74,22 +72,19 @@ function Computer(props) {
                     <Input defaultValue = {printDate({introduced}.introduced)} onChange={elt => setComputer({ ...computer, introduced: dateToJSON(elt.target.value) })} />
                     <Input defaultValue = {printDate({discontinued}.discontinued)} onChange={elt => setComputer({ ...computer, discontinued: dateToJSON(elt.target.value) })} />
 
-                    Company
-
                     <select onChange={elt => setComputer({ ...computer, company: companyToJSON(elt.target.value) })} >
+
+                        <option value="">--</option>
 
                         {companies && companies.map(elt => {
 
                             const magic = '{"id":' + elt.id + ',"name":"'+elt.name+'"}';
-
                             return (
                                     <option value={magic}>
                                         {elt.name}
                                     </option>
                                 )
-
                             }
-
                         )}
 
                     </select>
