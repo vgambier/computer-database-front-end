@@ -8,8 +8,6 @@ function Computer(props) {
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
 
-    console.log(companies)
-
     // Dropdown logic
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
@@ -63,17 +61,20 @@ function Computer(props) {
                     <Input defaultValue = {printDate({introduced}.introduced)} onChange={elt => setComputer({ ...computer, introduced: dateToJSON(elt.target.value) })} />
                     <Input defaultValue = {printDate({discontinued}.discontinued)} onChange={elt => setComputer({ ...computer, discontinued: dateToJSON(elt.target.value) })} />
 
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                        <DropdownToggle caret>
-                            Company
-                        </DropdownToggle>
-                        <DropdownMenu>
+                    Company
 
-                            {companies && companies.map(elt => (
-                                <DropdownItem>{elt.name}</DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
+                    <select>
+
+                        {companies && companies.map(elt => (
+
+                            <option value="company" >
+                                {elt.name}
+                            </option>
+
+                        ))}
+
+                    </select>
+
 
                     <Input defaultValue = {printCompany({company})} onChange={elt => setComputer({ ...computer, company: {id: 0, name:""}})} />
                     <Button onClick={() => { setEditMode(!editMode); props.edit(computer) }}>Confirm</Button>

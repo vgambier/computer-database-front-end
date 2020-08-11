@@ -68,7 +68,6 @@ function Dashboard() {
 
                 <tbody>
                     <tr>
-                        {console.log("YES")}
                         {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                             computer => <Computer computer={computer} companies = {company_data} edit={editComputer}/>
                         )}
