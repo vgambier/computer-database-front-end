@@ -8,16 +8,18 @@ function Computer(props) {
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
 
+    console.log(companies)
+
     // Dropdown logic
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
     function printDate(date) {
-        return date != undefined ? date.dayOfMonth+"-"+date.month+"-"+date.year : "";
+        return date !== null ? date.dayOfMonth+"-"+date.month+"-"+date.year : "";
     }
 
     function printCompany(company) {
-        return company.company != undefined ? company.company.name : "";
+        return company.company !== null ? company.company.name : "";
     }
 
     function dateToJSON(string) {
@@ -66,8 +68,9 @@ function Computer(props) {
                             Company
                         </DropdownToggle>
                         <DropdownMenu>
+
                             {companies && companies.map(elt => (
-                                <DropdownItem>{elt}</DropdownItem>
+                                <DropdownItem>{elt.name}</DropdownItem>
                             ))}
                         </DropdownMenu>
                     </Dropdown>

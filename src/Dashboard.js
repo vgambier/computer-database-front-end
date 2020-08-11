@@ -13,11 +13,10 @@ function Dashboard() {
         document.title = "Computer Database"
     }, []);
 
-    const [{ data }] = useAxios(`${server_url}/computers/page/1`); // Connecting to the server (back-end)
+    const [{ data: data }] = useAxios(`${server_url}/computers/page/1`); // Connecting to the server (back-end)
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
-    const [{ company_data }] = useAxios(`${server_url}/companies`); // Connecting to the server (back-end)
-    const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
+    const [{ data: company_data }] = useAxios(`${server_url}/companies`);
 
     // HTML Add, Delete, Edit requests
 
@@ -36,9 +35,7 @@ function Dashboard() {
         method: "PUT"
     }, { manual: true });
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
-    useEffect(() => setCompanies(company_data), [company_data]);
-
+    useEffect(() => setComputers(data), [data, dataAdd, dataEdit, company_data]);
 
     // Editing logic
     function editComputer(updatedComputer) {
@@ -49,9 +46,7 @@ function Dashboard() {
     return (
 
         <div className="Dashboard">
-
             Welcome to CDB!
-
             <table>
                 <thead>
                     <tr>
@@ -73,16 +68,14 @@ function Dashboard() {
 
                 <tbody>
                     <tr>
+                        {console.log("YES")}
                         {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer => <Computer computer={computer} companies={companies} edit={editComputer}/>
+                            computer => <Computer computer={computer} companies = {company_data} edit={editComputer}/>
                         )}
                     </tr>
                 </tbody>
 
             </table>
-
-
-
         </div>
   );
 }
