@@ -34,9 +34,22 @@ function Computer(props) {
         }
     }
 
-    function companyToJSON(string) {
+    function companyToJSON(company) {
+
+        console.log(company);
+
+        const jsonCompany = JSON.parse(company)
         // TODO
-        // menu déroulant
+        console.log(jsonCompany);
+
+        return jsonCompany;
+
+        if (company.company_id !== null && company.company_name !== null) {
+            return {id:company.company_id, name:company.company_name}
+        }
+        else {
+            return {id: 0, name:""};
+        }
     }
 
         return (
@@ -63,20 +76,24 @@ function Computer(props) {
 
                     Company
 
-                    <select>
+                    <select onChange={elt => setComputer({ ...computer, company: companyToJSON(elt.target.value) })} >
 
-                        {companies && companies.map(elt => (
+                        {companies && companies.map(elt => {
 
-                            <option value="company" >
-                                {elt.name}
-                            </option>
+                            const magic = '{"id":' + elt.id + ',"name":"'+elt.name+'"}';
 
-                        ))}
+                            return (
+                                    <option value={magic}>
+                                        {elt.name}
+                                    </option>
+                                )
+
+                            }
+
+                        )}
 
                     </select>
 
-
-                    <Input defaultValue = {printCompany({company})} onChange={elt => setComputer({ ...computer, company: {id: 0, name:""}})} />
                     <Button onClick={() => { setEditMode(!editMode); props.edit(computer) }}>Confirm</Button>
                 </>
             }
