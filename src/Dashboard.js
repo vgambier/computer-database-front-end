@@ -54,7 +54,6 @@ function Dashboard() {
     useEffect(() => setPage(page), [page]);
 
     // Adding logic
-
     const [addMode, setAddMode] = useState(false);
     const newComputer = {name: "", introduced:"", discontinued: "", company: {id: 0, name: ""}};
     function handleSubmit() {
