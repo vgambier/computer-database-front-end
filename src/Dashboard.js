@@ -5,21 +5,22 @@ import useAxios from "axios-hooks";
 import Computer from "./Computer";
 import {Button} from 'reactstrap';
 
+import { I18nProvider, LOCALES} from "./i18n";
+import translate  from "./i18n/messages/translate";
 function Dashboard() {
 
     // Setting page title
     useEffect(() => {
-        document.title = "Computer Database"
+        document.title = "Computer Database";
     }, []);
-
     // HTTP requests
+
 
     // Get all computers
     const [{ data }] = useAxios(`${server_url}/computers/page/1`);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
-
     const [{ data: company_data }] = useAxios(`${server_url}/companies`);
     const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
@@ -56,10 +57,16 @@ function Dashboard() {
         setComputers(computers.filter(computer => computer.id !== id))
     }
 
-    return (
+    // For i18n
+    const [locale, setLocale]= useState(LOCALES.ENGLISH);
+    useEffect(() => setLocale(locale), [locale]);
 
+    return (
+        <I18nProvider locale={locale}>
         <div className="Dashboard">
-            Welcome to CDB!
+            <h1>Welcome to {translate("CDB")}!</h1>
+            <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
+            <button onClick={()=> setLocale(LOCALES.FRENCH)}>French</button>
 
             <table>
                 <thead>
@@ -67,23 +74,22 @@ function Dashboard() {
                         <th class="editMode">
                             <input type="checkbox" id="selectall" />
                             <span>
-                                -
                                 <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
                                     <i class="fa fa-trash-o fa-lg"></i>
 							    </a>
 						</span></th>
 
-                        <th>Name</th>
-                        <th>Introduced</th>
-                        <th>Discontinued</th>
-                        <th>Company</th>
+                        <th>{translate("Name")}</th>
+                        <th>{translate("Introduced")}</th>
+                        <th>{translate("Discontinued")}</th>
+                        <th>{translate("Company")}</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
                         {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer}/>
+                            computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer} locale={locale}/>
                         )}
                     </tr>
                 </tbody>
@@ -91,6 +97,7 @@ function Dashboard() {
             </table>
 
         </div>
+        </I18nProvider>
   );
 }
 export default Dashboard;

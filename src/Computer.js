@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
+import {I18nProvider, LOCALES} from "./i18n";
+import translate from "./i18n/messages/translate";
 
 function Computer(props) {
 
@@ -7,6 +9,9 @@ function Computer(props) {
     const [companies] = useState(props.companies);
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
+    const [locale, setLocale] = useState(props.locale);
+
+    console.log(locale);
 
     function printCompany(company) {
         return company.company !== null ? company.company.name : "";
@@ -35,8 +40,9 @@ function Computer(props) {
         }
     }
 
-    return (
 
+    return (
+        <I18nProvider locale={props.locale}>
         <div className="Computer">
 
             {!editMode ?
@@ -49,8 +55,8 @@ function Computer(props) {
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <Button onClick={() => props.delete(id)}>Delete</Button>
-                    <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+                    <Button onClick={() => props.delete(id)}>{translate('Delete')}</Button>
+                    <Button onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
                 </>
                 :
                 <>
@@ -72,6 +78,7 @@ function Computer(props) {
                 </>
             }
         </div>
+        </I18nProvider>
     );
 }
 
