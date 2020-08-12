@@ -18,21 +18,28 @@ function Homepage() {
 
     // Authentication
 
-    const user = {username:"", password:""};
+    const [user, setUser] = useState({username: "", password: ""});
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [{}, executeLogin] = useAxios({
         url: `${server_url}/authenticate`,
         method: "POST",
         data: user
-    }, { manual: true });
+    }, {manual: true});
 
     function loginSubmit() {
+
         console.log(user);
-        executeLogin().then(response => {
-                axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
-                setAuthenticated(true);
-            }
-        )
+
+        executeLogin()
+            .then(
+                response => {
+                    axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
+                    setAuthenticated(true);
+                })
+            .catch(() => {
+                setErrorMessage("Incorrect credentials. Please try again.");
+            })
     }
 
     return (
@@ -43,9 +50,10 @@ function Homepage() {
                 <>
                     Log in:<br/>
 
-                    Username: <Input type="text" onChange={elt => user.username = elt.target.value}/>
-                    Password: <Input type="password" onChange={elt => user.password = elt.target.value}/>
+                    Username: <Input type="text" onChange={elt => setUser({...user, username: elt.target.value})}/>
+                    Password: <Input type="password" onChange={elt => setUser({...user, password: elt.target.value})}/>
                     <Button onClick={() => loginSubmit()}>Login</Button>
+                    {errorMessage}
                 </>
                 :
                 <Dashboard/>
