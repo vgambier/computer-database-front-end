@@ -47,6 +47,8 @@ function Computer(props) {
             {!editMode ?
 
                 <>
+                    <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+
                     <td className="deleteMode">
                         <input type="checkbox" name="cb" className="cb" value={id}/>
                     </td>
