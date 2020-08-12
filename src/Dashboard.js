@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
-import {SERVER_INFO} from './server_info';
+import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-
-export const server_url = "http://"+SERVER_INFO.ip_address +":" +SERVER_INFO.port+"/"+SERVER_INFO.app_name;
+import {Button} from 'reactstrap';
 
 function Dashboard() {
 
@@ -13,14 +12,23 @@ function Dashboard() {
         document.title = "Computer Database"
     }, []);
 
-    const [{ data }] = useAxios(`${server_url}/computers/page/1`); // Connecting to the server (back-end)
+
+    // HTTP requests
+
+    // Get all computers
+    const [{ data }] = useAxios({
+        url: `${server_url}/computers/page/1`
+        //,  TODO      headers: {authorization: `Bearer ${token2}`}
+    });
+
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
-    const [{ company_data }] = useAxios(`${server_url}/companies`); // Connecting to the server (back-end)
-    const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
+    // Get all companies
+    const [{ data: company_data }] = useAxios({
+        url: `${server_url}/companies`,
+    });
 
-    // HTML Add, Delete, Edit requests
-
+    // Add one computer
     const [{ data: dataAdd }, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
@@ -32,13 +40,13 @@ function Dashboard() {
         }
     , { manual: true });
 
+    // Edit one computer
     const [{ data: dataEdit }, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
     }, { manual: true });
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
-    useEffect(() => setCompanies(company_data), [company_data]);
+    useEffect(() => setComputers(data), [data, dataAdd, dataEdit, company_data]);
 
     // Editing logic
     function editComputer(updatedComputer) {
@@ -54,7 +62,6 @@ function Dashboard() {
     return (
 
         <div className="Dashboard">
-
             Welcome to CDB!
 
             <table>

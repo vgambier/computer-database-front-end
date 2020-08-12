@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, Input, Dropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap';
+import {Button, Input} from 'reactstrap';
 
 function Computer(props) {
 
@@ -8,44 +8,47 @@ function Computer(props) {
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
 
-    // Dropdown logic
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const toggle = () => setDropdownOpen(prevState => !prevState);
-
+    // TODO: remove this
     function printDate(date) {
-        return date != undefined ? date.dayOfMonth+"-"+date.month+"-"+date.year : "";
+        return date !== null && date != "" ? date.dayOfMonth + "-" + date.month + "-" + date.year : "";
     }
 
     function printCompany(company) {
-        return company.company != undefined ? company.company.name : "";
+        return company.company !== null ? company.company.name : "";
     }
 
-    function dateToJSON(string) {
+    function companyToJSON(company) {
 
-        // TODO if null send "", otherwise send well-formated JSON
-
-        if (true) {
-            return "";
-        }
-        else {
-            const date = new Date(string);
-            const jsonDate = {"year": date.getFullYear(), "month": date.getMonth()+1, "dayOfMonth": date.getUTCDate()};
-            return jsonDate;
+        if (company == "") {
+            return {id: 0, name: ""};
+        } else {
+            return JSON.parse(company)
         }
     }
 
-    function companyToJSON(string) {
-        // TODO
-        // menu déroulant
+    function displayCompanyOption(elt) {
+        const jsonString = '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
+
+        if ({company}.company && elt.id == {company}.company.id) {
+            return (
+                <option selected="selected" value={jsonString}> {elt.name} </option>
+            )
+        } else {
+            return (
+                <option value={jsonString}> {elt.name} </option>
+            )
+        }
     }
 
-        return (
+    return (
 
         <div className="Computer">
 
             {!editMode ?
 
                 <>
+                    <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+
                     <td className="deleteMode">
                         <input type="checkbox" name="cb" className="cb" value={id}/>
                     </td>
@@ -58,26 +61,25 @@ function Computer(props) {
                 </>
                 :
                 <>
-                    <Input defaultValue = {name} onChange={elt => setComputer({ ...computer, name: elt.target.value })} />
-                    <Input defaultValue = {printDate({introduced}.introduced)} onChange={elt => setComputer({ ...computer, introduced: dateToJSON(elt.target.value) })} />
-                    <Input defaultValue = {printDate({discontinued}.discontinued)} onChange={elt => setComputer({ ...computer, discontinued: dateToJSON(elt.target.value) })} />
+                    <Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/>
+                    <Input defaultValue={printDate({introduced}.introduced)}
+                           onChange={elt => setComputer({...computer, introduced: elt.target.value})}/>
+                    <Input defaultValue={printDate({discontinued}.discontinued)}
+                           onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/>
 
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                        <DropdownToggle caret>
-                            Company
-                        </DropdownToggle>
-                        <DropdownMenu>
-                            {companies && companies.map(elt => (
-                                <DropdownItem>{elt}</DropdownItem>
-                            ))}
-                        </DropdownMenu>
-                    </Dropdown>
+                    <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
+                        <option value="">--</option>
+                        {companies && companies.map(elt => displayCompanyOption(elt))}
+                    </select>
 
-                    <Input defaultValue = {printCompany({company})} onChange={elt => setComputer({ ...computer, company: {id: 0, name:""}})} />
-                    <Button onClick={() => { setEditMode(!editMode); props.edit(computer) }}>Confirm</Button>
+                    <Button onClick={() => {
+                        setEditMode(!editMode);
+                        props.edit(computer)
+                    }}>Confirm</Button>
                 </>
             }
         </div>
     );
 }
+
 export default Computer;
