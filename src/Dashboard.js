@@ -12,21 +12,15 @@ function Dashboard() {
         document.title = "Computer Database"
     }, []);
 
-
     // HTTP requests
 
     // Get all computers
-    const [{ data }] = useAxios({
-        url: `${server_url}/computers/page/1`
-        //,  TODO      headers: {authorization: `Bearer ${token2}`}
-    });
-
+    const [{ data }] = useAxios(`${server_url}/computers/page/1`);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
-    const [{ data: company_data }] = useAxios({
-        url: `${server_url}/companies`,
-    });
+    const [{ company_data }] = useAxios(`${server_url}/companies`);
+    const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
     // Add one computer
     const [{ data: dataAdd }, executeAdd] = useAxios({
@@ -34,6 +28,7 @@ function Dashboard() {
         method: "POST"
     }, { manual: true });
 
+    // Delete one computer
     const [{ }, executeDelete] = useAxios(
         {
         method: "DELETE"
@@ -46,7 +41,8 @@ function Dashboard() {
         method: "PUT"
     }, { manual: true });
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit, company_data]);
+    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
+    useEffect(() => setCompanies(company_data), [company_data]);
 
     // Editing logic
     function editComputer(updatedComputer) {
