@@ -13,7 +13,7 @@ function Dashboard() {
         document.title = "Computer Database"
     }, []);
 
-    const [{ data: data }] = useAxios(`${server_url}/computers/page/1`); // Connecting to the server (back-end)
+    const [{ data }] = useAxios(`${server_url}/computers/page/1`); // Connecting to the server (back-end)
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     const [{ data: company_data }] = useAxios(`${server_url}/companies`);

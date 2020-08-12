@@ -8,6 +8,7 @@ function Computer(props) {
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
 
+    // TODO: remove this
     function printDate(date) {
         return date !== null && date != "" ? date.dayOfMonth + "-" + date.month + "-" + date.year : "";
     }
@@ -22,6 +23,20 @@ function Computer(props) {
             return {id: 0, name: ""};
         } else {
             return JSON.parse(company)
+        }
+    }
+
+    function displayCompanyOption(elt) {
+        const jsonString = '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
+
+        if ({company}.company && elt.id == {company}.company.id) {
+            return (
+                <option selected="selected" value={jsonString}> {elt.name} </option>
+            )
+        } else {
+            return (
+                <option value={jsonString}> {elt.name} </option>
+            )
         }
     }
 
@@ -50,25 +65,8 @@ function Computer(props) {
                            onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/>
 
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
-
                         <option value="">--</option>
-
-                        {companies && companies.map(elt => {
-
-                                const jsonString = '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
-
-                                if ({company}.company && elt.id == {company}.company.id) {
-                                    return (
-                                        <option selected="selected" value={jsonString}> {elt.name} </option>
-                                    )
-                                } else {
-                                    return (
-                                        <option value={jsonString}> {elt.name} </option>
-                                    )
-                                }
-                            }
-                        )}
-
+                        {companies && companies.map(elt => displayCompanyOption(elt))}
                     </select>
 
                     <Button onClick={() => {
