@@ -81,7 +81,7 @@ function Dashboard() {
 
                 <tbody>
                     <tr>
-                        {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                        {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                             computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer}/>
                         )}
                     </tr>
