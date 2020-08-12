@@ -8,11 +8,6 @@ function Computer(props) {
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
 
-    // TODO: remove this
-    function printDate(date) {
-        return date !== null && date != "" ? date.dayOfMonth + "-" + date.month + "-" + date.year : "";
-    }
-
     function printCompany(company) {
         return company.company !== null ? company.company.name : "";
     }
@@ -53,8 +48,8 @@ function Computer(props) {
                         <input type="checkbox" name="cb" className="cb" value={id}/>
                     </td>
                     <td> {name} </td>
-                    <td> {printDate({introduced}.introduced)} </td>
-                    <td> {printDate({discontinued}.discontinued)} </td>
+                    <td> {introduced} </td>
+                    <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
                     <Button onClick={() => props.delete(id)}>Delete</Button>
                     <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
@@ -62,9 +57,9 @@ function Computer(props) {
                 :
                 <>
                     <Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/>
-                    <Input defaultValue={printDate({introduced}.introduced)}
+                    <Input defaultValue={introduced}
                            onChange={elt => setComputer({...computer, introduced: elt.target.value})}/>
-                    <Input defaultValue={printDate({discontinued}.discontinued)}
+                    <Input defaultValue={discontinued}
                            onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/>
 
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
