@@ -3,7 +3,8 @@ import './Dashboard.css';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Button} from 'reactstrap';
+import {Input} from "reactstrap";
+import {companyToJSON, displayCompanyOption, getCompanyJsonString} from "./CompanyHelper";
 
 import { I18nProvider, LOCALES} from "./i18n";
 import translate  from "./i18n/messages/translate";
@@ -46,12 +47,24 @@ function Dashboard() {
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
 
+    // Adding logic
+
+    const [addMode, setAddMode] = useState(false);
+    const newComputer = {name: "", introduced:"", discontinued: "", company: {id: 0, name: ""}};
+    function handleSubmit() {
+        setAddMode(!addMode);
+        executeAdd({ data: newComputer }).then(
+            response => { computers.push({ ...newComputer, id: response.data }) });
+        setComputers(computers);
+    }
+
     // Editing logic
     function editComputer(updatedComputer) {
         executeEdit({ data: updatedComputer });
         computers.push(updatedComputer);
     }
 
+    // Deleting logic
     function deleteComputer(id){
         executeDelete({url :`${server_url}/computers/${id}`})
         setComputers(computers.filter(computer => computer.id !== id))
@@ -88,10 +101,32 @@ function Dashboard() {
 
                 <tbody>
                     <tr>
-                        {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                        {computers && companies && computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                             computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer} locale={locale}/>
+
                         )}
                     </tr>
+
+                    {!addMode ?
+
+                        <button onClick={() => setAddMode(!addMode)}>Add a computer</button>
+
+                        :
+
+                        <>
+                            <Input placeholder="Fancy Computer #15" onChange={elt => newComputer.name = elt.target.value} />
+                            <Input placeholder="2001-12-31" onChange={elt => newComputer.introduced = elt.target.value} />
+                            <Input placeholder="2011-12-31" onChange={elt => newComputer.discontinued = elt.target.value} />
+
+                            <select onChange={elt => newComputer.company = companyToJSON(elt.target.value)}>
+                                <option value="">--</option>
+                                {companies && companies.map(elt => <option value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                            </select>
+
+                            <button onClick={() => handleSubmit()}>Confirm</button>
+                        </>
+                    }
+
                 </tbody>
 
             </table>

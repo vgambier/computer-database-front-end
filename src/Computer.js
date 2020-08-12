@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
+import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 
 function Computer(props) {
 
@@ -68,7 +69,7 @@ function Computer(props) {
 
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
-                        {companies && companies.map(elt => displayCompanyOption(elt))}
+                        {companies && companies.map(elt => displayCompanyOption({company}, elt))}
                     </select>
 
                     <Button onClick={() => {
