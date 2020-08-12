@@ -19,7 +19,8 @@ function Dashboard() {
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
-    const [{ data : company_data }] = useAxios(`${server_url}/companies`);
+
+    const [{ data: company_data }] = useAxios(`${server_url}/companies`);
     const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
     // Add one computer
