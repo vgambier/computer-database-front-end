@@ -17,8 +17,13 @@ function Dashboard() {
     // HTTP requests
 
 
+    // For i18n
+    const [locale, setLocale]= useState(LOCALES.ENGLISH);
+
+    const [page, setPage]= useState(1);
+
     // Get all computers
-    const [{ data }] = useAxios(`${server_url}/computers/page/1`);
+    const [{ data }] = useAxios(`${server_url}/computers/page/`+page);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -46,6 +51,7 @@ function Dashboard() {
 
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
+    useEffect(() => setPage(page), [page]);
 
     // Adding logic
 
@@ -64,20 +70,19 @@ function Dashboard() {
         computers.push(updatedComputer);
     }
 
+
+
     // Deleting logic
     function deleteComputer(id){
         executeDelete({url :`${server_url}/computers/${id}`})
         setComputers(computers.filter(computer => computer.id !== id))
     }
 
-    // For i18n
-    const [locale, setLocale]= useState(LOCALES.ENGLISH);
-    useEffect(() => setLocale(locale), [locale]);
 
     return (
         <I18nProvider locale={locale}>
         <div className="Dashboard">
-            <h1>Welcome to {translate("CDB")}!</h1>
+            <h1>{translate("Welcome")} {translate("CDB")}</h1>
             <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
             <button onClick={()=> setLocale(LOCALES.FRENCH)}>French</button>
 
@@ -98,6 +103,10 @@ function Dashboard() {
                         <th>{translate("Company")}</th>
                     </tr>
                 </thead>
+                <button onClick={()=> setPage(1)}>{translate("First Page")}</button>
+                <button onClick={()=> setPage(page-1)}>{translate("Previous Page")}</button>
+                <button onClick={()=> setPage(page+1)}>{translate("Next Page")}</button>
+                <button onClick={()=> setPage(21)}>{translate("Last Page")}</button>
 
                 <tbody>
                     <tr>
@@ -109,7 +118,7 @@ function Dashboard() {
 
                     {!addMode ?
 
-                        <button onClick={() => setAddMode(!addMode)}>Add a computer</button>
+                        <button onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
 
                         :
 

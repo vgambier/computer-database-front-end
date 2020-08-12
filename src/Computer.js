@@ -12,7 +12,6 @@ function Computer(props) {
     const {id, name, introduced, discontinued, company} = computer;
     const [locale, setLocale] = useState(props.locale);
 
-    console.log(locale);
 
     function printCompany(company) {
         return company.company !== null ? company.company.name : "";
