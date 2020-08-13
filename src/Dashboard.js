@@ -16,6 +16,14 @@ function Dashboard() {
         document.title = "Computer Database";
     }, []);
 
+
+    let result;
+    function editSearch(string)
+    {
+        result=string;
+    }
+
+
     // HTTP requests
 
     // For i18n
@@ -24,7 +32,8 @@ function Dashboard() {
     // For pagination
     const [page, setPage] = useState(1);
     const [entries, setEntries] = useState(25);
-    const [orderBy, setOrderBy] = useState("computer.id/");
+    const [orderBy, setOrderBy] = useState("computer.id");
+    const [search, setSearch] = useState("");
 
     // Count computers
     const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
@@ -33,7 +42,7 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + entries + `/` + orderBy);
+    const [{data}] = useAxios(`${server_url}/computers/page/`+page+`/`+entries+`/`+orderBy+`/`+search);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -63,6 +72,7 @@ function Dashboard() {
     useEffect(() => setPage(page), [page]);
     useEffect(() => setEntries(entries), [entries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
+    useEffect(() => setSearch(search), [search]);
 
 
     // Adding logic
@@ -85,6 +95,7 @@ function Dashboard() {
     }
 
 
+
     // Deleting logic
     function deleteComputer(id) {
         executeDelete({url: `${server_url}/computers/${id}`})
@@ -101,7 +112,6 @@ function Dashboard() {
             return (Math.floor(computersCount / entries)) + 1;
         }
     }
-
     return (
         <body>
         <div id="page1">
@@ -140,12 +150,18 @@ function Dashboard() {
                             <button onClick={() => setEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setEntries(50) & setPage(1)}>50</button>
                             <p></p>
-                            <button onClick={() => setOrderBy("computer.id/") & setPage(1)}>Computer Id</button>
-                            <button onClick={() => setOrderBy("computer.name/") & setPage(1)}>{translate("Name")}</button>
+                            <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
                             <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
                             <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                            <button onClick={() => setOrderBy("computer.company.name/") & setPage(1)}>{translate("Company")}
+                            <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
+
+                            <div>
+                            <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
+                            <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
+
                             <table>
                                 <thead>
                                 <tr>
