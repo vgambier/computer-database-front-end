@@ -4,6 +4,7 @@ import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
 import {Button} from 'reactstrap';
+import home from './images/home.jpg'
 
 function Dashboard() {
 
@@ -15,81 +16,81 @@ function Dashboard() {
     // HTTP requests
 
     // Get all computers
-    const [{ data }] = useAxios(`${server_url}/computers/page/1`);
+    const [{data}] = useAxios(`${server_url}/computers/page/1`);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
-    const [{ company_data }] = useAxios(`${server_url}/companies`);
+    const [{company_data}] = useAxios(`${server_url}/companies`);
     const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
 
     // Add one computer
-    const [{ data: dataAdd }, executeAdd] = useAxios({
+    const [{data: dataAdd}, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
-    }, { manual: true });
+    }, {manual: true});
 
     // Delete one computer
-    const [{ }, executeDelete] = useAxios(
+    const [{}, executeDelete] = useAxios(
         {
-        method: "DELETE"
+            method: "DELETE"
         }
-    , { manual: true });
+        , {manual: true});
 
     // Edit one computer
-    const [{ data: dataEdit }, executeEdit] = useAxios({
+    const [{data: dataEdit}, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
-    }, { manual: true });
+    }, {manual: true});
 
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
 
     // Editing logic
     function editComputer(updatedComputer) {
-        executeEdit({ data: updatedComputer });
+        executeEdit({data: updatedComputer});
         computers.push(updatedComputer);
     }
 
-    function deleteComputer(id){
-        executeDelete({url :`${server_url}/computers/${id}`})
+    function deleteComputer(id) {
+        executeDelete({url: `${server_url}/computers/${id}`})
         setComputers(computers.filter(computer => computer.id !== id))
     }
 
     return (
+        <body>
+            <div id="page1">
+                <div id="navigation">
 
-        <div className="Dashboard">
-            Welcome to CDB!
+                    <p align="center">
 
-            <table>
-                <thead>
-                    <tr>
-                        <th class="editMode">
-                            <input type="checkbox" id="selectall" />
-                            <span>
-                                -
-                                <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
-                                    <i class="fa fa-trash-o fa-lg"></i>
-							    </a>
-						</span></th>
+                        <div id="center">
+                            <a href="home.html"><img src={home} alt="Application de bases de données d’ordinateurs" width="320"/></a><br/>
+                            <i> COMPUTER DATABASE,</i><br/>
+                            <p>Application of computer databases</p>
+                        </div>
 
-                        <th>Name</th>
-                        <th>Introduced</th>
-                        <th>Discontinued</th>
-                        <th>Company</th>
-                    </tr>
-                </thead>
+                    </p>
 
-                <tbody>
-                    <tr>
-                        {computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer => <Computer key={computer.id} computer={computer} companies={companies} delete={deleteComputer} edit={editComputer}/>
-                        )}
-                    </tr>
-                </tbody>
+                    <div id="vertical-menu">
 
-            </table>
+                        <li><a href="home.html">Home</a></li>
 
-        </div>
-  );
+                        <li><a href="dashboard.html" className="active">Dashboard</a></li>
+
+                    </div>
+                </div>
+                <div id="main-page">
+                    <div className="content">
+                        <footer>
+                            <ul className="horizontal-menu">
+                                <li>partie logout</li>
+                            </ul>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </body>
+    );
 }
+
 export default Dashboard;
