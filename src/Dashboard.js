@@ -76,31 +76,8 @@ function Dashboard() {
     }
 
     return (
+
         <body>
-            <div id="page1">
-                <div id="navigation">
-
-                    <p align="center">
-
-                        <div id="center">
-                            <a href="home.html"><img src={home} alt="Application de bases de données d’ordinateurs" width="320"/></a><br/>
-                            <i> COMPUTER DATABASE,</i><br/>
-                            <p>Application of computer databases</p>
-                        </div>
-
-                    </p>
-
-                    <div id="vertical-menu">
-
-                        <li><a href="home.html">Home</a></li>
-
-                        <li><a href="dashboard.html" className="active">Dashboard</a></li>
-
-                    </div>
-                </div>
-                <div id="main-page">
-                    <div className="content">
-
                         <I18nProvider locale={locale}>
                             <div className="Dashboard">
                                 <h1>{translate("Welcome")} {translate("CDB")}</h1>
@@ -163,15 +140,6 @@ function Dashboard() {
 
                             </div>
                         </I18nProvider>
-
-                        <footer>
-                            <ul className="horizontal-menu">
-                                <li>partie logout</li>
-                            </ul>
-                        </footer>
-                    </div>
-                </div>
-            </div>
         </body>
     );
 

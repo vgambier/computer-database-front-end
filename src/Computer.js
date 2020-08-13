@@ -40,7 +40,6 @@ function Computer(props) {
         }
     }
 
-
     return (
         <I18nProvider locale={props.locale}>
         <div className="Computer">
