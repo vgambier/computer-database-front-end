@@ -15,8 +15,8 @@ function Dashboard() {
     useEffect(() => {
         document.title = "Computer Database";
     }, []);
-    // HTTP requests
 
+    // HTTP requests
 
     // For i18n
     const [locale, setLocale]= useState(LOCALES.ENGLISH);
@@ -40,8 +40,7 @@ function Dashboard() {
     const [{}, executeDelete] = useAxios(
         {
             method: "DELETE"
-        }
-        , {manual: true});
+        }, {manual: true});
 
     // Edit one computer
     const [{data: dataEdit}, executeEdit] = useAxios({

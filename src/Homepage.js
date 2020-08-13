@@ -29,8 +29,6 @@ function Homepage() {
 
     function loginSubmit() {
 
-        console.log(user);
-
         executeLogin()
             .then(
                 response => {
