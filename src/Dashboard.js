@@ -20,7 +20,14 @@ function Dashboard() {
     // For i18n
     const [locale, setLocale]= useState(LOCALES.ENGLISH);
 
+    // For pagination
     const [page, setPage]= useState(1);
+
+    // Count computers
+    const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
+
+    // Count companies
+    const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
     const [{ data }] = useAxios(`${server_url}/computers/page/`+page);
@@ -70,7 +77,6 @@ function Dashboard() {
     }
 
 
-
     // Deleting logic
     function deleteComputer(id){
         executeDelete({url :`${server_url}/computers/${id}`})
@@ -78,10 +84,13 @@ function Dashboard() {
     }
 
 
+
+
     return (
         <I18nProvider locale={locale}>
         <div className="Dashboard">
-            <h1>{translate("Welcome")} {translate("CDB")}</h1>
+            <h1> {translate("Welcome")} {translate("CDB")}</h1>
+            <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
             <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
             <button onClick={()=> setLocale(LOCALES.FRENCH)}>French</button>
 
