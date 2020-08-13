@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
-import {I18nProvider, LOCALES} from "./i18n";
+import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 
@@ -10,7 +10,6 @@ function Computer(props) {
     const [companies] = useState(props.companies);
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
-    const [locale, setLocale] = useState(props.locale);
 
     return (
         <I18nProvider locale={props.locale}>
@@ -29,7 +28,9 @@ function Computer(props) {
                     <Button onClick={() => props.delete(id)}>{translate('Delete')}</Button>
                     <Button onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
                 </>
+
                 :
+
                 <>
                     <Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/>
                     <Input defaultValue={introduced}
