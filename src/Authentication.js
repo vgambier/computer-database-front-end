@@ -7,7 +7,6 @@ import {server_url} from "./Homepage";
 
 function Authentication() {
 
-    let [authenticated, setAuthenticated] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     // HTTP request to get a token with a given username/password pair
@@ -24,19 +23,18 @@ function Authentication() {
             .then(
                 response => {
                     axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
-                    setAuthenticated(true);
+                    localStorage.setItem('bearerToken', response.data.token);
                 })
             .catch(() => {
                 setErrorMessage("Incorrect credentials. Please try again.");
             })
     }
 
-
     return (
 
         <div className="Authentication">
 
-            {!authenticated ?
+            {!localStorage.getItem('bearerToken') ?
                 <>
                     Log in:
                     Username: <Input type="text" onChange={elt => setUser({...user, username: elt.target.value})}/>
