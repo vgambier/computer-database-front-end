@@ -24,6 +24,7 @@ function Authentication() {
                 response => {
                     axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
                     localStorage.setItem('bearerToken', response.data.token);
+                    window.location.reload();
                 })
             .catch(() => {
                 setErrorMessage("Incorrect credentials. Please try again.");
@@ -33,6 +34,7 @@ function Authentication() {
     function onLogout() {
         localStorage.removeItem('bearerToken');
         localStorage.clear();
+        window.location.reload();
     }
 
         return (
