@@ -40,7 +40,7 @@ function Computer(props) {
 
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
-                        {companies && companies.map(elt => displayCompanyOption({company}.company, elt))}
+                        {companies && companies.map(elt => displayCompanyOption({company}, elt))}
                     </select>
 
                     <Button onClick={() => {
