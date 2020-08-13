@@ -22,6 +22,7 @@ function Dashboard() {
 
     // For pagination
     const [page, setPage]= useState(1);
+    const [entries, setEntries]= useState(25);
 
     // Count computers
     const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
@@ -30,7 +31,7 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{ data }] = useAxios(`${server_url}/computers/page/`+page);
+    const [{ data }] = useAxios(`${server_url}/computers/page/`+page+`/`+entries);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -59,6 +60,8 @@ function Dashboard() {
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
+    useEffect(() => setEntries(entries), [entries]);
+
 
     // Adding logic
     const [addMode, setAddMode] = useState(false);
@@ -84,7 +87,16 @@ function Dashboard() {
     }
 
 
+    function countPages() {
 
+        if(computersCount%entries===0) {
+            return computersCount/entries;
+        }
+        else {
+            console.log((Math.floor(computersCount/entries))+1);
+            return (Math.floor(computersCount/entries))+1;
+        }
+    }
 
     return (
         <I18nProvider locale={locale}>
@@ -93,6 +105,9 @@ function Dashboard() {
             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
             <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
             <button onClick={()=> setLocale(LOCALES.FRENCH)}>French</button>
+            <button onClick={()=> setEntries(10) & setPage(1)}>10</button>
+            <button onClick={()=> setEntries(25) & setPage(1)}>25</button>
+            <button onClick={()=> setEntries(50) & setPage(1)}>50</button>
 
             <table>
                 <thead>
@@ -114,7 +129,7 @@ function Dashboard() {
                 <button onClick={()=> setPage(1)}>{translate("First Page")}</button>
                 <button onClick={()=> setPage(page-1)}>{translate("Previous Page")}</button>
                 <button onClick={()=> setPage(page+1)}>{translate("Next Page")}</button>
-                <button onClick={()=> setPage(21)}>{translate("Last Page")}</button>
+                <button onClick={()=> setPage(countPages())}>{translate("Last Page")}</button>
 
                 <tbody>
                     <tr>
