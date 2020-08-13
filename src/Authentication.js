@@ -30,11 +30,17 @@ function Authentication() {
             })
     }
 
-    return (
+    function onLogout() {
+        localStorage.removeItem('bearerToken');
+        localStorage.clear();
+    }
+
+        return (
 
         <div className="Authentication">
 
             {!localStorage.getItem('bearerToken') ?
+
                 <>
                     Log in:
                     Username: <Input type="text" onChange={elt => setUser({...user, username: elt.target.value})}/>
@@ -42,8 +48,14 @@ function Authentication() {
                     <Button onClick={() => loginSubmit()}>Login</Button>
                     {errorMessage}
                 </>
+
                 :
+
+                <>
+                <Button onClick={() => onLogout()}>Logout</Button>
                 <Dashboard/>
+                </>
+
             }
 
         </div>
