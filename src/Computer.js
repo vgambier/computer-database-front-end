@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
+import {I18nProvider, LOCALES} from "./i18n";
+import translate from "./i18n/messages/translate";
+import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 
 function Computer(props) {
 
@@ -7,6 +10,8 @@ function Computer(props) {
     const [companies] = useState(props.companies);
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
+    const [locale, setLocale] = useState(props.locale);
+
 
     function printCompany(company) {
         return company.company !== null ? company.company.name : "";
@@ -35,15 +40,14 @@ function Computer(props) {
         }
     }
 
-    return (
 
+    return (
+        <I18nProvider locale={props.locale}>
         <div className="Computer">
 
             {!editMode ?
 
                 <>
-                    <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
-
                     <td className="deleteMode">
                         <input type="checkbox" name="cb" className="cb" value={id}/>
                     </td>
@@ -51,8 +55,8 @@ function Computer(props) {
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <Button onClick={() => props.delete(id)}>Delete</Button>
-                    <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+                    <Button onClick={() => props.delete(id)}>{translate('Delete')}</Button>
+                    <Button onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
                 </>
                 :
                 <>
@@ -64,7 +68,7 @@ function Computer(props) {
 
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
-                        {companies && companies.map(elt => displayCompanyOption(elt))}
+                        {companies && companies.map(elt => displayCompanyOption({company}, elt))}
                     </select>
 
                     <Button onClick={() => {
@@ -74,6 +78,7 @@ function Computer(props) {
                 </>
             }
         </div>
+        </I18nProvider>
     );
 }
 

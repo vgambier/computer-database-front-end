@@ -10,6 +10,7 @@
     "axios-hooks": "^2.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-intl": "^5.4.8",
     "react-scripts": "3.4.1",
     "reactstrap": "^8.5.1"
   },
