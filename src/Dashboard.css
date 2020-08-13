@@ -1,38 +1,145 @@
-.App {
+/* Instructions page */
+
+body{
+  margin:0%;
+  height: 100%;
+  background-image:url(../src/images/ordinateur.jpeg);
+  background-repeat:no-repeat;
+}
+
+#page1 {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Verdana, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif;
+  position: absolute;
+}
+
+/* navigation */
+
+#navigation{
+  width: 22%;
+  height: 100%;
+  float: left;
+  background-color:rgba(0,0,0,0.8);
+  color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Description au dessus du HOME */
+
+#center {
+  margin-top: 30%;
+  text-shadow: 0 0 0.2% #610B38, 0 0 0.2% #610B38;
+  text-align: center;
+  color: white;
+  min-height:10%;
+}
+
+#navigation p:first-of-type {
+  height: 45%;
+  margin: 0;
+  padding: 0;
+}
+
+/* MENU */
+
+#vertical-menu {
+  padding:0;
+  margin: 0;
+  height: 80%;
+}
+
+#vertical-menu a {
+  color: white;
+  display: block;
+  padding: 9%;
+  font-size: 100%;
+  text-decoration: none;
+  text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#vertical-menu a.active {
+  color: white;
+  font-weight:bold;
+  font-size: 30px;
+  font-weight:bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* CONTENT*/
+
+#main-page {
+  float: left;
+  width: 76%;
+  height : 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.content {
+  width: 100%;
+  height :100%;
+  overflow: scroll;
+}
+
+h1 {
+  text-shadow: 3px 0 0 black, 0 3px 0 black, 0 -3px 0 black, -3px 0 0 black, 3px 3px 0 black, 3px -3px 0 black, -3px 3px 0 black, -3px -3px 0 black;
+  color: white;
+  text-align: left;
+  font-size: 250%;
+  margin-left: 58px;
+  margin-top : 56px;
+  margin-bottom: -62px;
+}
+
+/* Barre menu haut */
+
+footer{
+  height: 10%;
+  background-color: rgba(0,0,0,0.8);
+  float: left;
+  width: 90%;
+  padding-right: 5%;
+  padding-left: 5%;
+  bottom: 0;
+  z-index: 5;
+}
+
+/* HORIZONTAL MENU */
+
+.horizontal-menu li {
+  display : inline;
+  padding: 0 16% 0 18%;
+  float: left;
+  text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;
+}
+
+.horizontal-menu {
+  list-style-type : none;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* HORIZONTAL MENU 2 */
+
+.horizontal-menu2 li {
+  display : inline;
+  padding: 30px;
+  padding-top: 3%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.horizontal-menu2 {
+  list-style-type : none;
+  width: 100%;
+  float: left;
+}
+
+.horizontal-menu2 a {
+  text-decoration: none;
+  color: black;
+}
+
+.horizontal-menu2 a:hover {
+  font-weight: bold;
 }
