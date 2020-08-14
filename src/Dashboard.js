@@ -87,17 +87,17 @@ function Dashboard() {
     function editComputer(updatedComputer) {
 
         const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
-        console.log(updatedComputer.id)
-        console.log(indexOfEntryOfId)
         executeEdit({data: updatedComputer}).then(response => {
-            setComputers(computers.splice(indexOfEntryOfId, 1, updatedComputer));
+            const newComputers = [...computers];
+            newComputers[indexOfEntryOfId]=updatedComputer;
+            setComputers(newComputers);
         });
     }
 
     // Deleting logic
     function deleteComputer(id) {
         executeDelete({url: `${server_url}/computers/${id}`}).then(response => {
-            setComputers(computers.filter(computer => computer.id !== id))
+            setComputers(computers.filter(computer => computer.id !== id));
         });
     }
 
