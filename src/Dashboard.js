@@ -128,15 +128,30 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                     <button className="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
                     <button className="button" onClick={() => setLocale(LOCALES.FRENCH)}>Français</button>
 
+                            <p>
+                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+                            </p>
+
+                             <p>
+                            <button className="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button className="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            <button className="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            <button className="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            <button className="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
+                            </button>
+                             </p>
+
+                            <div>
+                            <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                            <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
                     <div>
                         <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
                         <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                     </div>
-                    <p></p>
-                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                    <p></p>
+
                     <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
                     <button className="button"
                             onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
@@ -146,17 +161,6 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <p></p>
-                    <button className="button2"
-                            onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
-                    <button className="button2"
-                            onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                    <button className="button2"
-                            onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                    <button className="button2"
-                            onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                    <button className="button2"
-                            onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
-                    </button>
 
                     <table>
                         <thead>
@@ -169,13 +173,17 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
 							    </a>
 						            </span>*/}</th>
 
-                            <th>{translate("Name")}</th>
-                            <th>{translate("Introduced")}</th>
-                            <th>{translate("Discontinued")}</th>
-                            <th>{translate("Company")}</th>
-                        </tr>
-                        </thead>
-
+                                    <th>{translate("Name")}</th>
+                                    <th>{translate("Introduced")}</th>
+                                    <th>{translate("Discontinued")}</th>
+                                    <th>{translate("Company")}</th>
+                                </tr>
+                                </thead>
+                                <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                                <button className="button" onClick={() => setPage(Math.max(1,page - 1))}>{translate("Previous Page")}</button>
+                                <button className="button" >{page}</button>
+                                <button className="button" onClick={() => setPage(Math.min(countPages(),page + 1))}>{translate("Next Page")}</button>
+                                <button className="button" onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
 
                         <tbody>
                         <tr>
