@@ -9,7 +9,7 @@ export function companyToJSON(company) {
     if (company === "") {
         return {id: null, name: null};
     } else {
-        return JSON.parse(company)
+        return JSON.parse(company);
     }
 }
 
@@ -29,5 +29,5 @@ export function displayCompanyOption(companyObject, elt) {
 }
 
 export function getCompanyJsonString(elt) {
-    return '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
+    return '{"id":"' + elt.id + '","name":"' + elt.name + '"}';
 }
