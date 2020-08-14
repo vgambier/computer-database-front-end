@@ -3,6 +3,7 @@ import {Button, Input} from 'reactstrap';
 import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
+import './Computer.css';
 
 function Computer(props) {
 
@@ -25,8 +26,8 @@ function Computer(props) {
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <Button onClick={() => props.delete(id)}>{translate('Delete')}</Button>
-                    <Button onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
+                    <Button class="button" onClick={() => props.delete(id)}>{translate('Delete')}</Button>
+                    <Button class="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
                 </>
 
                 :

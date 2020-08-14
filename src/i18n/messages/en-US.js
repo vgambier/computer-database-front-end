@@ -17,5 +17,6 @@ export default {
         'Last Page': 'Last Page',
         'blabla': 'inside the database',
         'Computers': 'Computers',
+        'Search': 'Search bar',
     }
 }
