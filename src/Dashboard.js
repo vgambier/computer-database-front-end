@@ -28,7 +28,7 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
+    const [{data}, executeRefresh] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -102,7 +102,6 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
     }
 
     // Search logic
-
     const [result, setResult] = useState("");
     function editSearch(string) {
         setResult(string);
@@ -152,14 +151,14 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                         <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                     </div>
 
-                    <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                    <button className="button" onClick={() => setPage(1) && executeRefresh({url:`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search})}>{translate("First Page")}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                            onClick={() => setPage(Math.max(1, page - 1)) && executeRefresh({url:`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search})}>{translate("Previous Page")}</button>
                     <button className="button4">{page}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            onClick={() => setPage(Math.min(/*countPages()*/100, page + 1)) && executeRefresh({url:`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search})}>{translate("Next Page")}</button>
                     <button className="button"
-                            onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                            onClick={() => setPage(countPages()) && executeRefresh({url:`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search})}>{translate("Last Page")}</button>
                     <p></p>
 
                     <table>
