@@ -19,11 +19,11 @@ export function displayCompanyOption(companyObject, elt) {
 
     if (companyObject.company && elt.id === companyObject.company.id) {
         return (
-            <option selected="selected" value={jsonString}> {elt.name} </option>
+            <option selected="selected" value={jsonString} key={elt.id}> {elt.name} </option>
         )
     } else {
         return (
-            <option value={jsonString}> {elt.name} </option>
+            <option value={jsonString} key={elt.id}> {elt.name} </option>
         )
     }
 }

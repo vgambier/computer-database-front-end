@@ -85,6 +85,7 @@ function Dashboard() {
 
     // Editing logic
     function editComputer(updatedComputer) {
+
         const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
         console.log(updatedComputer.id)
         console.log(indexOfEntryOfId)
@@ -117,7 +118,6 @@ function Dashboard() {
     useEffect(() => setNewComputer(newComputer), [newComputer]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
-
 
     return (
         <div id="body1">
@@ -176,11 +176,11 @@ function Dashboard() {
                                 <tr>
 
                                     {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-
-                                        computer => <Computer key={computer.id} computer={computer}
-                                                              companies={companies} delete={deleteComputer}
-                                                              edit={editComputer} locale={locale}/>
-                                    )}
+                                        computer =>  {
+                                            return (<Computer key={computer.id} computer={computer}
+                                        companies={companies} delete={deleteComputer}
+                                        edit={editComputer} locale={locale}/>
+                                            ) })}
                                 </tr>
 
                                 {!addMode ?
@@ -209,7 +209,7 @@ function Dashboard() {
                                         <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
                                             <option value="">--</option>
                                             {companies && companies.map(elt =>
-                                                <option value={getCompanyJsonString(elt)}> {elt.name} </option>
+                                                <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>
                                             )}
                                         </select>
 

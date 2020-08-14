@@ -44,7 +44,7 @@ function Computer(props) {
 
                     <Button onClick={() => {
                         setEditMode(!editMode);
-                        props.edit(computer)
+                        props.edit(computer);
                     }}>Confirm</Button>
                 </>
             }
