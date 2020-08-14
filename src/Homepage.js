@@ -56,6 +56,7 @@ function Homepage() {
                             <div className="Homepage">
 
                             <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
+
                             </div>
 
                         </ul>
