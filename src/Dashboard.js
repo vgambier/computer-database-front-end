@@ -97,7 +97,8 @@ function Dashboard() {
     // Deleting logic
     function deleteComputer(id) {
         executeDelete({url: `${server_url}/computers/${id}`}).then(response => {
-            setComputers(computers.filter(computer => computer.id !== id));
+            const newComputers = computers.filter(computer => computer.id !== id);
+            setComputers(newComputers);
         });
     }
 
@@ -111,7 +112,7 @@ function Dashboard() {
 
     // Use effects
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
+    useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
