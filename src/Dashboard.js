@@ -15,15 +15,24 @@ function Dashboard() {
     useEffect(() => {
         document.title = "Computer Database";
     }, []);
-    // HTTP requests
 
+    // HTTP requests
 
     // For i18n
     const [locale, setLocale]= useState(LOCALES.ENGLISH);
+
+    // For pagination
     const [page, setPage]= useState(1);
+    const [entries, setEntries]= useState(25);
+
+    // Count computers
+    const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
+
+    // Count companies
+    const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{ data }] = useAxios(`${server_url}/computers/page/`+page);
+    const [{ data }] = useAxios(`${server_url}/computers/page/`+page+`/`+entries);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -40,8 +49,7 @@ function Dashboard() {
     const [{}, executeDelete] = useAxios(
         {
             method: "DELETE"
-        }
-        , {manual: true});
+        }, {manual: true});
 
     // Edit one computer
     const [{data: dataEdit}, executeEdit] = useAxios({
@@ -52,6 +60,8 @@ function Dashboard() {
     useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
+    useEffect(() => setEntries(entries), [entries]);
+
 
     // Adding logic
     const [addMode, setAddMode] = useState(false);
@@ -69,20 +79,37 @@ function Dashboard() {
         computers.push(updatedComputer);
     }
 
-// Deleting logic
-    function deleteComputer(id) {
-        executeDelete({url: `${server_url}/computers/${id}`})
+
+    // Deleting logic
+    function deleteComputer(id){
+        executeDelete({url :`${server_url}/computers/${id}`})
         setComputers(computers.filter(computer => computer.id !== id))
     }
 
-    return (
 
-        <body>
+    function countPages() {
+
+        if(computersCount%entries===0) {
+            return computersCount/entries;
+        }
+        else {
+            console.log((Math.floor(computersCount/entries))+1);
+            return (Math.floor(computersCount/entries))+1;
+        }
+    }
+
+    return (
+        <div id="body1">
+
                         <I18nProvider locale={locale}>
                             <div className="Dashboard">
-                                <h1>{translate("Welcome")} {translate("CDB")}</h1>
-                                <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
+                                <h1> {translate("Welcome")} {translate("CDB")}</h1>
+                                <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
+            <button onClick={()=> setLocale(LOCALES.ENGLISH)}>English</button>
                                 <button onClick={()=> setLocale(LOCALES.FRENCH)}>French</button>
+            <button onClick={()=> setEntries(10) & setPage(1)}>10</button>
+            <button onClick={()=> setEntries(25) & setPage(1)}>25</button>
+            <button onClick={()=> setEntries(50) & setPage(1)}>50</button>
 
                                 <table>
                                     <thead>
@@ -104,7 +131,7 @@ function Dashboard() {
                                     <button onClick={()=> setPage(1)}>{translate("First Page")}</button>
                                     <button onClick={()=> setPage(page-1)}>{translate("Previous Page")}</button>
                                     <button onClick={()=> setPage(page+1)}>{translate("Next Page")}</button>
-                                    <button onClick={()=> setPage(21)}>{translate("Last Page")}</button>
+                                    <button onClick={()=> setPage(countPages())}>{translate("Last Page")}</button>
 
                                     <tbody>
                                     <tr>
@@ -140,7 +167,7 @@ function Dashboard() {
 
                             </div>
                         </I18nProvider>
-        </body>
+                </div>
     );
 
 }

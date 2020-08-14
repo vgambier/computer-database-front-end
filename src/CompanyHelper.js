@@ -7,13 +7,14 @@ export function printCompany(company) {
 export function companyToJSON(company) {
 
     if (company === "") {
-        return {id: 0, name: ""};
+        return {id: null, name: null};
     } else {
         return JSON.parse(company)
     }
 }
 
 export function displayCompanyOption(companyObject, elt) {
+
     const jsonString = getCompanyJsonString(elt);
 
     if (companyObject.company && elt.id === companyObject.company.id) {

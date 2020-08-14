@@ -16,6 +16,10 @@ body {
   position: absolute;
 }
 
+#body1{
+  background-color: rgba(0,0,0,0.8);
+}
+
 /* navigation */
 
 #navigation {
@@ -97,7 +101,7 @@ h1 {
 
 /* Barre menu haut */
 
-footer{
+header{
   height: 10%;
   background-color: rgba(0,0,0,0.8);
   float: left;

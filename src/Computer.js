@@ -10,35 +10,6 @@ function Computer(props) {
     const [companies] = useState(props.companies);
     const [editMode, setEditMode] = useState(false);
     const {id, name, introduced, discontinued, company} = computer;
-    const [locale, setLocale] = useState(props.locale);
-
-
-    function printCompany(company) {
-        return company.company !== null ? company.company.name : "";
-    }
-
-    function companyToJSON(company) {
-
-        if (company == "") {
-            return {id: 0, name: ""};
-        } else {
-            return JSON.parse(company)
-        }
-    }
-
-    function displayCompanyOption(elt) {
-        const jsonString = '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
-
-        if ({company}.company && elt.id == {company}.company.id) {
-            return (
-                <option selected="selected" value={jsonString}> {elt.name} </option>
-            )
-        } else {
-            return (
-                <option value={jsonString}> {elt.name} </option>
-            )
-        }
-    }
 
     return (
         <I18nProvider locale={props.locale}>
