@@ -16,6 +16,12 @@ function Dashboard() {
         document.title = "Computer Database";
     }, []);
 
+    let result;
+
+    function editSearch(string) {
+        result = string;
+    }
+
     // HTTP requests
 
     // For i18n
@@ -24,6 +30,8 @@ function Dashboard() {
     // For pagination
     const [page, setPage] = useState(1);
     const [nbEntries, setNbEntries] = useState(25);
+    const [orderBy, setOrderBy] = useState("computer.id");
+    const [search, setSearch] = useState("");
 
     // Count computers
     const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
@@ -32,10 +40,11 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries);
-    const [computers, setComputers] = useState(data);
+    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
+    const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
+
     const [{data: company_data}] = useAxios(`${server_url}/companies`);
     const [companies, setCompanies] = useState(company_data);
 
@@ -93,7 +102,6 @@ function Dashboard() {
     }
 
     function countPages() {
-
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
@@ -103,11 +111,14 @@ function Dashboard() {
 
     // Use effects
 
-    useEffect(() => setComputers(data), [data, dataEdit]);
+    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setNewComputer(newComputer), [newComputer]);
+    useEffect(() => setOrderBy(orderBy), [orderBy]);
+    useEffect(() => setSearch(search), [search]);
+
 
     return (
         <body>
@@ -142,9 +153,23 @@ function Dashboard() {
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
                             <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
                             <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+
+                            <p></p>
                             <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+                            <p></p>
+                            <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
+                            </button>
+
+                            <div>
+                                <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
+                                <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
 
                             <table>
                                 <thead>
@@ -170,7 +195,9 @@ function Dashboard() {
 
                                 <tbody>
                                 <tr>
+
                                     {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+
                                         computer => <Computer key={computer.id} computer={computer}
                                                               companies={companies} delete={deleteComputer}
                                                               edit={editComputer} locale={locale}/>
