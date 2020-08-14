@@ -188,10 +188,6 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                             </button>
 
                             <div id="table">
-                    <div>
-                        <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
-                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                    </div>
 
                             <Table>
 
