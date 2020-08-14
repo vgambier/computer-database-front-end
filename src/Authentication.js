@@ -5,8 +5,6 @@ import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
 import './Dashboard.css';
-import translate from "./i18n/messages/translate";
-import {I18nProvider} from "./i18n";
 
 function Authentication(props) {
 

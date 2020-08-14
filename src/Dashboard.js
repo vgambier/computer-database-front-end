@@ -57,6 +57,7 @@ function Dashboard() {
     const [addMode, setAddMode] = useState(false);
 
     const [newComputer, setNewComputer] = useState({
+        id: "",
         name: "",
         introduced: "",
         discontinued: "",
@@ -67,8 +68,7 @@ function Dashboard() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
             response => {
-                console.log(response);
-                setNewComputer({...newComputer, id: response.data});
+                newComputer.id=response.data.toString();
                 setComputers(computers => [...computers, newComputer]);
             });
     }
@@ -85,6 +85,7 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
     }
     // Deleting logic
     function deleteComputer(id) {
+          console.log(id);
         executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
@@ -102,9 +103,9 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
 
     // Search logic
 
-    let result;
+    const [result, setResult] = useState("");
     function editSearch(string) {
-        result = string;
+        setResult(string);
     }
 
     // Use effects
@@ -112,8 +113,8 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
-    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setNewComputer(newComputer), [newComputer]);
+    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
 
