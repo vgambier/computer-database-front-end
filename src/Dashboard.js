@@ -10,11 +10,6 @@ import translate from "./i18n/messages/translate";
 
 function Dashboard() {
 
-    // Setting page title
-    useEffect(() => {
-        document.title = "Computer Database";
-    }, []);
-
     let result;
 
     function editSearch(string) {
