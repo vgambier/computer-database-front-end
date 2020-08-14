@@ -1,13 +1,13 @@
 /* Instructions page */
 
-body{
+body {
   margin:0%;
   height: 100%;
   background-image:url(../src/images/ordinateur.jpeg);
   background-repeat:no-repeat;
 }
 
-#page1 {
+#page {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -16,9 +16,13 @@ body{
   position: absolute;
 }
 
+#body1{
+  background-color: rgba(0,0,0,0.8);
+}
+
 /* navigation */
 
-#navigation{
+#navigation {
   width: 22%;
   height: 100%;
   float: left;
@@ -37,6 +41,7 @@ body{
   text-align: center;
   color: white;
   min-height:10%;
+  font-size: 15px;
 }
 
 #navigation p:first-of-type {
@@ -66,7 +71,7 @@ body{
 #vertical-menu a.active {
   color: white;
   font-weight:bold;
-  font-size: 30px;
+  font-size: 35px;
   font-weight:bold;
 }
 
@@ -96,7 +101,7 @@ h1 {
 
 /* Barre menu haut */
 
-footer{
+header{
   height: 10%;
   background-color: rgba(0,0,0,0.8);
   float: left;
@@ -142,4 +147,130 @@ footer{
 
 .horizontal-menu2 a:hover {
   font-weight: bold;
+}
+
+/* login */
+
+input[type="text"]::placeholder {
+  text-align: left;
+}
+
+input[type="password"]::placeholder {
+  text-align: left;
+}
+
+#login {
+  text-align: right;
+}
+
+#login input {
+  text-align: left;
+  margin-left : 18px;
+  border : 1mm ridge white;
+  font-style: italic;
+  width: 170px;
+  height: 20px;
+}
+
+/* Slide */
+
+#moncadre {
+  border:60px solid rgba(0,0,0,0.8);
+  width:770px;
+  height:338px;
+  overflow: hidden;
+}
+
+.slider {
+  width: 770px;
+  height : 338px;
+}
+.slides {
+  width: calc(770px * 3);
+  animation: glisse 8s infinite;
+}
+.slide {
+  float: left;
+}
+
+@keyframes glisse {
+  0% {
+    transform: translateX(0);
+  }
+  35% {
+    transform: translateX(0);
+  }
+  55% {
+    transform: translateX(-770px);
+  }
+  75% {
+    transform: translateX(-770px);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
+
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #008CBA;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+.button:hover {background-color: #000CBA}
+
+.button:active {
+  background-color:  #008CBA;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+
+.button2 {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #e7e7e7;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+.button2:hover {background-color: #000CBA}
+
+.button2:active {
+  background-color:  #008CBA;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button3 {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button3:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }

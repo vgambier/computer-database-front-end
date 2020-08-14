@@ -1,14 +1,14 @@
 import {Button, Input} from "reactstrap";
 import Dashboard from "./Dashboard";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
+import './Dashboard.css';
 
-function Authentication() {
+function Authentication(props) {
 
-    const [authenticated, setAuthenticated] = useState(false);
-    useEffect(() => setAuthenticated(authenticated), [authenticated]);
+    //useEffect(() => setAuthenticated(authenticated), [authenticated]);
     const [errorMessage, setErrorMessage] = useState("");
 
     // HTTP request to get a token with a given username/password pair
@@ -26,7 +26,7 @@ function Authentication() {
                 response => {
                     localStorage.setItem('bearerToken', response.data.token);
                     axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
-                    setAuthenticated(true);
+                    props.setAuthenticated(true);
                 })
             .catch(() => {
                 setErrorMessage("Incorrect credentials. Please try again.");
@@ -37,31 +37,20 @@ function Authentication() {
 
         localStorage.removeItem('bearerToken');
         localStorage.clear();
-        setAuthenticated(false);
-    }
-
-    function loginIfTokenExists() {
-        if(!authenticated && localStorage.getItem('bearerToken')) {
-            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
-            setAuthenticated(true);
-        }
+        props.setAuthenticated(false);
     }
 
     return (
 
-        <div className="Authentication">
+        <div className="Authentication" >
 
-            {loginIfTokenExists()}
-
-            {!authenticated ?
-
-                <>
-                    Log in:
-                    Username: <Input type="text" onChange={elt => setUser({...user, username: elt.target.value})}/>
-                    Password: <Input type="password" onChange={elt => setUser({...user, password: elt.target.value})}/>
+            {!props.authenticated ?
+                <div id="login">
+                    <Input type="text" placeholder="Username" onChange={elt => setUser({...user, username: elt.target.value})}/>
+                    <Input type="password" placeholder="Password" onChange={elt => setUser({...user, password: elt.target.value})}/>
                     <Button onClick={() => onLogin()}>Login</Button>
                     {errorMessage}
-                </>
+                </div>
 
                 :
 

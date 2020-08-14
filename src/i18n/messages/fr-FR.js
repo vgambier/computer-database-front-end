@@ -17,5 +17,6 @@ export default {
         'Last Page': 'Dernière Page',
         'blabla': 'disponibles dans la BDD',
         'Computers': 'Ordinateurs',
+        'Search': 'Barre de recherche',
     }
 }

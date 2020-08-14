@@ -77,10 +77,8 @@ function Dashboard() {
     function addComputer() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
-            response => {
-                console.log(response)
-                setNewComputer({...newComputer, id: response.data});
-                setComputers(computers => [...computers, newComputer]);
+            response => { console.log(response);
+                computers.push({...newComputer, id: response.data})
             });
     }
 
@@ -121,54 +119,33 @@ function Dashboard() {
 
 
     return (
-        <body>
-        <div id="page1">
-            <div id="navigation">
-
-                <p align="center">
-
-                    <div id="center">
-                        <a href="home.html"><img src={home} alt="Application de bases de données d’ordinateurs"
-                                                 width="320"/></a><br/>
-                        <i> COMPUTER DATABASE,</i><br/>
-                        <p>Application of computer databases</p>
-                    </div>
-
-                </p>
-
-                <div id="vertical-menu">
-
-                    <li><a href="home.html">Home</a></li>
-
-                    <li><a href="dashboard.html" className="active">Dashboard</a></li>
-
-                </div>
-            </div>
-            <div id="main-page">
-                <div className="content">
+        <div id="body1">
 
                     <I18nProvider locale={locale}>
                         <div className="Dashboard">
                             <h1> {translate("Welcome")} {translate("CDB")}</h1>
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
-                            <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                            <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+
+                            <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
 
                             <p></p>
                             <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                            <p></p>
-                            <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
-                            <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                            <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                            <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                            <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
+
+                             <p></p>
+
+                            <button class="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button class="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            <button class="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            <button class="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            <button class="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
 
                             <div>
-                                <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
-                                <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                            <button class="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                             </div>
 
                             <table>
@@ -188,10 +165,11 @@ function Dashboard() {
                                     <th>{translate("Company")}</th>
                                 </tr>
                                 </thead>
-                                <button onClick={() => setPage(1)}>{translate("First Page")}</button>
-                                <button onClick={() => setPage(page - 1)}>{translate("Previous Page")}</button>
-                                <button onClick={() => setPage(page + 1)}>{translate("Next Page")}</button>
-                                <button onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                                <button class="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                                <button class="button" onClick={() => setPage(Math.max(1,page - 1))}>{translate("Previous Page")}</button>
+                                <button className="button" >{page}</button>
+                                <button class="button" onClick={() => setPage(Math.min(countPages(),page + 1))}>{translate("Next Page")}</button>
+                                <button class="button" onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
 
                                 <tbody>
                                 <tr>
@@ -206,7 +184,7 @@ function Dashboard() {
 
                                 {!addMode ?
 
-                                    <button onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+                                    <button class="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
 
                                     :
 
@@ -242,18 +220,9 @@ function Dashboard() {
 
                             </table>
 
-                        </div>
-                    </I18nProvider>
-
-                    <footer>
-                        <ul className="horizontal-menu">
-                            <li>partie logout</li>
-                        </ul>
-                    </footer>
+                            </div>
+                        </I18nProvider>
                 </div>
-            </div>
-        </div>
-        </body>
     );
 }
 
