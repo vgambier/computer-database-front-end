@@ -74,7 +74,6 @@ function Homepage() {
             </div>
         </div>
         </body>
-
     );
 }
 

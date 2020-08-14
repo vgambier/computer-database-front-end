@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
+import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
@@ -15,13 +15,11 @@ function Dashboard() {
         document.title = "Computer Database";
     }, []);
 
-
     let result;
 
     function editSearch(string) {
         result = string;
     }
-
 
     // HTTP requests
 
@@ -30,7 +28,7 @@ function Dashboard() {
 
     // For pagination
     const [page, setPage] = useState(1);
-    const [entries, setEntries] = useState(25);
+    const [nbEntries, setNbEntries] = useState(25);
     const [orderBy, setOrderBy] = useState("computer.id");
     const [search, setSearch] = useState("");
 
@@ -41,12 +39,13 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + entries + `/` + orderBy + `/` + search);
+    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
+
     const [{data: company_data}] = useAxios(`${server_url}/companies`);
-    const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
+    const [companies, setCompanies] = useState(company_data);
 
     // Add one computer
     const [{data: dataAdd}, executeAdd] = useAxios({
@@ -55,10 +54,9 @@ function Dashboard() {
     }, {manual: true});
 
     // Delete one computer
-    const [{}, executeDelete] = useAxios(
-        {
-            method: "DELETE"
-        }, {manual: true});
+    const [{}, executeDelete] = useAxios({
+        method: "DELETE"
+    }, {manual: true});
 
     // Edit one computer
     const [{data: dataEdit}, executeEdit] = useAxios({
@@ -66,51 +64,61 @@ function Dashboard() {
         method: "PUT"
     }, {manual: true});
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
-    useEffect(() => setCompanies(company_data), [company_data]);
-    useEffect(() => setPage(page), [page]);
-    useEffect(() => setEntries(entries), [entries]);
-    useEffect(() => setOrderBy(orderBy), [orderBy]);
-    useEffect(() => setSearch(search), [search]);
-
-
     // Adding logic
     const [addMode, setAddMode] = useState(false);
-    const newComputer = {name: "", introduced: "", discontinued: "", company: {id: 0, name: ""}};
+    const [newComputer, setNewComputer] = useState({
+        name: "",
+        introduced: "",
+        discontinued: "",
+        company: {id: null, name: null}
+    });
 
-    function handleSubmit() {
+    function addComputer() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
             response => {
                 console.log(response);
-                computers.push({...newComputer, id: response.data})
+                setNewComputer({...newComputer, id: response.data});
+                setComputers(computers => [...computers, newComputer]);
             });
-        setComputers(computers);
     }
 
     // Editing logic
     function editComputer(updatedComputer) {
-        executeEdit({data: updatedComputer});
-        computers.push(updatedComputer);
+
+const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
+        executeEdit({data: updatedComputer}).then(response => {
+            const newComputers = [...computers];
+            newComputers[indexOfEntryOfId]=updatedComputer;
+            setComputers(newComputers);
+        });
     }
-
-
     // Deleting logic
     function deleteComputer(id) {
-        executeDelete({url: `${server_url}/computers/${id}`})
-        setComputers(computers.filter(computer => computer.id !== id))
+        executeDelete({url: `${server_url}/computers/${id}`}).then(response => {
+            const newComputers = computers.filter(computer => computer.id !== id);
+            setComputers(newComputers);
+        });
     }
-
 
     function countPages() {
-
-        if (computersCount % entries === 0) {
-            return computersCount / entries;
+        if (computersCount % nbEntries === 0) {
+            return computersCount / nbEntries;
         } else {
-            console.log((Math.floor(computersCount / entries)) + 1);
-            return (Math.floor(computersCount / entries)) + 1;
+            return (Math.floor(computersCount / nbEntries)) + 1;
         }
     }
+
+    // Use effects
+
+    useEffect(() => setComputers(data), [data]);
+    useEffect(() => setCompanies(company_data), [company_data]);
+    useEffect(() => setPage(page), [page]);
+    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
+    useEffect(() => setNewComputer(newComputer), [newComputer]);
+    useEffect(() => setOrderBy(orderBy), [orderBy]);
+    useEffect(() => setSearch(search), [search]);
+
 
     return (
         <div id="body1">
@@ -130,16 +138,16 @@ function Dashboard() {
                         <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                     </div>
                     <p></p>
-                    <button class="button" onClick={() => setEntries(10) & setPage(1)}>10</button>
-                    <button class="button" onClick={() => setEntries(25) & setPage(1)}>25</button>
-                    <button class="button" onClick={() => setEntries(50) & setPage(1)}>50</button>
+                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                     <p></p>
                     <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
                     <button className="button"
                             onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
                     <button className="button4">{page}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
+                            onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <p></p>
@@ -177,11 +185,12 @@ function Dashboard() {
 
                         <tbody>
                         <tr>
-                            {computers && companies && computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                computer => <Computer key={computer.id} computer={computer}
+                            {computers && companies &&  computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                                computer => {
+                                            return (<Computer key={computer.id} computer={computer}
                                                       companies={companies} delete={deleteComputer}
                                                       edit={editComputer} locale={locale}/>
-                            )}
+                            )})}
                         </tr>
 
                         {!addMode ?
@@ -192,19 +201,26 @@ function Dashboard() {
 
                             <>
                                 <Input placeholder="Fancy Computer #15"
-                                       onChange={elt => newComputer.name = elt.target.value}/>
-                                <Input placeholder="2001-12-31"
-                                       onChange={elt => newComputer.introduced = elt.target.value}/>
-                                <Input placeholder="2011-12-31"
-                                       onChange={elt => newComputer.discontinued = elt.target.value}/>
+                                       onChange={elt => setNewComputer({
+                                                   ...newComputer,
+                                                   name: elt.target.value
+                                })}/><Input placeholder="2001-12-31"
+                                       onChange={elt => setNewComputer({
+                                                   ...newComputer,
+                                                   introduced: elt.target.value
+                                })}/><Input placeholder="2011-12-31"
+                                       onChange={elt => setNewComputer({
+                                                   ...newComputer,
+                                                   discontinued: elt.target.value
+                                               })}/>
 
-                                <select onChange={elt => newComputer.company = companyToJSON(elt.target.value)}>
+                                <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
                                     <option value="">--</option>
-                                    {companies && companies.map(elt => <option
-                                        value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                    {companies && companies.map(elt =>
+                                        <option key={elt.id}value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                                 </select>
 
-                                <button onClick={() => handleSubmit()}>Confirm</button>
+                                <button onClick={() => addComputer()}>Confirm</button>
                             </>
                         }
 
@@ -216,7 +232,6 @@ function Dashboard() {
             </I18nProvider>
         </div>
     );
-
 }
 
 export default Dashboard;
