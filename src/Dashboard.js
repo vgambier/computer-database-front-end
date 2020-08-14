@@ -175,9 +175,9 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                             <button className="button"
                                     onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                             <br/>
-                            <button onClick={() => setEntries(10) & setPage(1)}>10</button>
-                            <button onClick={() => setEntries(25) & setPage(1)}>25</button>
-                            <button onClick={() => setEntries(50) & setPage(1)}>50</button>
+                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                             <br/>
                             <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
                             <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
@@ -185,13 +185,8 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                             <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
                             <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
-                             </p>
 
                             <div id="table">
-                    <div>
-                        <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
-                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                    </div>
 
                             <Table>
 
