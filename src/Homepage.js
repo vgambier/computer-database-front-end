@@ -26,13 +26,13 @@ function Homepage() {
 
             <div id="page">
                 <div id="navigation">
-                    <p align="center">
+                    <div align="center">
                         <div id="center">
                             <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
                             COMPUTER DATABASE,<br/>
                             <p><i>Application of computer databases</i></p>
                         </div>
-                    </p>
+                    </div>
 
                     <div id="vertical-menu">
                         <li><a className={authenticated? "": "active"}>Home</a></li>

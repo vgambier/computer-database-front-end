@@ -123,8 +123,8 @@ function Dashboard() {
                             <h1> {translate("Welcome")} {translate("CDB")}</h1>
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
 
-                            <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                            <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+                            <button className="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button className="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
 
                             <p>
                             <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
@@ -133,17 +133,17 @@ function Dashboard() {
                             </p>
 
                              <p>
-                            <button class="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
-                            <button class="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                            <button class="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                            <button class="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                            <button class="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
+                            <button className="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button className="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            <button className="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            <button className="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            <button className="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
                              </p>
 
                             <div>
                             <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
-                            <button class="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                             </div>
 
                             <table>
@@ -163,11 +163,11 @@ function Dashboard() {
                                     <th>{translate("Company")}</th>
                                 </tr>
                                 </thead>
-                                <button class="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
-                                <button class="button" onClick={() => setPage(Math.max(1,page - 1))}>{translate("Previous Page")}</button>
+                                <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                                <button className="button" onClick={() => setPage(Math.max(1,page - 1))}>{translate("Previous Page")}</button>
                                 <button className="button" >{page}</button>
-                                <button class="button" onClick={() => setPage(Math.min(countPages(),page + 1))}>{translate("Next Page")}</button>
-                                <button class="button" onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                                <button className="button" onClick={() => setPage(Math.min(countPages(),page + 1))}>{translate("Next Page")}</button>
+                                <button className="button" onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
 
                                 <tbody>
                                 <tr>
