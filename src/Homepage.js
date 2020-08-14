@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {SERVER_INFO} from "./server_info";
 import home from "./images/home.jpg";
 import dashboard from './images/dashboard.jpg'
 import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
 import axios from "axios";
-import translate from "./i18n/messages/translate";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
