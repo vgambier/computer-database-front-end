@@ -82,7 +82,7 @@ function Dashboard() {
     function handleSubmit() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
-            response => {
+            response => { console.log(response);
                 computers.push({...newComputer, id: response.data})
             });
         setComputers(computers);
