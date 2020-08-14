@@ -17,7 +17,6 @@ export function displayCompanyOption(companyObject, elt) {
 
     const jsonString = getCompanyJsonString(elt);
 
-
     if (companyObject.company && elt.id === companyObject.company.id) {
         return (
             <option selected="selected" value={jsonString}> {elt.name} </option>
