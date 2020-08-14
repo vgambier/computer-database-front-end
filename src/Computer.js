@@ -17,15 +17,13 @@ function Computer(props) {
 
             {!editMode ?
                 <>
-                    {/*<td className="deleteMode">
-                        <input type="checkbox" name="cb" className="cb" value={id}/>
-                    </td>*/}
+                    <td> {id} </td>
                     <td> {name} </td>
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <Button class="button" onClick={() => props.delete(id) & props.count}>{translate('Delete')}</Button>
-                    <Button class="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
+                    <td> <Button className="button" onClick={() => props.delete(id) & props.count}>{translate('Delete')}</Button> </td>
+                    <td> <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button> </td>
                 </>
                 :
                 <>
@@ -34,7 +32,6 @@ function Computer(props) {
                            onChange={elt => setComputer({...computer, introduced: elt.target.value})}/>
                     <Input defaultValue={discontinued}
                            onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/>
-
                     <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
                         {companies && companies.map(elt => displayCompanyOption({company}, elt))}

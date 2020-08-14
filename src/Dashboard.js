@@ -121,7 +121,6 @@ function Dashboard() {
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
 
-
     return (
         <div id="body1">
 
@@ -143,8 +142,8 @@ function Dashboard() {
                             <Input placeholder="Fancy Computer #15"
                                    onChange={elt => setNewComputer({
                                        ...newComputer,
-                                       name: elt.target.value
-                                   })}/><Input placeholder="2001-12-31"
+                                       name: elt.target.value})}/>
+                                   <Input placeholder="2001-12-31"
                                                onChange={elt => setNewComputer({
                                                    ...newComputer,
                                                    introduced: elt.target.value
@@ -177,7 +176,7 @@ function Dashboard() {
                             onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
                     <button className="button4">{page}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            onClick={() => setPage(Math.min(/* TODO countPages()*/100, page + 1))}>{translate("Next Page")}</button>
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <br/>
@@ -198,16 +197,19 @@ function Dashboard() {
 
                             <thead>
                             <tr>
+                                <td>{translate("Id")}</td>
                                 <td>{translate("Name")}</td>
                                 <td>{translate("Introduced")}</td>
                                 <td>{translate("Discontinued")}</td>
                                 <td>{translate("Company")}</td>
+                                <td>Delete</td>
+                                <td>Edit</td>
                             </tr>
                             </thead>
 
                             <tbody>
 
-                            {computers && companies && computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                            {computers && companies &&  computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                                 computer => <tr>< Computer key={computer.id}
                                                            computer={computer}
                                                            companies={companies}
