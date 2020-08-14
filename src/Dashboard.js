@@ -10,12 +10,6 @@ import translate from "./i18n/messages/translate";
 
 function Dashboard() {
 
-    let result;
-
-    function editSearch(string) {
-        result = string;
-    }
-
     // HTTP requests
 
     // For i18n
@@ -38,7 +32,6 @@ function Dashboard() {
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
-
     const [{data: company_data}] = useAxios(`${server_url}/companies`);
     const [companies, setCompanies] = useState(company_data);
 
@@ -60,7 +53,9 @@ function Dashboard() {
     }, {manual: true});
 
     // Adding logic
+
     const [addMode, setAddMode] = useState(false);
+
     const [newComputer, setNewComputer] = useState({
         name: "",
         introduced: "",
@@ -96,12 +91,20 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
         });
     }
 
+    // Count pages logic
     function countPages() {
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
             return (Math.floor(computersCount / nbEntries)) + 1;
         }
+    }
+
+    // Search logic
+
+    let result;
+    function editSearch(string) {
+        result = string;
     }
 
     // Use effects
