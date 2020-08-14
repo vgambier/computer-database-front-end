@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
+import home from './images/home.jpg'
 import {Input} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
@@ -76,8 +77,15 @@ function Dashboard() {
     function addComputer() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
+<<<<<<< HEAD
+            response => {
+                console.log(response)
+                setNewComputer({...newComputer, id: response.data});
+                setComputers(computers => [...computers, newComputer]);
+=======
             response => { console.log(response);
                 computers.push({...newComputer, id: response.data})
+>>>>>>> dev
             });
     }
 
@@ -124,17 +132,23 @@ function Dashboard() {
                         <div className="Dashboard">
                             <h1> {translate("Welcome")} {translate("CDB")}</h1>
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
-
-                            <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                            <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+<<<<<<< HEAD
+                            <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
 
                             <p></p>
                             <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-
-                             <p></p>
-
+=======
+                            <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+                            <p></p>
+                            <button class="button" onClick={() => setEntries(10) & setPage(1)}>10</button>
+                            <button class="button" onClick={() => setEntries(25) & setPage(1)}>25</button>
+                            <button class="button" onClick={() => setEntries(50) & setPage(1)}>50</button>
+>>>>>>> dev
+                            <p></p>
                             <button class="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
                             <button class="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
                             <button class="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
@@ -143,8 +157,13 @@ function Dashboard() {
                             </button>
 
                             <div>
+<<<<<<< HEAD
+                                <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
+                                <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+=======
                             <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
                             <button class="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+>>>>>>> dev
                             </div>
 
                             <table>
