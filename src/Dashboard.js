@@ -4,7 +4,7 @@ import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
 import home from './images/home.jpg'
-import {Input} from "reactstrap";
+import {Table, Input} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
@@ -117,15 +117,50 @@ function Dashboard() {
 
                     <I18nProvider locale={locale}>
                         <div className="Dashboard">
-                            <h1> {translate("Welcome")} {translate("CDB")}</h1>
+
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
                             <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
                             <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
-                            <p></p>
+                            <br/>
+
+                            {!addMode ?
+
+                                <button onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+
+                                :
+
+                                <>
+                                    <Input placeholder="Fancy Computer #15"
+                                           onChange={elt => newComputer.name = elt.target.value}/>
+                                    <Input placeholder="2001-12-31"
+                                           onChange={elt => newComputer.introduced = elt.target.value}/>
+                                    <Input placeholder="2011-12-31"
+                                           onChange={elt => newComputer.discontinued = elt.target.value}/>
+
+                                    <select onChange={elt => newComputer.company = companyToJSON(elt.target.value)}>
+                                        <option value="">--</option>
+                                        {companies && companies.map(elt => <option
+                                            value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                    </select>
+
+                                    <button onClick={() => handleSubmit()}>Confirm</button>
+                                </>
+                            }
+
+                            <div id="searchbar">
+                                <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
+                                <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
+                            <br/>
+                            <button onClick={() => setPage(1)}>{translate("First Page")}</button>
+                            <button onClick={() => setPage(page - 1)}>{translate("Previous Page")}</button>
+                            <button onClick={() => setPage(page + 1)}>{translate("Next Page")}</button>
+                            <button onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                            <br/>
                             <button onClick={() => setEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setEntries(50) & setPage(1)}>50</button>
-                            <p></p>
+                            <br/>
                             <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
                             <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
                             <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
@@ -133,71 +168,46 @@ function Dashboard() {
                             <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
 
-                            <div>
-                            <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
-                            <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                            </div>
+                            <div id="table">
 
-                            <table>
+                            <Table>
+
                                 <thead>
                                 <tr>
-                                    <th class="editMode">
+                                    <td className="editMode">
                                         <input type="checkbox" id="selectall"/>
                                         <span>
-                                <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
-                                    <i class="fa fa-trash-o fa-lg"></i>
-							    </a>
-						            </span></th>
-
-                                    <th>{translate("Name")}</th>
-                                    <th>{translate("Introduced")}</th>
-                                    <th>{translate("Discontinued")}</th>
-                                    <th>{translate("Company")}</th>
+                                        <a href="#" id="deleteSelected" onClick="$.fn.deleteSelected();">
+                                            <i className="fa fa-trash-o fa-lg"></i>
+							            </a>
+                                    </span>
+                                    </td>
+                                    <td>{translate("Name")}</td>
+                                    <td>{translate("Introduced")}</td>
+                                    <td>{translate("Discontinued")}</td>
+                                    <td>{translate("Company")}</td>
                                 </tr>
                                 </thead>
-                                <button onClick={() => setPage(1)}>{translate("First Page")}</button>
-                                <button onClick={() => setPage(page - 1)}>{translate("Previous Page")}</button>
-                                <button onClick={() => setPage(page + 1)}>{translate("Next Page")}</button>
-                                <button onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
 
                                 <tbody>
-                                <tr>
+
                                     {computers && companies && computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                        computer => <Computer key={computer.id} computer={computer}
-                                                              companies={companies} delete={deleteComputer}
-                                                              edit={editComputer} locale={locale}/>
+                                        computer =>    <tr>< Computer key={computer.id}
+                                                              computer={computer}
+                                                              companies={companies}
+                                                              delete={deleteComputer}
+                                                              edit={editComputer}
+                                                              locale={locale}/></tr>
                                     )}
-                                </tr>
-
-                                {!addMode ?
-
-                                    <button onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
-
-                                    :
-
-                                    <>
-                                        <Input placeholder="Fancy Computer #15"
-                                               onChange={elt => newComputer.name = elt.target.value}/>
-                                        <Input placeholder="2001-12-31"
-                                               onChange={elt => newComputer.introduced = elt.target.value}/>
-                                        <Input placeholder="2011-12-31"
-                                               onChange={elt => newComputer.discontinued = elt.target.value}/>
-
-                                        <select onChange={elt => newComputer.company = companyToJSON(elt.target.value)}>
-                                            <option value="">--</option>
-                                            {companies && companies.map(elt => <option
-                                                value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                                        </select>
-
-                                        <button onClick={() => handleSubmit()}>Confirm</button>
-                                    </>
-                                }
 
                                 </tbody>
 
-                            </table>
+                            </Table>
 
                             </div>
+
+                            </div>
+
                         </I18nProvider>
                 </div>
     );

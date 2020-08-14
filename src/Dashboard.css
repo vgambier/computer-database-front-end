@@ -17,7 +17,18 @@ body {
 }
 
 #body1{
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(201, 76, 76, 0.3);
+}
+
+/* tableau */
+
+#table {
+  background-color: white;
+  border: medium solid #000000;
+}
+
+td, th {
+  border: 1px solid black;
 }
 
 /* navigation */
@@ -112,43 +123,6 @@ header{
   z-index: 5;
 }
 
-/* HORIZONTAL MENU */
-
-.horizontal-menu li {
-  display : inline;
-  padding: 0 16% 0 18%;
-  float: left;
-  text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;
-}
-
-.horizontal-menu {
-  list-style-type : none;
-  color: white;
-}
-
-/* HORIZONTAL MENU 2 */
-
-.horizontal-menu2 li {
-  display : inline;
-  padding: 30px;
-  padding-top: 3%;
-}
-
-.horizontal-menu2 {
-  list-style-type : none;
-  width: 100%;
-  float: left;
-}
-
-.horizontal-menu2 a {
-  text-decoration: none;
-  color: black;
-}
-
-.horizontal-menu2 a:hover {
-  font-weight: bold;
-}
-
 /* login */
 
 input[type="text"]::placeholder {
@@ -210,3 +184,4 @@ input[type="password"]::placeholder {
     transform: translateX(0);
   }
 }
+
