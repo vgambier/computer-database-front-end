@@ -10,8 +10,6 @@ import translate from "./i18n/messages/translate";
 
 function Dashboard() {
 
-    // HTTP requests
-
     // For i18n
     const [locale, setLocale] = useState(LOCALES.ENGLISH);
 
@@ -20,6 +18,8 @@ function Dashboard() {
     const [nbEntries, setNbEntries] = useState(25);
     const [orderBy, setOrderBy] = useState("computer.id");
     const [search, setSearch] = useState("");
+
+    /* HTTP requests */
 
     // Count computers
     const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
@@ -51,6 +51,8 @@ function Dashboard() {
         url: `${server_url}/computers`,
         method: "PUT"
     }, {manual: true});
+
+    /* End of HTTP requests */
 
     // Adding logic
 
