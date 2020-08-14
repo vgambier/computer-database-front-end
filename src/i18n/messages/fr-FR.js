@@ -6,6 +6,7 @@ export default {
         'Name': 'Nom',
         'Introduced': 'Mise en service',
         'Discontinued': 'Mise hors service',
+        'Id': "N° d'Ordinateur",
         'Company': 'Entreprise',
         'Delete': 'Supprimer',
         'Edit': 'Modifier',
@@ -17,5 +18,7 @@ export default {
         'Last Page': 'Dernière Page',
         'blabla': 'disponibles dans la BDD',
         'Computers': 'Ordinateurs',
+        'Search': 'Barre de recherche',
+        'Logout': 'Deconnexion',
     }
 }

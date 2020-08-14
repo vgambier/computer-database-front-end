@@ -9,7 +9,7 @@ export function companyToJSON(company) {
     if (company === "") {
         return {id: null, name: null};
     } else {
-        return JSON.parse(company)
+        return JSON.parse(company);
     }
 }
 
@@ -19,15 +19,15 @@ export function displayCompanyOption(companyObject, elt) {
 
     if (companyObject.company && elt.id === companyObject.company.id) {
         return (
-            <option selected="selected" value={jsonString}> {elt.name} </option>
+            <option selected="selected" value={jsonString} key={elt.id}> {elt.name} </option>
         )
     } else {
         return (
-            <option value={jsonString}> {elt.name} </option>
+            <option value={jsonString} key={elt.id}> {elt.name} </option>
         )
     }
 }
 
 export function getCompanyJsonString(elt) {
-    return '{"id":' + elt.id + ',"name":"' + elt.name + '"}';
+    return '{"id":"' + elt.id + '","name":"' + elt.name + '"}';
 }

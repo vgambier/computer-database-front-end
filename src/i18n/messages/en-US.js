@@ -6,6 +6,7 @@ export default {
         'Name': 'Name',
         'Introduced': 'Introduced',
         'Discontinued': 'Discontinued',
+        'Id': "Computer ID",
         'Company': 'Company',
         'Delete': 'Delete',
         'Edit': 'Edit',
@@ -17,5 +18,7 @@ export default {
         'Last Page': 'Last Page',
         'blabla': 'inside the database',
         'Computers': 'Computers',
+        'Search': 'Search bar',
+        'Logout': 'Logout',
     }
 }

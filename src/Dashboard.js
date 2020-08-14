@@ -1,28 +1,14 @@
-import React, {useEffect, useState} from 'react';
 import './Dashboard.css';
+import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import home from './images/home.jpg'
 import {Table, Input} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 
 function Dashboard() {
-
-    // Setting page title
-    useEffect(() => {
-        document.title = "Computer Database";
-    }, []);
-
-
-    let result;
-    function editSearch(string)
-    {
-        result=string;
-    }
-
 
     // HTTP requests
 
@@ -31,7 +17,7 @@ function Dashboard() {
 
     // For pagination
     const [page, setPage] = useState(1);
-    const [entries, setEntries] = useState(25);
+    const [nbEntries, setNbEntries] = useState(25);
     const [orderBy, setOrderBy] = useState("computer.id");
     const [search, setSearch] = useState("");
 
@@ -42,76 +28,97 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/`+page+`/`+entries+`/`+orderBy+`/`+search);
+    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
     const [{data: company_data}] = useAxios(`${server_url}/companies`);
-    const [companies, setCompanies] = useState(company_data); // Grabbing data from the dataset
+    const [companies, setCompanies] = useState(company_data);
 
     // Add one computer
-    const [{data: dataAdd}, executeAdd] = useAxios({
+    const [{}, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
     }, {manual: true});
 
     // Delete one computer
-    const [{}, executeDelete] = useAxios(
-        {
-            method: "DELETE"
-        }, {manual: true});
+    const [{}, executeDelete] = useAxios({
+        method: "DELETE"
+    }, {manual: true});
 
     // Edit one computer
-    const [{data: dataEdit}, executeEdit] = useAxios({
+    const [{}, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
     }, {manual: true});
 
-    useEffect(() => setComputers(data), [data, dataAdd, dataEdit]);
-    useEffect(() => setCompanies(company_data), [company_data]);
-    useEffect(() => setPage(page), [page]);
-    useEffect(() => setEntries(entries), [entries]);
-    useEffect(() => setOrderBy(orderBy), [orderBy]);
-    useEffect(() => setSearch(search), [search]);
-
-
     // Adding logic
-    const [addMode, setAddMode] = useState(false);
-    const newComputer = {name: "", introduced: "", discontinued: "", company: {id: 0, name: ""}};
 
-    function handleSubmit() {
+    const [addMode, setAddMode] = useState(false);
+
+    const [newComputer, setNewComputer] = useState({
+        id: "",
+        name: "",
+        introduced: "",
+        discontinued: "",
+        company: {id: null, name: null}
+    });
+
+    function addComputer() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
             response => {
-                computers.push({...newComputer, id: response.data})
+                newComputer.id=response.data.toString();
+                setComputers(computers => [...computers, newComputer]);
             });
-        setComputers(computers);
     }
 
     // Editing logic
     function editComputer(updatedComputer) {
-        executeEdit({data: updatedComputer});
-        computers.push(updatedComputer);
+
+const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
+        executeEdit({data: updatedComputer}).then(() => {
+            const newComputers = [...computers];
+            newComputers[indexOfEntryOfId]=updatedComputer;
+            setComputers(newComputers);
+        });
     }
-
-
-
     // Deleting logic
     function deleteComputer(id) {
-        executeDelete({url: `${server_url}/computers/${id}`})
-        setComputers(computers.filter(computer => computer.id !== id))
+          console.log(id);
+        executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
+            const newComputers = computers.filter(computer => computer.id !== id);
+            setComputers(newComputers);
+        });
     }
 
-
+    // Count pages logic
     function countPages() {
-
-        if (computersCount % entries === 0) {
-            return computersCount / entries;
+        if (computersCount % nbEntries === 0) {
+            return computersCount / nbEntries;
         } else {
-            console.log((Math.floor(computersCount / entries)) + 1);
-            return (Math.floor(computersCount / entries)) + 1;
+            return (Math.floor(computersCount / nbEntries)) + 1;
         }
     }
+
+    // Search logic
+
+    const [result, setResult] = useState("");
+    function editSearch(string) {
+        setResult(string);
+    }
+
+    // Use effects
+
+    useEffect(() => setComputers(data), [data]);
+    useEffect(() => setCompanies(company_data), [company_data]);
+    useEffect(() => setPage(page), [page]);
+    useEffect(() => setNewComputer(newComputer), [newComputer]);
+    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
+    useEffect(() => setOrderBy(orderBy), [orderBy]);
+    useEffect(() => setSearch(search), [search]);
+
+
     return (
         <div id="body1">
 
@@ -125,37 +132,48 @@ function Dashboard() {
 
                             {!addMode ?
 
-                                <button onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+                                <button class="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
 
                                 :
 
                                 <>
                                     <Input placeholder="Fancy Computer #15"
-                                           onChange={elt => newComputer.name = elt.target.value}/>
-                                    <Input placeholder="2001-12-31"
-                                           onChange={elt => newComputer.introduced = elt.target.value}/>
-                                    <Input placeholder="2011-12-31"
-                                           onChange={elt => newComputer.discontinued = elt.target.value}/>
+                                           onChange={elt => setNewComputer({
+                                               ...newComputer,
+                                               name: elt.target.value
+                                           })}/><Input placeholder="2001-12-31"
+                                                       onChange={elt => setNewComputer({
+                                                           ...newComputer,
+                                                           introduced: elt.target.value
+                                                       })}/><Input placeholder="2011-12-31"
+                                                                   onChange={elt => setNewComputer({
+                                                                       ...newComputer,
+                                                                       discontinued: elt.target.value
+                                                                   })}/>
 
-                                    <select onChange={elt => newComputer.company = companyToJSON(elt.target.value)}>
+                                    <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
                                         <option value="">--</option>
-                                        {companies && companies.map(elt => <option
-                                            value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                        {companies && companies.map(elt =>
+                                            <option key={elt.id}value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                                     </select>
 
-                                    <button onClick={() => handleSubmit()}>Confirm</button>
+                                    <button onClick={() => addComputer()}>Confirm</button>
                                 </>
                             }
 
                             <div id="searchbar">
-                                <Input placeholder="Search bar" onChange={elt => editSearch(elt.target.value)}/>
-                                <button onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                                <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                                <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                             </div>
                             <br/>
-                            <button onClick={() => setPage(1)}>{translate("First Page")}</button>
-                            <button onClick={() => setPage(page - 1)}>{translate("Previous Page")}</button>
-                            <button onClick={() => setPage(page + 1)}>{translate("Next Page")}</button>
-                            <button onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                            <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                            <button className="button"
+                                    onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                            <button className="button4">{page}</button>
+                            <button className="button"
+                                    onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            <button className="button"
+                                    onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                             <br/>
                             <button onClick={() => setEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setEntries(25) & setPage(1)}>25</button>
@@ -167,8 +185,13 @@ function Dashboard() {
                             <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
                             <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
+                             </p>
 
                             <div id="table">
+                    <div>
+                        <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                    </div>
 
                             <Table>
 
@@ -200,9 +223,9 @@ function Dashboard() {
                                                               locale={locale}/></tr>
                                     )}
 
-                                </tbody>
+                        </tbody>
 
-                            </Table>
+                    </Table>
 
                             </div>
 
@@ -211,7 +234,6 @@ function Dashboard() {
                         </I18nProvider>
                 </div>
     );
-
 }
 
 export default Dashboard;
