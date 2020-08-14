@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
-import {I18nProvider, LOCALES} from "./i18n";
+import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 import './Computer.css';
@@ -19,9 +19,9 @@ function Computer(props) {
             {!editMode ?
 
                 <>
-                    <td className="deleteMode">
+                    {/*<td className="deleteMode">
                         <input type="checkbox" name="cb" className="cb" value={id}/>
-                    </td>
+                    </td>*/}
                     <td> {name} </td>
                     <td> {introduced} </td>
                     <td> {discontinued} </td>

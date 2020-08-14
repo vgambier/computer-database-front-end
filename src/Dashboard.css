@@ -213,7 +213,7 @@ input[type="password"]::placeholder {
 
 .button {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 4px 10px;
   font-size: 24px;
   cursor: pointer;
   text-align: center;
@@ -231,6 +231,21 @@ input[type="password"]::placeholder {
   background-color:  #008CBA;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.button4 {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #008CBA;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
 }
 
 
