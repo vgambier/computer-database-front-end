@@ -43,7 +43,7 @@ function Dashboard() {
     const [companies, setCompanies] = useState(company_data);
 
     // Add one computer
-    const [{data: dataAdd}, executeAdd] = useAxios({
+    const [{}, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
     }, {manual: true});
@@ -54,7 +54,7 @@ function Dashboard() {
     }, {manual: true});
 
     // Edit one computer
-    const [{data: dataEdit}, executeEdit] = useAxios({
+    const [{}, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
     }, {manual: true});
@@ -82,7 +82,7 @@ function Dashboard() {
     function editComputer(updatedComputer) {
 
         const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
-        executeEdit({data: updatedComputer}).then(response => {
+        executeEdit({data: updatedComputer}).then(() => {
             const newComputers = [...computers];
             newComputers[indexOfEntryOfId]=updatedComputer;
             setComputers(newComputers);
@@ -91,7 +91,7 @@ function Dashboard() {
 
     // Deleting logic
     function deleteComputer(id) {
-        executeDelete({url: `${server_url}/computers/${id}`}).then(response => {
+        executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
         });
@@ -126,19 +126,20 @@ function Dashboard() {
                             <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
                             <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
 
-                            <p></p>
+                            <p>
                             <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                             <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                             <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+                            </p>
 
-                             <p></p>
-
+                             <p>
                             <button class="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
                             <button class="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
                             <button class="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
                             <button class="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
                             <button class="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
+                             </p>
 
                             <div>
                             <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
