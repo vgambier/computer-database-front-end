@@ -125,8 +125,8 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                 </p>
                 <div className="Dashboard">
 
-                    <button class="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                    <button class="button" onClick={() => setLocale(LOCALES.FRENCH)}>Français</button>
+                    <button className="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                    <button className="button" onClick={() => setLocale(LOCALES.FRENCH)}>Français</button>
 
                     <div>
                         <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
@@ -146,15 +146,15 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <p></p>
-                    <button class="button2"
+                    <button className="button2"
                             onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
-                    <button class="button2"
+                    <button className="button2"
                             onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                    <button class="button2"
+                    <button className="button2"
                             onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                    <button class="button2"
+                    <button className="button2"
                             onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                    <button class="button2"
+                    <button className="button2"
                             onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                     </button>
 
