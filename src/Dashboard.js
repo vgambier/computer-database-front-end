@@ -176,9 +176,9 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                             <button className="button"
                                     onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                             <br/>
-                            <button onClick={() => setEntries(10) & setPage(1)}>10</button>
-                            <button onClick={() => setEntries(25) & setPage(1)}>25</button>
-                            <button onClick={() => setEntries(50) & setPage(1)}>50</button>
+                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                             <br/>
                             <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
                             <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
