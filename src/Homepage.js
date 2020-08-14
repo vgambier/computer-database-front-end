@@ -13,7 +13,7 @@ function Homepage() {
     const [authenticated, setAuthenticated] = useState(false);
 
     function loginIfTokenExists() {
-        if(!authenticated && localStorage.getItem('bearerToken')) {
+        if (!authenticated && localStorage.getItem('bearerToken')) {
             axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
             setAuthenticated(true);
         }
@@ -21,24 +21,24 @@ function Homepage() {
 
     return (
 
-    <body>
-    {loginIfTokenExists()}
+        <body>
+        {loginIfTokenExists()}
 
-            <div id="page">
-                <div id="navigation">
-                    <div align="center">
-                        <div id="center">
-                            <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
-                            COMPUTER DATABASE,<br/>
-                            <p><i>Application of computer databases</i></p>
-                        </div>
-                    </div>
-
-                    <div id="vertical-menu">
-                        <li><a className={authenticated? "": "active"}>Home</a></li>
-                        <li><a className={!authenticated? "": "active"}>Dashboard</a></li>
+        <div id="page">
+            <div id="navigation">
+                <div align="center">
+                    <div id="center">
+                        <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
+                        COMPUTER DATABASE,<br/>
+                        <p><i>Application of computer databases</i></p>
                     </div>
                 </div>
+
+                <div id="vertical-menu">
+                    <li><a className={authenticated ? "" : "active"}>Home</a></li>
+                    <li><a className={!authenticated ? "" : "active"}>Dashboard</a></li>
+                </div>
+            </div>
 
             <div id="main-page">
                 <div className="content">
@@ -46,32 +46,28 @@ function Homepage() {
                     <header>
 
                         <ul className="horizontal-menu">
-
                             <div className="Homepage">
-
-                            <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
-
+                                <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
                             </div>
-
                         </ul>
 
                     </header>
 
                     <div className="Homepage">
 
-                    <div id="moncadre" hidden={authenticated}>
-                        <div class="slider">
-                            <div class="slides">
-                                <div class="slide"><img src={dashboard} alt="dashboard" /></div>
-                                <div class="slide"><img src={dashboard2} alt="dashboard2" /></div>
+                        <div id="moncadre" hidden={authenticated}>
+                            <div class="slider">
+                                <div class="slides">
+                                    <div class="slide"><img src={dashboard} alt="dashboard"/></div>
+                                    <div class="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
         </body>
     );
 }

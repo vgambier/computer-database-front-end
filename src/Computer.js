@@ -14,14 +14,12 @@ function Computer(props) {
 
     return (
         <I18nProvider locale={props.locale}>
-        <div className="Computer">
 
             {!editMode ?
-
                 <>
-                    <td className="deleteMode">
+                    {/*<td className="deleteMode">
                         <input type="checkbox" name="cb" className="cb" value={id}/>
-                    </td>
+                    </td>*/}
                     <td> {name} </td>
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
@@ -48,7 +46,6 @@ function Computer(props) {
                     }}>Confirm</Button>
                 </>
             }
-        </div>
         </I18nProvider>
     );
 }

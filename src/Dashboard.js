@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Input} from "reactstrap";
+import {Table, Input} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
@@ -59,6 +59,7 @@ function Dashboard() {
     const [addMode, setAddMode] = useState(false);
 
     const [newComputer, setNewComputer] = useState({
+        id: "",
         name: "",
         introduced: "",
         discontinued: "",
@@ -69,8 +70,7 @@ function Dashboard() {
         setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
             response => {
-                console.log(response);
-                setNewComputer({...newComputer, id: response.data});
+                newComputer.id=response.data.toString();
                 setComputers(computers => [...computers, newComputer]);
             });
     }
@@ -78,16 +78,16 @@ function Dashboard() {
     // Editing logic
     function editComputer(updatedComputer) {
 
-        const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
+const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
         executeEdit({data: updatedComputer}).then(() => {
             const newComputers = [...computers];
             newComputers[indexOfEntryOfId]=updatedComputer;
             setComputers(newComputers);
         });
     }
-
     // Deleting logic
     function deleteComputer(id) {
+          console.log(id);
         executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
@@ -105,9 +105,9 @@ function Dashboard() {
 
     // Search logic
 
-    let result;
+    const [result, setResult] = useState("");
     function editSearch(string) {
-        result = string;
+        setResult(string);
     }
 
     // Use effects
@@ -115,115 +115,124 @@ function Dashboard() {
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
-    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setNewComputer(newComputer), [newComputer]);
+    useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
+
 
     return (
         <div id="body1">
 
                     <I18nProvider locale={locale}>
                         <div className="Dashboard">
-                            <h1> {translate("Welcome")} {translate("CDB")}</h1>
+
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
+                            <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+                            <br/>
 
-                            <button className="button" onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                            <button className="button" onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+                            {!addMode ?
 
-                            <p>
-                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                            </p>
+                                <button class="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
 
-                             <p>
-                            <button className="button2" onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
-                            <button className="button2" onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                            <button className="button2" onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                            <button className="button2" onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                            <button className="button2" onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
+                                :
+
+                                <>
+                                    <Input placeholder="Fancy Computer #15"
+                                           onChange={elt => setNewComputer({
+                                               ...newComputer,
+                                               name: elt.target.value
+                                           })}/><Input placeholder="2001-12-31"
+                                                       onChange={elt => setNewComputer({
+                                                           ...newComputer,
+                                                           introduced: elt.target.value
+                                                       })}/><Input placeholder="2011-12-31"
+                                                                   onChange={elt => setNewComputer({
+                                                                       ...newComputer,
+                                                                       discontinued: elt.target.value
+                                                                   })}/>
+
+                                    <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
+                                        <option value="">--</option>
+                                        {companies && companies.map(elt =>
+                                            <option key={elt.id}value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                    </select>
+
+                                    <button onClick={() => addComputer()}>Confirm</button>
+                                </>
+                            }
+
+                            <div id="searchbar">
+                                <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                                <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
+                            <br/>
+                            <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                            <button className="button"
+                                    onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                            <button className="button4">{page}</button>
+                            <button className="button"
+                                    onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            <button className="button"
+                                    onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                            <br/>
+                            <button onClick={() => setEntries(10) & setPage(1)}>10</button>
+                            <button onClick={() => setEntries(25) & setPage(1)}>25</button>
+                            <button onClick={() => setEntries(50) & setPage(1)}>50</button>
+                            <br/>
+                            <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
+                            <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                             </button>
                              </p>
 
-                            <div>
-                            <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
-                            <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                            </div>
+                            <div id="table">
+                    <div>
+                        <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                    </div>
 
-                            <table>
+                            <Table>
+
                                 <thead>
                                 <tr>
-                                    <th class="editMode">
+                                    <td className="editMode">
                                         <input type="checkbox" id="selectall"/>
                                         <span>
-                                <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
-                                    <i class="fa fa-trash-o fa-lg"></i>
-							    </a>
-						            </span></th>
-
-                                    <th>{translate("Name")}</th>
-                                    <th>{translate("Introduced")}</th>
-                                    <th>{translate("Discontinued")}</th>
-                                    <th>{translate("Company")}</th>
+                                        <a href="#" id="deleteSelected" onClick="$.fn.deleteSelected();">
+                                            <i className="fa fa-trash-o fa-lg"></i>
+							            </a>
+                                    </span>
+                                    </td>
+                                    <td>{translate("Name")}</td>
+                                    <td>{translate("Introduced")}</td>
+                                    <td>{translate("Discontinued")}</td>
+                                    <td>{translate("Company")}</td>
                                 </tr>
                                 </thead>
-                                <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
-                                <button className="button" onClick={() => setPage(Math.max(1,page - 1))}>{translate("Previous Page")}</button>
-                                <button className="button" >{page}</button>
-                                <button className="button" onClick={() => setPage(Math.min(countPages(),page + 1))}>{translate("Next Page")}</button>
-                                <button className="button" onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
 
                                 <tbody>
-                                <tr>
 
-                                    {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                        computer =>  {
-                                            return (<Computer key={computer.id} computer={computer}
-                                        companies={companies} delete={deleteComputer}
-                                        edit={editComputer} locale={locale}/>
-                                            ) })}
-                                </tr>
+                                    {computers && companies && computers && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                                        computer =>    <tr>< Computer key={computer.id}
+                                                              computer={computer}
+                                                              companies={companies}
+                                                              delete={deleteComputer}
+                                                              edit={editComputer}
+                                                              locale={locale}/></tr>
+                                    )}
 
-                                {!addMode ?
+                        </tbody>
 
-                                    <button class="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
-
-                                    :
-
-                                    <>
-                                        <Input placeholder="Fancy Computer #15"
-                                               onChange={elt => setNewComputer({
-                                                   ...newComputer,
-                                                   name: elt.target.value
-                                               })}/>
-                                        <Input placeholder="2001-12-31"
-                                               onChange={elt => setNewComputer({
-                                                   ...newComputer,
-                                                   introduced: elt.target.value
-                                               })}/>
-                                        <Input placeholder="2011-12-31"
-                                               onChange={elt => setNewComputer({
-                                                   ...newComputer,
-                                                   discontinued: elt.target.value
-                                               })}/>
-
-                                        <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
-                                            <option value="">--</option>
-                                            {companies && companies.map(elt =>
-                                                <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>
-                                            )}
-                                        </select>
-
-                                        <button onClick={() => addComputer()}>Confirm</button>
-                                    </>
-                                }
-
-                                </tbody>
-
-                            </table>
+                    </Table>
 
                             </div>
+
+                            </div>
+
                         </I18nProvider>
                 </div>
     );

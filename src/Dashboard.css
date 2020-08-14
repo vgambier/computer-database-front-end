@@ -17,7 +17,18 @@ body {
 }
 
 #body1{
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(201, 76, 76, 0.3);
+}
+
+/* tableau */
+
+#table {
+  background-color: white;
+  border: medium solid #000000;
+}
+
+td, th {
+  border: 1px solid black;
 }
 
 /* navigation */
@@ -213,7 +224,7 @@ input[type="password"]::placeholder {
 
 .button {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 4px 10px;
   font-size: 24px;
   cursor: pointer;
   text-align: center;
@@ -231,6 +242,21 @@ input[type="password"]::placeholder {
   background-color:  #008CBA;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.button4 {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #008CBA;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
 }
 
 
