@@ -17,7 +17,18 @@ body {
 }
 
 #body1{
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(201, 76, 76, 0.3);
+}
+
+/* tableau */
+
+#table {
+  background-color: white;
+  border: medium solid #000000;
+}
+
+td, th {
+  border: 1px solid black;
 }
 
 /* navigation */
