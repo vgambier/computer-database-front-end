@@ -42,7 +42,7 @@ function Authentication(props) {
 
     return (
 
-        <div className="Authentication" >
+        <div className="Authentication">
 
             {!props.authenticated ?
                 <div id="login">
