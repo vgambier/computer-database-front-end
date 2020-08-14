@@ -10,11 +10,6 @@ import translate from "./i18n/messages/translate";
 
 function Dashboard() {
 
-    // Setting page title
-    useEffect(() => {
-        document.title = "Computer Database";
-    }, []);
-
     let result;
 
     function editSearch(string) {
@@ -48,7 +43,7 @@ function Dashboard() {
     const [companies, setCompanies] = useState(company_data);
 
     // Add one computer
-    const [{data: dataAdd}, executeAdd] = useAxios({
+    const [{}, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
     }, {manual: true});
@@ -59,7 +54,7 @@ function Dashboard() {
     }, {manual: true});
 
     // Edit one computer
-    const [{data: dataEdit}, executeEdit] = useAxios({
+    const [{}, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
     }, {manual: true});
@@ -87,7 +82,7 @@ function Dashboard() {
     function editComputer(updatedComputer) {
 
 const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
-        executeEdit({data: updatedComputer}).then(response => {
+        executeEdit({data: updatedComputer}).then(() => {
             const newComputers = [...computers];
             newComputers[indexOfEntryOfId]=updatedComputer;
             setComputers(newComputers);
@@ -95,7 +90,7 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
     }
     // Deleting logic
     function deleteComputer(id) {
-        executeDelete({url: `${server_url}/computers/${id}`}).then(response => {
+        executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
         });
@@ -162,7 +157,6 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                     <button class="button2"
                             onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
                     </button>
-
 
                     <table>
                         <thead>

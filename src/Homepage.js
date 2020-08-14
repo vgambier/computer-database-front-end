@@ -10,11 +10,6 @@ export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO
 
 function Homepage() {
 
-    // Setting page title
-    useEffect(() => {
-        document.title = "Welcome!"
-    }, []);
-
     const [authenticated, setAuthenticated] = useState(false);
 
     function loginIfTokenExists() {
