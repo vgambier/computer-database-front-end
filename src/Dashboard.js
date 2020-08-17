@@ -25,8 +25,9 @@ function Dashboard() {
     /* HTTP requests */
 
     // Count computers
-    const [{data: count_data}] = useAxios(`${server_url}/computers/count`/*, {useCache: false}*/);
+    const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
     const [computersCount, setComputersCount] = useState(count_data);
+
     // Count companies
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 

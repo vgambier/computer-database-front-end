@@ -45,7 +45,7 @@ function Homepage() {
                     <header>
 
                         <ul className="write">
-                            <div className="Homepage">
+                            <div className="Authentication">
                                 <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
                             </div>
                         </ul>
