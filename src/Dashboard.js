@@ -23,7 +23,7 @@ function Dashboard() {
 
     // Count computers
     const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
-    const [computersCount,setComputersCount] = useState(count_data);
+    const [computersCount, setComputersCount] = useState(count_data);
     // Count companies
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
@@ -100,7 +100,7 @@ function Dashboard() {
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
-            return (Math.floor(computersCount/ nbEntries)) + 1;
+            return (Math.floor(computersCount / nbEntries)) + 1;
         }
     }
 
@@ -121,135 +121,188 @@ function Dashboard() {
     useEffect(() => setSearch(search), [search]);
     useEffect(() => setComputersCount(count_data), [count_data]);
 
-    return (
-        <div id="body1">
-
-            <I18nProvider locale={locale}>
-                <div className="Dashboard">
-
-                    <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
-                    <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                    <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
-                    <br/>
-
-                    {!addMode ?
-
-                        <button className="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
-
-                        :
-
-                        <Form>
-                            <FormGroup>
-                                <Label>{translate("Name")}</Label>
-                            <Input placeholder="Fancy Computer #15"
-                                   onChange={elt => setNewComputer(
-                                       {...newComputer,
-                                       name: elt.target.value})}/>
-                                   </FormGroup>
-
-                                               <FormGroup>
-                                <Label>{translate("Introduced")}</Label><Input type="datetime" placeholder="2001-12-31"
-                                                           onChange={elt => setNewComputer(
-                                                               {...newComputer,
-                                                               introduced: elt.target.value}
-                                                           )}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label>{translate("Discontinued")}</Label>
-                                <Input type="datetime" placeholder="2011-12-31" onChange={elt => setNewComputer(
-                                    {...newComputer, discontinued: elt.target.value}
-                                )}/>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label>{translate("Company")}</Label>
-                                <select onChange={elt => setNewComputer({
-                                ...newComputer,
-                                company: companyToJSON(elt.target.value)
-                            })}>
-                                    <option value="">--</option>
-                                    {companies && companies.map(elt =>
-                                        <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                                </select>
-                            </FormGroup>
-
-                            <button onClick={() => addComputer() & setComputersCount(computersCount+1) & setPage(countPages())}>Confirm</button>
-
-                        </Form>
-                    }
-
-                    <div id="searchbar">
-                        <Label>{translate("Search")}</Label>
-                        <Input placeholder="Powerbook" onChange={elt => editSearch(elt.target.value)}/>
-                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                    </div>
-                    <br/>
-                    <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
-                    <button className="button"
-                            onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+    function testComponent()
+    {
+        if (page == 1) {
+            return (
+                <div>
                     <button className="button4">{page}</button>
                     <button className="button"
                             onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
-                    <br/>
-                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                    <br/>
-
-                    <div id="table">
-
-                        <Table>
-
-                            <thead>
-                            <tr>
-                                <td>
-                                    <button onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                                </td>
-                                <td>
-                                    <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
-                                </td>
-                                <td>{translate("Actions")}</td>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-                            {computers && companies &&  computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                computer => <tr key={computer.id}>
-                                        <Computer
-                                                           computer={computer}
-                                                           companies={companies}
-                                                           delete={deleteComputer}
-                                                           edit={editComputer}
-                                                           locale={locale}
-                                                           count={computersCount}
-                                                           set={setComputersCount}
-                                                            /></tr>
-                            )}
-
-                            </tbody>
-
-                        </Table>
-
-                    </div>
-
                 </div>
+            )
+        } else {
+            if (page == countPages()) {
+                return
+            } else {
+                return (
+                    <div>
+                        <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                        <button className="button"
+                                onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                        <button className="button4">{page}</button>
+                        <button className="button"
+                                onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
+                        <button className="button"
+                                onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                    </div>
+                )
+            }
 
-            </I18nProvider>
-        </div>
-    );
-}
+            return (
+                <div>
+                    <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                    <button className="button"
+                            onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                    <button className="button4">{page}</button>
+                </div>
+            )
+        }
+    }
 
-export default Dashboard;
+    return (
+                <div id="body1">
+
+                    <I18nProvider locale={locale}>
+                        <div className="Dashboard">
+
+                            <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
+                            <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
+                            <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
+                            <br/>
+
+                            {!addMode ?
+
+                                <button className="button3"
+                                        onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+
+                                :
+
+                                <Form>
+                                    <FormGroup>
+                                        <Label>{translate("Name")}</Label>
+                                        <Input placeholder="Fancy Computer #15"
+                                               onChange={elt => setNewComputer(
+                                                   {
+                                                       ...newComputer,
+                                                       name: elt.target.value
+                                                   })}/>
+                                    </FormGroup>
+
+                                    <FormGroup>
+                                        <Label>{translate("Introduced")}</Label><Input type="datetime"
+                                                                                       placeholder="2001-12-31"
+                                                                                       onChange={elt => setNewComputer(
+                                                                                           {
+                                                                                               ...newComputer,
+                                                                                               introduced: elt.target.value
+                                                                                           }
+                                                                                       )}/>
+                                    </FormGroup>
+
+                                    <FormGroup>
+                                        <Label>{translate("Discontinued")}</Label>
+                                        <Input type="datetime" placeholder="2011-12-31" onChange={elt => setNewComputer(
+                                            {...newComputer, discontinued: elt.target.value}
+                                        )}/>
+                                    </FormGroup>
+
+                                    <FormGroup>
+                                        <Label>{translate("Company")}</Label>
+                                        <select onChange={elt => setNewComputer({
+                                            ...newComputer,
+                                            company: companyToJSON(elt.target.value)
+                                        })}>
+                                            <option value="">--</option>
+                                            {companies && companies.map(elt =>
+                                                <option key={elt.id}
+                                                        value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                        </select>
+                                    </FormGroup>
+
+                                    <button
+                                        onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm
+                                    </button>
+
+                                </Form>
+                            }
+
+                            <div id="searchbar">
+                                <Label>{translate("Search")}</Label>
+                                <Input placeholder="Powerbook" onChange={elt => editSearch(elt.target.value)}/>
+                                <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
+                            </div>
+                            <br/>
+                            <div>
+                                <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
+                                <button className="button"
+                                        onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
+                                <button className="button4">{page}</button>
+                                <button className="button"
+                                        onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
+                                <button className="button"
+                                        onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
+                            </div>
+                            <br/>
+
+                            <div id="table">
+
+                                <Table>
+
+                                    <thead>
+                                    <tr>
+                                        <td>
+                                            <button
+                                                onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
+                                        </td>
+                                        <td>{translate("Actions")}</td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                                        computer => <tr key={computer.id}>
+                                            <Computer
+                                                computer={computer}
+                                                companies={companies}
+                                                delete={deleteComputer}
+                                                edit={editComputer}
+                                                locale={locale}
+                                                count={computersCount}
+                                                set={setComputersCount}
+                                            /></tr>
+                                    )}
+
+                                    </tbody>
+
+                                </Table>
+
+                            </div>
+
+                        </div>
+
+                    </I18nProvider>
+                </div>
+            );
+        }
+
+        export default Dashboard;
