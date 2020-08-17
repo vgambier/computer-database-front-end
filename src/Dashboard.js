@@ -25,8 +25,9 @@ function Dashboard() {
     /* HTTP requests */
 
     // Count computers
-    const [{data: count_data}] = useAxios(`${server_url}/computers/count`/*, {useCache: false}*/);
+    const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
     const [computersCount, setComputersCount] = useState(count_data);
+
     // Count companies
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
@@ -138,11 +139,10 @@ function Dashboard() {
                 <br/>
 
                 <div id="drapeau">
-                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}><img src={english}
-                                                                                                alt="english"
-                                                                                                width="20"/></button>
-                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}><img src={french} alt="french"
-                                                                                              width="20"/></button>
+                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                        <img src={english} alt="english" width="20"/></button>
+                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}>
+                        <img src={french} alt="french" width="20"/></button>
                 </div>
 
                 <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
@@ -178,14 +178,15 @@ function Dashboard() {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label>{translate("Introduced")}</Label><Input type="datetime"
-                                                                               placeholder="2001-12-31"
-                                                                               onChange={elt => setNewComputer(
-                                                                                   {
-                                                                                       ...newComputer,
-                                                                                       introduced: elt.target.value
-                                                                                   }
-                                                                               )}/>
+                                <Label>{translate("Introduced")}</Label>
+                                <Input type="datetime"
+                                       placeholder="2001-12-31"
+                                       onChange={elt => setNewComputer(
+                                           {
+                                               ...newComputer,
+                                               introduced: elt.target.value
+                                           }
+                                       )}/>
                             </FormGroup>
 
                             <FormGroup>
@@ -198,8 +199,7 @@ function Dashboard() {
                             <FormGroup>
                                 <Label>{translate("Company")}</Label>
                                 <select onChange={elt => setNewComputer({
-                                    ...newComputer,
-                                    company: companyToJSON(elt.target.value)
+                                    ...newComputer, company: companyToJSON(elt.target.value)
                                 })}>
                                     <option value="">--</option>
                                     {companies && companies.map(elt =>
@@ -250,15 +250,15 @@ function Dashboard() {
                         {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                             computer =>
                                 <tr key={computer.id}>
-                                <Computer
-                                    computer={computer}
-                                    companies={companies}
-                                    delete={deleteComputer}
-                                    edit={editComputer}
-                                    locale={locale}
-                                    count={computersCount}
-                                    set={setComputersCount}
-                                /></tr>
+                                    <Computer
+                                        computer={computer}
+                                        companies={companies}
+                                        delete={deleteComputer}
+                                        edit={editComputer}
+                                        locale={locale}
+                                        count={computersCount}
+                                        set={setComputersCount}
+                                    /></tr>
                         )}
 
                         </tbody>
@@ -270,8 +270,8 @@ function Dashboard() {
             </div>
 
         </I18nProvider>
-)
-    ;
+    )
+        ;
 }
 
 export default Dashboard;
