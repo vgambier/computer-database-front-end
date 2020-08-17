@@ -41,11 +41,12 @@ function Homepage() {
             </div>
 
             <div id="main-page">
+
                 <div className="content">
 
                     <header>
 
-                        <ul className="horizontal-menu">
+                        <ul className="write">
                             <div className="Homepage">
                                 <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
                             </div>
@@ -66,7 +67,7 @@ function Homepage() {
 
                     </div>
                 </div>
-            </div>
+                </div>
         </div>
         </body>
     );

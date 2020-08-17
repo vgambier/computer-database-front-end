@@ -7,6 +7,9 @@ import {Table, Input} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
+import home from "./images/home.jpg";
+import english from "./images/english.jpg";
+import french from "./images/french.jpg";
 
 function Dashboard() {
 
@@ -122,19 +125,37 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
 
 
     return (
-        <div id="body1">
 
                     <I18nProvider locale={locale}>
                         <div className="Dashboard">
 
+                            <br/>
+                            <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>&nbsp;
+                            <button className="button"
+                                    onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>&nbsp;
+                            <button className="button4"><b>{page}</b></button>&nbsp;
+                            <button className="button"
+                                    onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>&nbsp;
+                            <button className="button"
+                                    onClick={() => setPage(countPages())}>{translate("Last Page")}</button>&nbsp;
+                            <div id="drapeau">
+                            <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}><img src={english} alt="english" width="20"/></button>
+                            <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}><img src={french} alt="french" width="20"/></button>
+                            </div>
                             <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
-                            <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                            <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
                             <br/>
 
+                            <div id="searchbar">
+                                <Input placeholder={"Search computer..."} onChange={elt => editSearch(elt.target.value)}/>
+                                <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
+                            </div>&nbsp;
+                            <div id="buttons">
+                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                             {!addMode ?
 
-                                <button class="button3" onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+                                <button class="button3" onClick={() => setAddMode(!addMode)}><b>{translate("Add")}</b></button>
 
                                 :
 
@@ -162,50 +183,18 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                                     <button onClick={() => addComputer()}>Confirm</button>
                                 </>
                             }
-
-                            <div id="searchbar">
-                                <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
-                                <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                             </div>
-                            <br/>
-                            <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
-                            <button className="button"
-                                    onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
-                            <button className="button4">{page}</button>
-                            <button className="button"
-                                    onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
-                            <button className="button"
-                                    onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
-                            <br/>
-                            <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                            <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                            <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                            <br/>
-                            <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
-                            <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                            <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                            <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                            <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
-                            </button>
-
+                            <br/> <br/>
                             <div id="table">
 
                             <Table>
 
                                 <thead>
                                 <tr>
-                                    <td className="editMode">
-                                        <input type="checkbox" id="selectall"/>
-                                        <span>
-                                        <a href="#" id="deleteSelected" onClick="$.fn.deleteSelected();">
-                                            <i className="fa fa-trash-o fa-lg"></i>
-							            </a>
-                                    </span>
-                                    </td>
-                                    <td>{translate("Name")}</td>
-                                    <td>{translate("Introduced")}</td>
-                                    <td>{translate("Discontinued")}</td>
-                                    <td>{translate("Company")}</td>
+                                    <td><button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button></td>
+                                    <td><button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button></td>
+                                    <td><button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button></td>
+                                    <td><button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button></td>
                                 </tr>
                                 </thead>
 
@@ -229,7 +218,7 @@ const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedC
                             </div>
 
                         </I18nProvider>
-                </div>
+
     );
 }
 
