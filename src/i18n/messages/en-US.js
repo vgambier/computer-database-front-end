@@ -6,7 +6,7 @@ export default {
         'Name': 'Name',
         'Introduced': 'Introduced',
         'Discontinued': 'Discontinued',
-        'Id': "Computer ID",
+        'Id': "ID",
         'Company': 'Company',
         'Delete': 'Delete',
         'Edit': 'Edit',

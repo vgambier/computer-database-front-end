@@ -4,9 +4,9 @@ export default {
     [LOCALES.FRENCH]: {
         'CDB': 'CDB !',
         'Name': 'Nom',
-        'Introduced': 'Mise en service',
-        'Discontinued': 'Mise hors service',
-        'Id': "N° d'ordinateur",
+        'Introduced': 'Début',
+        'Discontinued': 'Fin',
+        'Id': "N°",
         'Company': 'Entreprise',
         'Delete': 'Supprimer',
         'Edit': 'Modifier',

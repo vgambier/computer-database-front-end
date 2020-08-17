@@ -221,27 +221,28 @@ function Dashboard() {
 
                         <thead>
                         <tr>
+
                             <td>
-                                <button
-                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
+                                <button className="button6"
+                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇</button>
                             </td>
                             <td>
-                                <button
-                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                                <button className="button6"
+                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇</button>
                             </td>
                             <td>
-                                <button
-                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                                <button className="button6"
+                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇</button>
                             </td>
                             <td>
-                                <button
-                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                                <button className="button6"
+                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇</button>
                             </td>
                             <td>
-                                <button
-                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
+                                <button className="button6"
+                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇</button>
                             </td>
-                            <td>{translate("Actions")}</td>
+                            <td><b>{translate("Actions")}</b></td>
                         </tr>
                         </thead>
 
