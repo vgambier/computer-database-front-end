@@ -53,12 +53,7 @@ function Authentication(props) {
                 </div>
 
                 :
-
-                <>
                     <Button onClick={() => onLogout()}>Logout</Button>
-                    <Dashboard/>
-                </>
-
             }
 
         </div>

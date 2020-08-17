@@ -11,10 +11,13 @@ function Buttons(props) {
             <I18nProvider locale={props.locale}>
                 <div>
                     <button className="button4">{props.page}</button>
+                    &nbsp;
                     <button className="button"
                             onClick={() => props.setPage(Math.min(props.countPages(), props.page + 1))}>{translate("Next Page")}</button>
+                    &nbsp;
                     <button className="button"
                             onClick={() => props.setPage(props.countPages())}>{translate("Last Page")}</button>
+                    &nbsp;
                 </div>
             </I18nProvider>
         )
@@ -24,9 +27,12 @@ function Buttons(props) {
                 <I18nProvider locale={props.locale}>
                     <div>
                         <button className="button" onClick={() => props.setPage(1)}>{translate("First Page")}</button>
+                        &nbsp;
                         <button className="button"
                                 onClick={() => props.setPage(Math.max(1, props.page - 1))}>{translate("Previous Page")}</button>
+                        &nbsp;
                         <button className="button4">{props.page}</button>
+                        &nbsp;
                     </div>
                 </I18nProvider>
 
