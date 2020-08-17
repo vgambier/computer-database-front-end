@@ -6,12 +6,14 @@ import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
 import axios from "axios";
 import Dashboard from "./Dashboard";
+import Users from "./Users";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
 function Homepage() {
 
     const [authenticated, setAuthenticated] = useState(false);
+    const [mode, setMode] = useState(true);
 
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
@@ -37,6 +39,7 @@ function Homepage() {
                     <li><a className={authenticated ? "" : "active"}>Home</a></li>
                     <li><a className={!authenticated ? "" : "active"}>Dashboard</a></li>
                     <li><a className={!authenticated ? "" : "active"}>My Account</a></li>
+                    <button onClick={() => setMode(!mode)}> SWITCH</button>
                 </div>
             </div>
 
@@ -50,7 +53,12 @@ function Homepage() {
                             <div className="Authentication">
                                 <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
 
-                                {authenticated ? <Dashboard/> : <></>}
+                                {authenticated ?
+                                    mode ?
+                                        <Dashboard/>
+                                        :
+                                        <Users/>
+                                    : <></>}
 
                             </div>
                         </ul>

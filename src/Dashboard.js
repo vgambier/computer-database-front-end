@@ -208,7 +208,7 @@ function Dashboard() {
                                 </select>
                             </FormGroup>
 
-                            <button onClick={() => addComputer()}>Confirm</button>
+                            <button onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm</button>
                         </Form>
                     }
 
