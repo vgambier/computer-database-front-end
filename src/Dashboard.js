@@ -22,16 +22,15 @@ function Dashboard() {
     /* HTTP requests */
 
     // Count computers
-    const [{data: computersCount}] = useAxios(`${server_url}/computers/count`);
-
+    const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
+    const [computersCount, setComputersCount] = useState(count_data);
     // Count companies
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}, execute] = useAxios(
+    const [{data}, executeRefresh] = useAxios(
         `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search,
         {useCache: false});
-
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
@@ -108,7 +107,6 @@ function Dashboard() {
     }
 
     // Search logic
-
     const [result, setResult] = useState("");
 
     function editSearch(string) {
@@ -116,7 +114,6 @@ function Dashboard() {
     }
 
     // Use effects
-
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
@@ -124,6 +121,7 @@ function Dashboard() {
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
+    useEffect(() => setComputersCount(count_data), [count_data]);
 
     return (
         <div id="body1">
@@ -145,16 +143,20 @@ function Dashboard() {
                         <Form>
                             <FormGroup>
                                 <Label>{translate("Name")}</Label>
-                                <Input placeholder="Fancy Computer #15" onChange={elt => setNewComputer(
-                                    {...newComputer, name: elt.target.value}
-                                )}/>
+                                <Input placeholder="Fancy Computer #15"
+                                       onChange={elt => setNewComputer(
+                                           {
+                                               ...newComputer,
+                                               name: elt.target.value
+                                           })}/>
                             </FormGroup>
 
                             <FormGroup>
                                 <Label>{translate("Introduced")}</Label>
-                                <Input type="datetime" placeholder="2001-12-31" onChange={elt => setNewComputer(
-                                    {...newComputer, introduced: elt.target.value}
-                                )}/>
+                                <Input type="datetime" placeholder="2001-12-31"
+                                       onChange={elt => setNewComputer(
+                                           {...newComputer, introduced: elt.target.value}
+                                       )}/>
                             </FormGroup>
 
                             <FormGroup>
@@ -166,14 +168,17 @@ function Dashboard() {
 
                             <FormGroup>
                                 <Label>{translate("Company")}</Label>
-                                <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
+                                <select onChange={elt => setNewComputer({
+                                    ...newComputer,
+                                    company: companyToJSON(elt.target.value)
+                                })}>
                                     <option value="">--</option>
                                     {companies && companies.map(elt =>
                                         <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                                 </select>
                             </FormGroup>
 
-                            <button onClick={() => addComputer()}>Confirm</button>
+                            <button onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm</button>
 
                         </Form>
                     }
@@ -189,7 +194,7 @@ function Dashboard() {
                             onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
                     <button className="button4">{page}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.min(/* TODO countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <br/>
@@ -224,22 +229,28 @@ function Dashboard() {
                             </thead>
 
                             <tbody>
+
                             {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                computer =>
-                                    <tr key={computer.id}>
-                                        <Computer
-                                            computer={computer}
-                                            companies={companies}
-                                            delete={deleteComputer}
-                                            edit={editComputer}
-                                            locale={locale}/>
-                                    </tr>
+                                computer => <tr key={computer.id}>
+                                    <Computer
+                                        computer={computer}
+                                        companies={companies}
+                                        delete={deleteComputer}
+                                        edit={editComputer}
+                                        locale={locale}
+                                        count={computersCount}
+                                        set={setComputersCount}
+                                    /></tr>
                             )}
 
                             </tbody>
+
                         </Table>
+
                     </div>
+
                 </div>
+
             </I18nProvider>
         </div>
     );

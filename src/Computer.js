@@ -23,7 +23,7 @@ function Computer(props) {
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
                     <td>
-                        <Button className="button" onClick={() => props.delete(id)}>{translate('Delete')} </Button>
+                        <Button className="button" onClick={() => props.delete(id) & props.set(props.count-1) }>{translate('Delete')} </Button>
                         <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
                     </td>
                 </>
