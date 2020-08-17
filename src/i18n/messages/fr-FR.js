@@ -16,7 +16,7 @@ export default {
         'Previous Page': 'Page Précédente',
         'Next Page': ' Page Suivante',
         'Last Page': 'Dernière Page',
-        'blabla': 'disponibles dans la BDD',
+        'inside_db': 'disponibles dans la BDD',
         'Computers': 'Ordinateurs',
         'Search': 'Barre de recherche',
         'Logout': 'Deconnexion',

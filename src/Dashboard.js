@@ -128,7 +128,7 @@ function Dashboard() {
             <I18nProvider locale={locale}>
                 <div className="Dashboard">
 
-                    <h2> {computersCount} {translate("Computers")} {translate("blabla")}</h2>
+                    <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
                     <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
                     <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
                     <br/>
@@ -201,8 +201,8 @@ function Dashboard() {
                                 <td>
                                     <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
                                 </td>
-                                <td>Delete</td>
-                                <td>Edit</td>
+                                <td>{translate("Delete")}</td>
+                                <td>{translate("Edit")}</td>
                             </tr>
                             </thead>
 

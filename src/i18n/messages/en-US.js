@@ -16,7 +16,7 @@ export default {
         'Previous Page': 'Previous Page',
         'Next Page': 'Next Page',
         'Last Page': 'Last Page',
-        'blabla': 'inside the database',
+        'inside_db': 'inside the database',
         'Computers': 'Computers',
         'Search': 'Search bar',
         'Logout': 'Logout',
