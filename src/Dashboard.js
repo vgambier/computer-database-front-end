@@ -221,41 +221,47 @@ function Dashboard() {
                             </FormGroup>
 
                             <button onClick={() => addComputer()}>Confirm</button>
-                            </Form>
-                            }
+                        </Form>
+                    }
 
-                        </div>
-                        <br/> <br/>
+                </div>
+                <br/> <br/>
 
-                        <div id="table">
+                <div id="table">
 
-                        <Table>
+                    <Table>
 
                         <thead>
                         <tr>
-                        <td>
-                        <button
-                        onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                        </td>
-                        <td>
-                        <button
-                        onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                        </td>
-                        <td>
-                        <button
-                        onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                        </td>
-                        <td>
-                        <button
-                        onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
-                        </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
+                            </td>
+                            <td>{translate("Actions")}</td>
                         </tr>
                         </thead>
 
                         <tbody>
 
                         {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer => <tr key={computer.id}>
+                            computer =>
+                                <tr key={computer.id}>
                                 <Computer
                                     computer={computer}
                                     companies={companies}
@@ -269,14 +275,14 @@ function Dashboard() {
 
                         </tbody>
 
-                        </Table>
+                    </Table>
 
-                        </div>
+                </div>
 
-                        </div>
+            </div>
 
-                        </I18nProvider>
-                        );
-                        }
+        </I18nProvider>
+    );
+}
 
-                        export default Dashboard;
+export default Dashboard;
