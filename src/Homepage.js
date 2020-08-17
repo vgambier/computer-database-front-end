@@ -21,10 +21,8 @@ function Homepage() {
 
     return (
 
-        <body>
-        {loginIfTokenExists()}
-
         <div id="page">
+            {loginIfTokenExists()}
             <div id="navigation">
                 <div align="center">
                     <div id="center">
@@ -57,10 +55,10 @@ function Homepage() {
                     <div className="Homepage">
 
                         <div id="moncadre" hidden={authenticated}>
-                            <div class="slider">
-                                <div class="slides">
-                                    <div class="slide"><img src={dashboard} alt="dashboard"/></div>
-                                    <div class="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                            <div className="slider">
+                                <div className="slides">
+                                    <div className="slide"><img src={dashboard} alt="dashboard"/></div>
+                                    <div className="slide"><img src={dashboard2} alt="dashboard2"/></div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +67,6 @@ function Homepage() {
                 </div>
                 </div>
         </div>
-        </body>
     );
 }
 
