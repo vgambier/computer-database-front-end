@@ -202,6 +202,12 @@ function Dashboard() {
                     <br/>
                     <Buttons page={page} countPages={countPages} setPage={setPage} locale={locale}/>
                     <br/>
+                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+                    <br/>
+
+                    <br/>
 
                     <div id="table">
 
