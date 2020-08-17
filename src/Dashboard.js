@@ -135,20 +135,8 @@ function Dashboard() {
         <I18nProvider locale={locale}>
             <div className="Dashboard">
 
+                <Buttons page={page} countPages={countPages} setPage={setPage} locale={locale}/>
                 <br/>
-                <button className="button" onClick={() => setPage(1)}>{translate("First Page")}</button>
-                &nbsp;
-                <button className="button"
-                        onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
-                &nbsp;
-                <button className="button4"><b>{page}</b></button>
-                &nbsp;
-                <button className="button"
-                        onClick={() => setPage(Math.min(/*countPages()*/100, page + 1))}>{translate("Next Page")}</button>
-                &nbsp;
-                <button className="button"
-                        onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
-                &nbsp;
 
                 <div id="drapeau">
                     <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}><img src={english}
@@ -283,7 +271,8 @@ function Dashboard() {
             </div>
 
         </I18nProvider>
-    );
+)
+    ;
 }
 
 export default Dashboard;
