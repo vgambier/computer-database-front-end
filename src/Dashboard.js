@@ -28,7 +28,10 @@ function Dashboard() {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}] = useAxios(`${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search);
+    const [{data}, execute] = useAxios(
+        `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search,
+        {useCache: false});
+
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
     // Get all companies
