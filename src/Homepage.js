@@ -21,10 +21,8 @@ function Homepage() {
 
     return (
 
-        <body>
-        {loginIfTokenExists()}
-
         <div id="page">
+            {loginIfTokenExists()}
             <div id="navigation">
                 <div align="center">
                     <div id="center">
@@ -68,7 +66,6 @@ function Homepage() {
                 </div>
             </div>
         </div>
-        </body>
     );
 }
 

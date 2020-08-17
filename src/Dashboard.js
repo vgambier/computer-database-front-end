@@ -203,16 +203,15 @@ function Dashboard() {
                             </thead>
 
                             <tbody>
-
                             {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
                                 computer =>
-                                    <tr>
-                                        <Computer key={computer.id}
-                                                  computer={computer}
-                                                  companies={companies}
-                                                  delete={deleteComputer}
-                                                  edit={editComputer}
-                                                  locale={locale}/>
+                                    <tr key={computer.id}>
+                                        <Computer
+                                            computer={computer}
+                                            companies={companies}
+                                            delete={deleteComputer}
+                                            edit={editComputer}
+                                            locale={locale}/>
                                     </tr>
                             )}
 
