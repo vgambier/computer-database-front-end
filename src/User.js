@@ -19,7 +19,8 @@ function User(props) {
                 <>
                     <td> {username} </td>
                     <td> {enabled} </td>
-                    <td> {authorityList} </td>
+                    <td> {authorityList[0]} </td>
+                    <td> {authorityList[1]} </td>
                     <td>
                         <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="28" width="25"/></Button>
                         <Button className="button" onClick={() => props.delete(username)}><img src={deletes} alt="delete" height="28" width="25"/></Button>

@@ -55,7 +55,7 @@ function Users(props) {
     // Editing logic
     function editUser(updatedUser) {
 
-        const indexOfEntryOfId = users.map(user => user.id).indexOf(updatedUser.id);
+        const indexOfEntryOfId = users.map(user => user.username).indexOf(updatedUser.username);
         executeEdit({data: updatedUser}).then(() => {
             const newUsers = [...users];
             newUsers[indexOfEntryOfId] = updatedUser;
@@ -158,6 +158,9 @@ function Users(props) {
                         <td>
                             Authority
                         </td>
+                        <td>
+                            Secondary Authority
+                        </td>
                     </tr>
                     </thead>
 
@@ -167,7 +170,7 @@ function Users(props) {
                         user =>
                             <tr key={user.username}>
                                 <User
-                                    user={users}
+                                    user={user}
                                     delete={deleteUser}
                                     edit={editUser}
                                     locale={props.locale}
