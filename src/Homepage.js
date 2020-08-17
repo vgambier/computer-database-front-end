@@ -35,6 +35,7 @@ function Homepage() {
                 <div id="vertical-menu">
                     <li><a className={authenticated ? "" : "active"}>Home</a></li>
                     <li><a className={!authenticated ? "" : "active"}>Dashboard</a></li>
+                    <li><a className={!authenticated ? "" : "active"}>My Account</a></li>
                 </div>
             </div>
 

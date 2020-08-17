@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
