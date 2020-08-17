@@ -24,8 +24,10 @@ function Computer(props) {
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="28" width="25"/></Button>
-                    <Button className="button" onClick={() => props.delete(id)}><img src={deletes} alt="delete" height="22" width="25"/></Button>
+                    <td>
+                        <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="28" width="25"/></Button>
+                        <Button className="button" onClick={() => props.delete(id)}><img src={deletes} alt="delete" height="28" width="25"/></Button>
+                    </td>
                 </>
                 :
                 <>
