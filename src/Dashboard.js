@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input} from "reactstrap";
+import {Table, Input, Label} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
@@ -140,17 +140,22 @@ function Dashboard() {
                         :
 
                         <>
-                            <Input placeholder="Fancy Computer #15" onChange={elt => setNewComputer({
-                                ...newComputer,
-                                name: elt.target.value
-                            })}/>
-                            <Input placeholder="2001-12-31" onChange={elt => setNewComputer({
-                                ...newComputer, introduced: elt.target.value
-                            })}/>
-                            <Input placeholder="2011-12-31" onChange={elt => setNewComputer({
-                                ...newComputer, discontinued: elt.target.value
-                            })}/>
+                            <Label>{translate("Name")}</Label>
+                            <Input placeholder="Fancy Computer #15" onChange={elt => setNewComputer(
+                                {...newComputer, name: elt.target.value}
+                                )}/>
 
+                            <Label>{translate("Introduced")}</Label>
+                            <Input placeholder="2001-12-31" onChange={elt => setNewComputer(
+                                {...newComputer, introduced: elt.target.value}
+                            )}/>
+
+                            <Label>{translate("Discontinued")}</Label>
+                            <Input placeholder="2011-12-31" onChange={elt => setNewComputer(
+                                {...newComputer, discontinued: elt.target.value}
+                            )}/>
+
+                            <Label>{translate("Company")}</Label>
                             <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
                                 <option value="">--</option>
                                 {companies && companies.map(elt =>
@@ -162,7 +167,7 @@ function Dashboard() {
                     }
 
                     <div id="searchbar">
-                        <Input placeholder={"CDB"} onChange={elt => editSearch(elt.target.value)}/>
+                        <Input placeholder={"Search..."} onChange={elt => editSearch(elt.target.value)}/>
                         <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                     </div>
                     <br/>
