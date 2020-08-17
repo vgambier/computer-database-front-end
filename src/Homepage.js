@@ -5,6 +5,7 @@ import dashboard from './images/dashboard.jpg'
 import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
 import axios from "axios";
+import Dashboard from "./Dashboard";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -47,6 +48,9 @@ function Homepage() {
                         <ul className="write">
                             <div className="Authentication">
                                 <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
+
+                                {authenticated ? <Dashboard/> : <></>}
+
                             </div>
                         </ul>
 
@@ -62,10 +66,9 @@ function Homepage() {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     );
 }
