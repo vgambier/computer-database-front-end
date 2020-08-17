@@ -15,32 +15,36 @@ function Computer(props) {
     return (
         <I18nProvider locale={props.locale}>
 
+            <td> {id} </td>
             {!editMode ?
                 <>
-                    <td> {id} </td>
                     <td> {name} </td>
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <td> <Button className="button" onClick={() => props.delete(id) & props.set(props.count-1) }>{translate('Delete')}</Button> </td>
-                    <td> <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button> </td>
+                    <td>
+                        <Button className="button" onClick={() => props.delete(id) & props.set(props.count-1) }>{translate('Delete')} </Button>
+                        <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
+                    </td>
                 </>
                 :
                 <>
-                    <Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/>
-                    <Input defaultValue={introduced}
-                           onChange={elt => setComputer({...computer, introduced: elt.target.value})}/>
-                    <Input defaultValue={discontinued}
-                           onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/>
-                    <select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
+                    <td><Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/></td>
+                    <td><Input type="datetime" defaultValue={introduced}
+                               onChange={elt => setComputer({...computer, introduced: elt.target.value})}/></td>
+                    <td><Input type="datetime" defaultValue={discontinued}
+                               onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/></td>
+                    <td><select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
                         {companies && companies.map(elt => displayCompanyOption({company}, elt))}
-                    </select>
+                    </select></td>
 
-                    <Button onClick={() => {
-                        setEditMode(!editMode);
-                        props.edit(computer);
-                    }}>Confirm</Button>
+                    <td>
+                        <Button className="button" onClick={() => {
+                            setEditMode(!editMode);
+                            props.edit(computer);
+                        }}>Confirm</Button>
+                    </td>
                 </>
             }
         </I18nProvider>
