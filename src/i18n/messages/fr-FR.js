@@ -18,7 +18,7 @@ export default {
         'Last Page': 'Dernière Page',
         'inside_db': 'disponibles dans la BDD',
         'Computers': 'Ordinateurs',
-        'Search': 'Recherche',
+        'Search': 'Recherche : ',
         'Logout': 'Déconnexion',
         'Actions': 'Actions'
     }

@@ -7,6 +7,8 @@ import {Table, Input, Label, Form, FormGroup} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
+import english from "./images/english.jpg";
+import french from "./images/french.jpg";
 import Buttons from "./Buttons"
 
 function Dashboard() {
@@ -128,20 +130,39 @@ function Dashboard() {
 
 
     return (
-        <div id="body1">
 
-            <I18nProvider locale={locale}>
-                <div className="Dashboard">
+        <I18nProvider locale={locale}>
+            <div className="Dashboard">
 
-                    <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
-                    <button onClick={() => setLocale(LOCALES.ENGLISH)}>English</button>
-                    <button onClick={() => setLocale(LOCALES.FRENCH)}>French</button>
-                    <br/>
+                <Buttons page={page} countPages={countPages} setPage={setPage} locale={locale}/>
+                <br/>
 
+                <div id="drapeau">
+                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}><img src={english}
+                                                                                                alt="english"
+                                                                                                width="20"/></button>
+                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}><img src={french} alt="french"
+                                                                                              width="20"/></button>
+                </div>
+
+                <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
+                <br/>
+
+                <div id="searchbar">
+                    <Label>{translate("Search")}</Label>
+                    <Input placeholder={"Powerbook"} onChange={elt => editSearch(elt.target.value)}/>
+                    <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
+                </div>
+                &nbsp;
+
+                <div id="buttons">
+                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                     {!addMode ?
 
                         <button className="button3"
-                                onClick={() => setAddMode(!addMode)}>{translate("Add")}</button>
+                                onClick={() => setAddMode(!addMode)}><b>{translate("Add")}</b></button>
 
                         :
 
@@ -187,84 +208,70 @@ function Dashboard() {
                                 </select>
                             </FormGroup>
 
-                            <button
-                                onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm
-                            </button>
-
+                            <button onClick={() => addComputer()}>Confirm</button>
                         </Form>
                     }
 
-                    <div id="searchbar">
-                        <Label>{translate("Search")}</Label>
-                        <Input placeholder="Powerbook" onChange={elt => editSearch(elt.target.value)}/>
-                        <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
-                    </div>
-                    <br/>
-                    <Buttons page={page} countPages={countPages} setPage={setPage} locale={locale}/>
-                    <br/>
-                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                    <br/>
+                </div>
+                <br/> <br/>
 
-                    <br/>
+                <div id="table">
 
-                    <div id="table">
+                    <Table>
 
-                        <Table>
+                        <thead>
+                        <tr>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
+                            </td>
+                            <td>{translate("Actions")}</td>
+                        </tr>
+                        </thead>
 
-                            <thead>
-                            <tr>
-                                <td>
-                                    <button
-                                        onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
-                                </td>
-                                <td>{translate("Actions")}</td>
-                            </tr>
-                            </thead>
+                        <tbody>
 
-                            <tbody>
+                        {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                            computer =>
+                                <tr key={computer.id}>
+                                <Computer
+                                    computer={computer}
+                                    companies={companies}
+                                    delete={deleteComputer}
+                                    edit={editComputer}
+                                    locale={locale}
+                                    count={computersCount}
+                                    set={setComputersCount}
+                                /></tr>
+                        )}
 
-                            {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                                computer => <tr key={computer.id}>
-                                    <Computer
-                                        computer={computer}
-                                        companies={companies}
-                                        delete={deleteComputer}
-                                        edit={editComputer}
-                                        locale={locale}
-                                        count={computersCount}
-                                        set={setComputersCount}
-                                    /></tr>
-                            )}
+                        </tbody>
 
-                            </tbody>
-
-                        </Table>
-
-                    </div>
+                    </Table>
 
                 </div>
 
-            </I18nProvider>
-        </div>
-    );
+            </div>
+
+        </I18nProvider>
+)
+    ;
 }
 
 export default Dashboard;

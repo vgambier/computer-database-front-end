@@ -4,6 +4,8 @@ import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 import './Computer.css';
+import deletes from "./images/corbeille.png";
+import edit from "./images/edit.jpg";
 
 function Computer(props) {
 
@@ -23,8 +25,8 @@ function Computer(props) {
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
                     <td>
-                        <Button className="button" onClick={() => props.delete(id) & props.set(props.count-1) }>{translate('Delete')} </Button>
-                        <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
+                        <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="22" width="25"/></Button>
+                        <Button className="button" onClick={() => props.delete(id)}><img src={deletes} alt="delete" height="22" width="25"/></Button>
                     </td>
                 </>
                 :
