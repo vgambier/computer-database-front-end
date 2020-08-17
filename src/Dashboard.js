@@ -179,12 +179,6 @@ function Dashboard() {
                     <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                     <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                     <br/>
-                    <button onClick={() => setOrderBy("computer.id") & setPage(1)}>Computer Id</button>
-                    <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
-                    <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
-                    <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
-                    <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}
-                    </button>
 
                     <div id="table">
 
@@ -192,11 +186,21 @@ function Dashboard() {
 
                             <thead>
                             <tr>
-                                <td>{translate("Id")}</td>
-                                <td>{translate("Name")}</td>
-                                <td>{translate("Introduced")}</td>
-                                <td>{translate("Discontinued")}</td>
-                                <td>{translate("Company")}</td>
+                                <td>
+                                    <button onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
+                                </td>
                                 <td>Delete</td>
                                 <td>Edit</td>
                             </tr>
