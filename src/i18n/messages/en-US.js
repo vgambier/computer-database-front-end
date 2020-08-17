@@ -18,7 +18,8 @@ export default {
         'Last Page': 'Last Page',
         'inside_db': 'inside the database',
         'Computers': 'Computers',
-        'Search': 'Search bar',
+        'Search': 'Search',
         'Logout': 'Logout',
+        'Actions': 'Actions'
     }
 }

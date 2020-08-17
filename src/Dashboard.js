@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input, Label} from "reactstrap";
+import {Table, Input, Label, Form, FormGroup} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
@@ -139,35 +139,45 @@ function Dashboard() {
 
                         :
 
-                        <>
-                            <Label>{translate("Name")}</Label>
-                            <Input placeholder="Fancy Computer #15" onChange={elt => setNewComputer(
-                                {...newComputer, name: elt.target.value}
+                        <Form>
+                            <FormGroup>
+                                <Label>{translate("Name")}</Label>
+                                <Input placeholder="Fancy Computer #15" onChange={elt => setNewComputer(
+                                    {...newComputer, name: elt.target.value}
                                 )}/>
+                            </FormGroup>
 
-                            <Label>{translate("Introduced")}</Label>
-                            <Input placeholder="2001-12-31" onChange={elt => setNewComputer(
-                                {...newComputer, introduced: elt.target.value}
-                            )}/>
+                            <FormGroup>
+                                <Label>{translate("Introduced")}</Label>
+                                <Input type="datetime" placeholder="2001-12-31" onChange={elt => setNewComputer(
+                                    {...newComputer, introduced: elt.target.value}
+                                )}/>
+                            </FormGroup>
 
-                            <Label>{translate("Discontinued")}</Label>
-                            <Input placeholder="2011-12-31" onChange={elt => setNewComputer(
-                                {...newComputer, discontinued: elt.target.value}
-                            )}/>
+                            <FormGroup>
+                                <Label>{translate("Discontinued")}</Label>
+                                <Input type="datetime" placeholder="2011-12-31" onChange={elt => setNewComputer(
+                                    {...newComputer, discontinued: elt.target.value}
+                                )}/>
+                            </FormGroup>
 
-                            <Label>{translate("Company")}</Label>
-                            <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
-                                <option value="">--</option>
-                                {companies && companies.map(elt =>
-                                    <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                            </select>
+                            <FormGroup>
+                                <Label>{translate("Company")}</Label>
+                                <select onChange={elt => setNewComputer({...newComputer, company: companyToJSON(elt.target.value)})}>
+                                    <option value="">--</option>
+                                    {companies && companies.map(elt =>
+                                        <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                                </select>
+                            </FormGroup>
 
                             <button onClick={() => addComputer()}>Confirm</button>
-                        </>
+
+                        </Form>
                     }
 
                     <div id="searchbar">
-                        <Input placeholder={"Search..."} onChange={elt => editSearch(elt.target.value)}/>
+                        <Label>{translate("Search")}</Label>
+                        <Input placeholder="Powerbook" onChange={elt => editSearch(elt.target.value)}/>
                         <button className="button2" onClick={() => setSearch(result) & setPage(1)}>OK</button>
                     </div>
                     <br/>
@@ -206,8 +216,7 @@ function Dashboard() {
                                 <td>
                                     <button onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}</button>
                                 </td>
-                                <td>{translate("Delete")}</td>
-                                <td>{translate("Edit")}</td>
+                                <td>{translate("Actions")}</td>
                             </tr>
                             </thead>
 

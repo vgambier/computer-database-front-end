@@ -22,25 +22,29 @@ function Computer(props) {
                     <td> {introduced} </td>
                     <td> {discontinued} </td>
                     <td> {printCompany({company})} </td>
-                    <td><Button className="button" onClick={() => props.delete(id)}>{translate('Delete')}</Button></td>
-                    <td><Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button></td>
+                    <td>
+                        <Button className="button" onClick={() => props.delete(id)}>{translate('Delete')} </Button>
+                        <Button className="button" onClick={() => setEditMode(!editMode)}>{translate('Edit')}</Button>
+                    </td>
                 </>
                 :
                 <>
                     <td><Input defaultValue={name} onChange={elt => setComputer({...computer, name: elt.target.value})}/></td>
-                    <td><Input defaultValue={introduced}
+                    <td><Input type="datetime" defaultValue={introduced}
                                onChange={elt => setComputer({...computer, introduced: elt.target.value})}/></td>
-                    <td><Input defaultValue={discontinued}
+                    <td><Input type="datetime" defaultValue={discontinued}
                                onChange={elt => setComputer({...computer, discontinued: elt.target.value})}/></td>
                     <td><select onChange={elt => setComputer({...computer, company: companyToJSON(elt.target.value)})}>
                         <option value="">--</option>
                         {companies && companies.map(elt => displayCompanyOption({company}, elt))}
                     </select></td>
 
-                    <Button onClick={() => {
-                        setEditMode(!editMode);
-                        props.edit(computer);
-                    }}>Confirm</Button>
+                    <td>
+                        <Button className="button" onClick={() => {
+                            setEditMode(!editMode);
+                            props.edit(computer);
+                        }}>Confirm</Button>
+                    </td>
                 </>
             }
         </I18nProvider>
