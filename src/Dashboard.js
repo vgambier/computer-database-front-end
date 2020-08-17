@@ -22,8 +22,8 @@ function Dashboard() {
     /* HTTP requests */
 
     // Count computers
-    const [{data: computersCount,executeCount}] = useAxios(`${server_url}/computers/count`);
-
+    const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
+    const [computersCount,setComputersCount] = useState(count_data);
     // Count companies
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
@@ -100,7 +100,7 @@ function Dashboard() {
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
-            return (Math.floor(computersCount / nbEntries)) + 1;
+            return (Math.floor(computersCount/ nbEntries)) + 1;
         }
     }
 
@@ -112,7 +112,6 @@ function Dashboard() {
     }
 
     // Use effects
-
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
@@ -120,6 +119,7 @@ function Dashboard() {
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
+    useEffect(() => setComputersCount(count_data), [count_data]);
 
     return (
         <div id="body1">
@@ -162,7 +162,7 @@ function Dashboard() {
                                     <option key={elt.id} value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                             </select>
 
-                            <button onClick={() => addComputer() & executeCount}>Confirm</button>
+                            <button onClick={() => addComputer() & setComputersCount(computersCount+1) & setPage(countPages())}>Confirm</button>
                         </>
                     }
 
@@ -176,7 +176,7 @@ function Dashboard() {
                             onClick={() => setPage(Math.max(1, page - 1))}>{translate("Previous Page")}</button>
                     <button className="button4">{page}</button>
                     <button className="button"
-                            onClick={() => setPage(Math.min(/* TODO countPages()*/100, page + 1))}>{translate("Next Page")}</button>
+                            onClick={() => setPage(Math.min(countPages(), page + 1))}>{translate("Next Page")}</button>
                     <button className="button"
                             onClick={() => setPage(countPages())}>{translate("Last Page")}</button>
                     <br/>
@@ -216,7 +216,9 @@ function Dashboard() {
                                                            delete={deleteComputer}
                                                            edit={editComputer}
                                                            locale={locale}
-                                                            count={executeCount}/></tr>
+                                                           count={computersCount}
+                                                           set={setComputersCount}
+                                                            /></tr>
                             )}
 
                             </tbody>
