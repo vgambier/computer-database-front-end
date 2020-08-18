@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Input} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import translate from "./i18n/messages/translate";
 import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
@@ -26,7 +25,7 @@ function Computer(props) {
                     <td> {printCompany({company})} </td>
                     <td>
                         <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="28" width="25"/></Button>
-                        <Button className="button" onClick={() => props.delete(id)}><img src={deletes} alt="delete" height="28" width="25"/></Button>
+                        <Button className="button" onClick={() => props.delete(id) & props.set(props.count-1)}><img src={deletes} alt="delete" height="28" width="25"/></Button>
                     </td>
                 </>
                 :

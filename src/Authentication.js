@@ -1,9 +1,10 @@
-import {Button, Input} from "reactstrap";
+import {Button, Input, Label} from "reactstrap";
 import Dashboard from "./Dashboard";
 import React, {useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
+import translate from "./i18n/messages/translate";
 import './Dashboard.css';
 
 function Authentication(props) {
@@ -46,16 +47,20 @@ function Authentication(props) {
 
             {!props.authenticated ?
                 <div id="login">
-                    <Input type="text" placeholder="Username" onChange={elt => setUser({...user, username: elt.target.value})}/>
-                    <Input type="password" placeholder="Password" onChange={elt => setUser({...user, password: elt.target.value})}/>
-                    <Button onClick={() => onLogin()}>Login</Button>
+                    <Label>{translate("Username")}</Label>
+                    <Input type="text" placeholder="Gaëtan" onChange={elt => setUser({...user, username: elt.target.value})}/>
+                    <Label>{translate("Password")}</Label>
+                    <Input type="password" placeholder="123456" onChange={elt => setUser({...user, password: elt.target.value})}/>
+                    <Button onClick={() => onLogin()}>{translate("Login")}</Button>
                     {errorMessage}
                 </div>
+
                 :
                 <div id="login">
-                    <Button onClick={() => onLogout()}>Logout</Button>
+                    <Button onClick={() => onLogout()}>{translate("Logout")}</Button>
                 </div>
             }
+
         </div>
     );
 }
