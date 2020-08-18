@@ -22,7 +22,7 @@ export default {
         'Login': 'Connexion',
         'Logout': 'Déconnexion',
         'Actions': 'Actions',
-        'Home': 'Menu principal',
+        'Home': 'Menu',
         'Dashboard': 'Collection',
         'Users': 'Utilisateurs',
         'Companies': 'Entreprises',

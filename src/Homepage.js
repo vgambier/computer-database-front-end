@@ -43,22 +43,12 @@ function Homepage() {
                         </div>
                     </div>
 
-
-
-
                     <div id="vertical-menu">
-                        <li><a className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
+                        <li><a path="/Homepage" className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
                         <li><a className={!authenticated ? "" : "active"}>{translate("Dashboard")}</a></li>
-                        <li><a className={!authenticated ? "" : "active"}>{translate("Users")}</a></li>
+                        <li><a>{translate("Users")}</a></li>
                         <button onClick={() => setMode(!mode)}> SWITCH</button>
                     </div>
-                </div>
-
-                <div id="drapeau">
-                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}>
-                        <img src={english} alt="english" width="20"/></button>
-                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}>
-                        <img src={french} alt="french" width="20"/></button>
                 </div>
 
                 <div id="main-page">
@@ -66,6 +56,13 @@ function Homepage() {
                     <div className="content">
 
                         <header>
+
+                            <div id="drapeau">
+                                <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                                    <img src={english} alt="english" width="58"/></button>
+                                <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
+                                    <img src={french} alt="french" width="50"/></button>
+                            </div>
 
                             <ul className="write">
                                 <div className="Authentication">
@@ -77,11 +74,11 @@ function Homepage() {
                                             :
                                             <Users  locale={locale}/>
                                         : <></>}
-
                                 </div>
                             </ul>
 
                         </header>
+
 
                         <div className="Homepage">
 

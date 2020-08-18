@@ -48,16 +48,16 @@ function Authentication(props) {
             {!props.authenticated ?
                 <div id="login">
                     <Label>{translate("Username")}</Label>
-                    <Input type="text" placeholder="Gaëtan" onChange={elt => setUser({...user, username: elt.target.value})}/>
-                    <Label>{translate("Password")}</Label>
-                    <Input type="password" placeholder="123456" onChange={elt => setUser({...user, password: elt.target.value})}/>
-                    <Button onClick={() => onLogin()}>{translate("Login")}</Button>
-                    {errorMessage}
+                    <Input type="text" placeholder="Gaëtan" onChange={elt => setUser({...user, username: elt.target.value})}/>&nbsp;
+                    <Label>{translate(" Password")}</Label>
+                    <Input type="password" placeholder="123456" onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
+                    <Button className="button6" onClick={() => onLogin()}>{translate("Login")}</Button>&nbsp;
+                    {errorMessage}&nbsp;&nbsp;
                 </div>
 
                 :
                 <div id="login">
-                    <Button onClick={() => onLogout()}>{translate("Logout")}</Button>
+                    <Button className="button6" onClick={() => onLogout()}>{translate("Logout")}</Button>
                 </div>
             }
 

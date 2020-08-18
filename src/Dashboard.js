@@ -138,7 +138,7 @@ function Dashboard(props) {
                 <br/>
 
                 <div id="searchbar">
-                    <Label>{translate("Search")}</Label>
+                    <Label><h8>{translate("Search")}</h8></Label>
                     <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
                     <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
                 </div>
@@ -212,25 +212,25 @@ function Dashboard(props) {
 
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.id") & setPage(1)}><h7><b>{translate("Id")}⬆⬇</b></h7></button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.name") & setPage(1)}><h7>{translate("Name")}⬆⬇</h7></button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇</button>
+                                        onClick={() => setOrderBy("introduced") & setPage(1)}><h7>{translate("Introduced")}⬆⬇</h7></button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇</button>
+                                        onClick={() => setOrderBy("discontinued") & setPage(1)}><h7>{translate("Discontinued")}⬆⬇</h7></button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.company.name") & setPage(1)}><h7>{translate("Company")}⬆⬇</h7></button>
                             </td>
-                            <td><b>{translate("Actions")}</b></td>
+                            <td>{translate("Actions")}</td>
                         </tr>
                         </thead>
 
