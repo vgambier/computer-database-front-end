@@ -15,20 +15,19 @@ function Computer(props) {
     const {id, name, introduced, discontinued, company} = computer;
 
     const customStyles = {
-        content : {
-            top                   : '50%',
-            left                  : '50%',
-            right                 : 'auto',
-            bottom                : 'auto',
-            marginRight           : '-50%',
-            transform             : 'translate(-50%, -50%)'
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
         }
     };
 
-
-
     let subtitle;
-    const [modalIsOpen,setIsOpen] = React.useState(false);
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
     function openModal() {
         setIsOpen(true);
     }
@@ -38,17 +37,14 @@ function Computer(props) {
         subtitle.style.color = '#ff0000';
     }
 
-    function closeModal(){
+    function closeModal() {
         setIsOpen(false);
     }
 
-    function confirm(id)
-    {
+    function confirm(id) {
         props.delete(id);
-        props.set(props.count-1);
+        props.set(props.count - 1);
     }
-
-
 
     return (
         <I18nProvider locale={props.locale}>
@@ -65,6 +61,7 @@ function Computer(props) {
                     <td>
                         <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit" height="28" width="25"/></Button>
                         <button className="button" onClick={() => setIsOpen(!modalIsOpen)}><img src={deletes} alt="delete" height="28" width="25"/></button>
+
                         <Modal
                             isOpen={modalIsOpen}
                             onAfterOpen={afterOpenModal}
@@ -77,7 +74,7 @@ function Computer(props) {
                             <button onClick={() => closeModal() & confirm(id)}>DELETE</button>
                             <div>I am a modal</div>
                             <form>
-                                <input />
+                                <input/>
                                 <button>WOW!</button>
                             </form>
                         </Modal>
@@ -106,4 +103,5 @@ function Computer(props) {
         </I18nProvider>
     );
 }
+
 export default Computer;

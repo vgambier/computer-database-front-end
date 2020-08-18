@@ -9,9 +9,10 @@ import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
 import {AvForm, AvField} from 'availity-reactstrap-validation';
+import deletes from "./images/corbeille.png";
+import Modal from "react-modal";
 
 function Dashboard(props) {
-
 
     // For pagination
     const [page, setPage] = useState(1);
@@ -57,9 +58,28 @@ function Dashboard(props) {
 
     /* End of HTTP requests */
 
-    // Adding logic
+    /* Adding logic */
 
-    const [addMode, setAddMode] = useState(false);
+    // Modal / Pop-up
+
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    function closeModal() {
+        setIsAddModalOpen(false);
+    }
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
+
+    // Form submission and validation
 
     const [newComputer, setNewComputer] = useState({
         id: "",
@@ -77,6 +97,7 @@ function Dashboard(props) {
             setDateMessage("Discontinued date must be after introduced date");
         } else {
             addComputer();
+            closeModal();
         }
     }
 
@@ -89,8 +110,9 @@ function Dashboard(props) {
         console.log(values);
     }
 
+    // Actually adding the computer to both the database and the webapp
+
     function addComputer() {
-        setAddMode(!addMode);
         executeAdd({data: newComputer}).then(
             response => {
                 newComputer.id = response.data.toString();
@@ -99,6 +121,8 @@ function Dashboard(props) {
                 setPage(countPages());
             });
     }
+
+    /* End of adding logic */
 
     // Editing logic
     function editComputer(updatedComputer) {
@@ -136,7 +160,6 @@ function Dashboard(props) {
         setResult(string);
     }
 
-
     // Use effects
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
@@ -146,7 +169,6 @@ function Dashboard(props) {
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
     useEffect(() => setComputersCount(count_data), [count_data]);
-
 
     return (
 
@@ -172,12 +194,14 @@ function Dashboard(props) {
                     <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                     &nbsp;
 
-                    {!addMode ?
+                    <button className="button3"
+                            onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
 
-                        <button className="button3"
-                                onClick={() => setAddMode(!addMode)}><b>{translate("Add")}</b></button>
-
-                        :
+                    <Modal isOpen={isAddModalOpen}
+                           onRequestClose={closeModal}
+                           style={customStyles}
+                           contentLabel="Add a computer">
+                        <h2> {translate("Add")}</h2>
 
                         <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
                             <AvField name="name" label={translate("Name")} type="text"
@@ -212,7 +236,9 @@ function Dashboard(props) {
                             <Button className="button">Confirm</Button>
 
                         </AvForm>
-                    }
+
+                        <Button className="button" onClick={() => closeModal()}>Cancel</Button>
+                    </Modal>
 
                 </div>
                 <br/> <br/>
@@ -267,13 +293,9 @@ function Dashboard(props) {
                                 />
                             </tr>
                     )}
-
                     </tbody>
-
                 </Table>
-
             </div>
-
         </I18nProvider>
     );
 }
