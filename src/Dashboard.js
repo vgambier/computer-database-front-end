@@ -5,7 +5,7 @@ import useAxios from "axios-hooks";
 import Computer from "./Computer";
 import {Table, Input, Label, Form, FormGroup} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
-import {I18nProvider, LOCALES} from "./i18n";
+import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
 

@@ -28,6 +28,9 @@ export default {
         'Companies': 'Entreprises',
         'desc': 'Application de gestion de BDD',
         'Username': "Nom d'utilisateur",
-        'Password': 'Mot de passe'
+        'Password': 'Mot de passe',
+        'State': 'Etat',
+        'Authority': 'Autorité',
+        'Secondary': 'Secondaire'
     }
 }

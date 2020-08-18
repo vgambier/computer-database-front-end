@@ -28,6 +28,10 @@ export default {
         'Companies': 'Companies',
         'desc': 'Application of computer databases',
         'Username': 'Username',
-        'Password': 'Password'
+        'Password': 'Password',
+        'State': 'State',
+        'Authority': 'Authority',
+        'Secondary': 'Secondary'
+
     }
 }

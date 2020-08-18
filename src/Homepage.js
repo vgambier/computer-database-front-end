@@ -49,7 +49,7 @@ function Homepage() {
                     <div id="vertical-menu">
                         <li><a className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
                         <li><a className={!authenticated ? "" : "active"}>{translate("Dashboard")}</a></li>
-                        <li><a className={!authenticated ? "" : "active"}>{translate("Users")}</a></li>
+                        <li><a className={authenticated ? "" : "active"}>{translate("Users")}</a></li>
                         <button onClick={() => setMode(!mode)}> SWITCH</button>
                     </div>
                 </div>
