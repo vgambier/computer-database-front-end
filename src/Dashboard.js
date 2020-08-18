@@ -81,7 +81,9 @@ function Dashboard(props) {
     }
 
     function handleInvalidSubmit(event, errors, values) {
-        console.log("Invalid form submission:");
+        if (!values.introduced || !values.discontinued || new Date(values.introduced) < new Date(values.discontinued)) {
+            setDateMessage("");
+        }
         console.log(event);
         console.log(errors);
         console.log(values);
@@ -94,7 +96,7 @@ function Dashboard(props) {
                 newComputer.id = response.data.toString();
                 setComputers(computers => [...computers, newComputer]);
                 setComputersCount(computersCount + 1);
-		        setPage(countPages());
+                setPage(countPages());
             });
     }
 
@@ -213,60 +215,60 @@ function Dashboard(props) {
                 </div>
                 <br/> <br/>
 
-                    <Table>
+                <Table>
 
-                        <thead>
-                        <tr>
+                    <thead>
+                    <tr>
 
-                            <td>
-                                <button className="button6"
-                                        onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇
-                                </button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                        onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇
-                                </button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                        onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇
-                                </button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                        onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇
-                                </button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                        onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇
-                                </button>
-                            </td>
-                            <td><b>{translate("Actions")}</b></td>
-                        </tr>
-                        </thead>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇
+                            </button>
+                        </td>
+                        <td><b>{translate("Actions")}</b></td>
+                    </tr>
+                    </thead>
 
-                        <tbody>
+                    <tbody>
 
-                        {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer =>
-                                <tr key={computer.id}>
-                                    <Computer
-                                        computer={computer}
-                                        companies={companies}
-                                        delete={deleteComputer}
-                                        edit={editComputer}
-                                        locale={props.locale}
-                                        count={computersCount}
-                                        set={setComputersCount}
-                                    />
-                                </tr>
-                        )}
+                    {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                        computer =>
+                            <tr key={computer.id}>
+                                <Computer
+                                    computer={computer}
+                                    companies={companies}
+                                    delete={deleteComputer}
+                                    edit={editComputer}
+                                    locale={props.locale}
+                                    count={computersCount}
+                                    set={setComputersCount}
+                                />
+                            </tr>
+                    )}
 
-                        </tbody>
+                    </tbody>
 
-                    </Table>
+                </Table>
 
             </div>
 
