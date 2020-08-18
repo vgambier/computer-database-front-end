@@ -9,7 +9,6 @@ import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
 import {AvForm, AvField} from 'availity-reactstrap-validation';
-import deletes from "./images/corbeille.png";
 import Modal from "react-modal";
 
 function Dashboard(props) {
@@ -64,7 +63,7 @@ function Dashboard(props) {
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-    function closeModal() {
+    function closeAddModal() {
         setIsAddModalOpen(false);
     }
 
@@ -97,7 +96,7 @@ function Dashboard(props) {
             setDateMessage("Discontinued date must be after introduced date");
         } else {
             addComputer();
-            closeModal();
+            closeAddModal();
         }
     }
 
@@ -125,9 +124,9 @@ function Dashboard(props) {
     /* End of adding logic */
 
     // Editing logic
-    function editComputer(updatedComputer) {
+    function editComputer(id, updatedComputer) {
 
-        const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(updatedComputer.id);
+        const indexOfEntryOfId = computers.map(computer => computer.id).indexOf(id);
         executeEdit({data: updatedComputer}).then(() => {
             const newComputers = [...computers];
             newComputers[indexOfEntryOfId] = updatedComputer;
@@ -198,7 +197,7 @@ function Dashboard(props) {
                             onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
 
                     <Modal isOpen={isAddModalOpen}
-                           onRequestClose={closeModal}
+                           onRequestClose={closeAddModal}
                            style={customStyles}
                            contentLabel="Add a computer">
                         <h2> {translate("Add")}</h2>
@@ -237,7 +236,7 @@ function Dashboard(props) {
 
                         </AvForm>
 
-                        <Button className="button" onClick={() => closeModal()}>Cancel</Button>
+                        <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
                     </Modal>
 
                 </div>
