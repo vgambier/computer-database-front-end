@@ -150,7 +150,7 @@ function Dashboard() {
 
                 <div id="searchbar">
                     <Label>{translate("Search")}</Label>
-                    <Input placeholder={"Powerbook"} onChange={elt => editSearch(elt.target.value)}/>
+                    <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
                     <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
                 </div>
                 &nbsp;
@@ -159,6 +159,7 @@ function Dashboard() {
                     <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                     <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                     <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+                    &nbsp;
                     {!addMode ?
 
                         <button className="button3"
@@ -215,8 +216,6 @@ function Dashboard() {
                 </div>
                 <br/> <br/>
 
-                <div id="table">
-
                     <Table>
 
                         <thead>
@@ -265,8 +264,6 @@ function Dashboard() {
                         </tbody>
 
                     </Table>
-
-                </div>
 
             </div>
 

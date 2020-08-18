@@ -51,11 +51,11 @@ function Authentication(props) {
                     <Button onClick={() => onLogin()}>Login</Button>
                     {errorMessage}
                 </div>
-
                 :
+                <div id="login">
                     <Button onClick={() => onLogout()}>Logout</Button>
+                </div>
             }
-
         </div>
     );
 }
