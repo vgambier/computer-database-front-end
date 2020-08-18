@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import {printCompany, companyToJSON, displayCompanyOption} from './CompanyHelper';
+import {printCompany, companyToJSON, displayCompanyOption, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
@@ -124,9 +124,10 @@ function Computer(props) {
                         />
 
                         <AvField name="company" label={translate("Company")} type="select"
-                                 value="6"
+                                 defaultValue={getCompanyJsonString(company)}
                                  onChange={elt => setUpdatedComputer({...updatedComputer, company: companyToJSON(elt.target.value)})}>
                             <option value="">--</option>
+
                             {companies && companies.map(elt => displayCompanyOption({company}, elt))}
 
                         </AvField>
