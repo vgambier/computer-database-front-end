@@ -115,13 +115,12 @@ function Users(props) {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label>{translate("Introduced")}</Label>
-                        <Input type="datetime"
-                               placeholder="2001-12-31"
+                        <Label>{translate("State")}</Label>
+                        <Input placeholder="0"
                                onChange={elt => setNewUser(
                                    {
                                        ...newUser,
-                                       introduced: elt.target.value
+                                       enabled: elt.target.value
                                    }
                                )}/>
                     </FormGroup>

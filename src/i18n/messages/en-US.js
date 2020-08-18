@@ -19,7 +19,15 @@ export default {
         'inside_db': 'inside the database',
         'Computers': 'Computers',
         'Search': 'Search: ',
+        'Login': 'Login',
         'Logout': 'Logout',
-        'Actions': 'Actions'
+        'Actions': 'Actions',
+        'Home': 'Home',
+        'Dashboard': 'Dashboard',
+        'Users': 'Users',
+        'Companies': 'Companies',
+        'desc': 'Application of computer databases',
+        'Username': 'Username',
+        'Password': 'Password'
     }
 }

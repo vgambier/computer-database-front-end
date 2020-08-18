@@ -7,14 +7,10 @@ import {Table, Input, Label, Form, FormGroup} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
-import english from "./images/english.jpg";
-import french from "./images/french.jpg";
 import Buttons from "./Buttons"
 
-function Dashboard() {
+function Dashboard(props) {
 
-    // For i18n
-    const [locale, setLocale] = useState(LOCALES.ENGLISH);
 
     // For pagination
     const [page, setPage] = useState(1);
@@ -132,18 +128,11 @@ function Dashboard() {
 
     return (
 
-        <I18nProvider locale={locale}>
+        <I18nProvider locale={props.locale}>
             <div className="Dashboard">
 
-                <Buttons page={page} countPages={countPages} setPage={setPage} locale={locale}/>
+                <Buttons page={page} countPages={countPages} setPage={setPage} locale={props.locale}/>
                 <br/>
-
-                <div id="drapeau">
-                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}>
-                        <img src={english} alt="english" width="20"/></button>
-                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}>
-                        <img src={french} alt="french" width="20"/></button>
-                </div>
 
                 <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
                 <br/>
@@ -256,7 +245,7 @@ function Dashboard() {
                                         companies={companies}
                                         delete={deleteComputer}
                                         edit={editComputer}
-                                        locale={locale}
+                                        locale={props.locale}
                                         count={computersCount}
                                         set={setComputersCount}
                                     /></tr>

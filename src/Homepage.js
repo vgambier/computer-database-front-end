@@ -7,10 +7,17 @@ import Authentication from "./Authentication";
 import axios from "axios";
 import Dashboard from "./Dashboard";
 import Users from "./Users";
+import {I18nProvider, LOCALES} from "./i18n";
+import translate from "./i18n/messages/translate";
+import english from "./images/english.jpg";
+import french from "./images/french.jpg";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
 function Homepage() {
+
+    // For i18n
+    const [locale, setLocale] = useState(LOCALES.ENGLISH);
 
     const [authenticated, setAuthenticated] = useState(false);
     const [mode, setMode] = useState(true);
@@ -24,61 +31,73 @@ function Homepage() {
 
     return (
 
-        <div id="page">
-            {loginIfTokenExists()}
-            <div id="navigation">
-                <div align="center">
-                    <div id="center">
-                        <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
-                        COMPUTER DATABASE,<br/>
-                        <p><i>Application of computer databases</i></p>
+        <I18nProvider locale={locale}>
+            <div id="page">
+                {loginIfTokenExists()}
+                <div id="navigation">
+                    <div align="center">
+                        <div id="center">
+                            <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
+                            {translate("CDB")},<br/>
+                            <p><i>{translate("desc")}</i></p>
+                        </div>
+                    </div>
+
+
+
+
+                    <div id="vertical-menu">
+                        <li><a className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
+                        <li><a className={!authenticated ? "" : "active"}>{translate("Dashboard")}</a></li>
+                        <li><a className={!authenticated ? "" : "active"}>{translate("Users")}</a></li>
+                        <button onClick={() => setMode(!mode)}> SWITCH</button>
                     </div>
                 </div>
 
-                <div id="vertical-menu">
-                    <li><a className={authenticated ? "" : "active"}>Home</a></li>
-                    <li><a className={!authenticated ? "" : "active"}>Dashboard</a></li>
-                    <li><a className={!authenticated ? "" : "active"}>My Account</a></li>
-                    <button onClick={() => setMode(!mode)}> SWITCH</button>
+                <div id="drapeau">
+                    <button className="english" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                        <img src={english} alt="english" width="20"/></button>
+                    <button className="french" onClick={() => setLocale(LOCALES.FRENCH)}>
+                        <img src={french} alt="french" width="20"/></button>
                 </div>
-            </div>
 
-            <div id="main-page">
+                <div id="main-page">
 
-                <div className="content">
+                    <div className="content">
 
-                    <header>
+                        <header>
 
-                        <ul className="write">
-                            <div className="Authentication">
-                                <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
+                            <ul className="write">
+                                <div className="Authentication">
+                                    <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
 
-                                {authenticated ?
-                                    mode ?
-                                        <Dashboard/>
-                                        :
-                                        <Users/>
-                                    : <></>}
+                                    {authenticated ?
+                                        mode ?
+                                            <Dashboard  locale={locale}/>
+                                            :
+                                            <Users  locale={locale}/>
+                                        : <></>}
 
-                            </div>
-                        </ul>
+                                </div>
+                            </ul>
 
-                    </header>
+                        </header>
 
-                    <div className="Homepage">
+                        <div className="Homepage">
 
-                        <div id="moncadre" hidden={authenticated}>
-                            <div className="slider">
-                                <div className="slides">
-                                    <div className="slide"><img src={dashboard} alt="dashboard"/></div>
-                                    <div className="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                            <div id="moncadre" hidden={authenticated}>
+                                <div className="slider">
+                                    <div className="slides">
+                                        <div className="slide"><img src={dashboard} alt="dashboard"/></div>
+                                        <div className="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </I18nProvider>
     );
 }
 

@@ -4,12 +4,17 @@ import {I18nProvider} from "./i18n";
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
+import {printAuthority, authorityToJSON, displayAuthorityOption1,displayAuthorityOption2, displayEnabledOption } from './AuthorityHelper';
+import {displayCompanyOption} from "./CompanyHelper";
 
 function User(props) {
 
     const [user, setUser] = useState(props.user);
     const [editMode, setEditMode] = useState(false);
     const {username,enabled,authorityList} = user;
+
+    const authorities = ["ROLE_ADMIN","ROLE_USER","ROLE_TEST"];
+    const state= ["0","1"];
 
 
     return (
@@ -29,11 +34,16 @@ function User(props) {
                 :
                 <>
                     <td><Input defaultValue={username} onChange={elt => setUser({...user, username: elt.target.value})}/></td>
-                    <td><Input defaultValue={enabled}
-                               onChange={elt => setUser({...user, authorityList: elt.target.value})}/></td>
+
                     <td><select onChange={elt => setUser({...user, enabled: elt.target.value})}>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
+                        {state.map(elt => displayEnabledOption({enabled}, elt))}
+                    </select></td>
+
+                    <td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
+                        {authorities.map(elt => displayAuthorityOption1({authorityList}, elt))}
+                    </select></td>
+                    <td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
+                        {authorities.map(elt => displayAuthorityOption2({authorityList}, elt))}
                     </select></td>
 
                     <td>
