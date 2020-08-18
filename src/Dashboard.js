@@ -185,40 +185,29 @@ function Dashboard() {
                                          maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
                                      }}
                                      placeholder="Fancy Computer #15"
-                                     onChange={elt => setNewComputer(
-                                         {
-                                             ...newComputer,
-                                             name: elt.target.value
-                                         })}
+                                     onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
                             />
 
                             <AvField name="introduced" label={translate("Introduced")} type="date"
                                      placeholder="2001-12-31"
-                                     onChange={elt => setNewComputer(
-                                         {
-                                             ...newComputer,
-                                             introduced: elt.target.value
-                                         })}
+                                     onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
                             />
 
                             <AvField name="discontinued" label={translate("Discontinued")} type="date"
                                      placeholder="2011-12-31"
-                                     onChange={elt => setNewComputer(
-                                         {
-                                             ...newComputer, discontinued: elt.target.value
-                                         })}
+                                     onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
                             />
 
                             <AvField name="company" label={translate("Company")} type="select"
                                      onChange={elt => setNewComputer({
                                          ...newComputer, company: companyToJSON(elt.target.value)
                                      })}>
-                            <option value="">--</option>
+                                <option value="" selected="selected">--</option>
                                 {companies && companies.map(elt =>
                                     <option key={elt.id}
                                             value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                             </AvField>
-                            <Button>Confirm</Button>
+                            <Button className="button">Confirm</Button>
 
                         </AvForm>
                     }
