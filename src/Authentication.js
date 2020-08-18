@@ -1,5 +1,4 @@
 import {Button, Input, Label} from "reactstrap";
-import Dashboard from "./Dashboard";
 import React, {useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";

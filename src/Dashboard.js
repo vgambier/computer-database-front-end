@@ -3,12 +3,12 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input, Label, Form, FormGroup} from "reactstrap";
+import {Table, Input, Label, Button} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
-import Buttons from "./Buttons";
-
+import Buttons from "./Buttons"
+import {AvForm, AvField} from 'availity-reactstrap-validation';
 
 function Dashboard(props) {
 
@@ -29,7 +29,7 @@ function Dashboard(props) {
     const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
-    const [{data}, executeRefresh] = useAxios(
+    const [{data}] = useAxios(
         `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search,
         {useCache: false});
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
@@ -69,6 +69,25 @@ function Dashboard(props) {
         company: {id: null, name: null}
     });
 
+    const [dateMessage, setDateMessage] = useState("");
+
+    function handleValidSubmit(event, values) {
+
+        if (values.introduced && values.discontinued && new Date(values.introduced) >= new Date(values.discontinued)) {
+            setDateMessage("Discontinued date must be after introduced date");
+        } else {
+            addComputer();
+        }
+    }
+
+    function handleInvalidSubmit(event, errors, values) {
+        if (!values.introduced || !values.discontinued || new Date(values.introduced) < new Date(values.discontinued)) {
+            setDateMessage("");
+        }
+        console.log(event);
+        console.log(errors);
+        console.log(values);
+    }
 
     function addComputer() {
         setAddMode(!addMode);
@@ -76,6 +95,8 @@ function Dashboard(props) {
             response => {
                 newComputer.id = response.data.toString();
                 setComputers(computers => [...computers, newComputer]);
+                setComputersCount(computersCount + 1);
+                setPage(countPages());
             });
     }
 
@@ -115,6 +136,7 @@ function Dashboard(props) {
         setResult(string);
     }
 
+
     // Use effects
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
@@ -149,6 +171,7 @@ function Dashboard(props) {
                     <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                     <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                     &nbsp;
+
                     {!addMode ?
 
                         <button className="button3"
@@ -156,52 +179,39 @@ function Dashboard(props) {
 
                         :
 
-                        <Form>
-                            <FormGroup>
-                                <Label>{translate("Name")}</Label>
-                                <Input placeholder="Fancy Computer #15"
-                                       onChange={elt => setNewComputer(
-                                           {
-                                               ...newComputer,
-                                               name: elt.target.value
-                                           })}/>
-                            </FormGroup>
+                        <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+                            <AvField name="name" label={translate("Name")} type="text"
+                                     placeholder="Fancy Computer #15"
+                                     onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
+                                     validate={{
+                                         required: {value: true, errorMessage: 'This field is required'},
+                                         maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
+                                     }}
+                            />
 
-                            <FormGroup>
-                                <Label>{translate("Introduced")}</Label>
-                                <Input type="datetime"
-                                       placeholder="2001-12-31"
-                                       onChange={elt => setNewComputer(
-                                           {
-                                               ...newComputer,
-                                               introduced: elt.target.value
-                                           }
-                                       )}/>
-                            </FormGroup>
+                            <AvField name="introduced" label={translate("Introduced")} type="date"
+                                     placeholder="2001-12-31"
+                                     onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
+                            />
 
-                            <FormGroup>
-                                <Label>{translate("Discontinued")}</Label>
-                                <Input type="datetime" placeholder="2011-12-31" onChange={elt => setNewComputer(
-                                    {...newComputer, discontinued: elt.target.value}
-                                )}/>
-                            </FormGroup>
+                            <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                                     placeholder="2011-12-31"
+                                     onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
+                            />
+                            {dateMessage}
 
-                            <FormGroup>
-                                <Label>{translate("Company")}</Label>
-                                <select onChange={elt => setNewComputer({
-                                    ...newComputer, company: companyToJSON(elt.target.value)
-                                })}>
-                                    <option value="">--</option>
-                                    {companies && companies.map(elt =>
-                                        <option key={elt.id}
-                                                value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                                </select>
-                            </FormGroup>
+                            <AvField name="company" label={translate("Company")} type="select"
+                                     onChange={elt => setNewComputer({
+                                         ...newComputer, company: companyToJSON(elt.target.value)
+                                     })}>
+                                <option value="" selected="selected">--</option>
+                                {companies && companies.map(elt =>
+                                    <option key={elt.id}
+                                            value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                            </AvField>
+                            <Button className="button">Confirm</Button>
 
-                            <button
-                                onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm
-                            </button>
-                        </Form>
+                        </AvForm>
                     }
 
                 </div>
@@ -254,7 +264,8 @@ function Dashboard(props) {
                                     locale={props.locale}
                                     count={computersCount}
                                     set={setComputersCount}
-                                /></tr>
+                                />
+                            </tr>
                     )}
 
                     </tbody>
@@ -264,8 +275,7 @@ function Dashboard(props) {
             </div>
 
         </I18nProvider>
-    )
-        ;
+    );
 }
 
 export default Dashboard;
