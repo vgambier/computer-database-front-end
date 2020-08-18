@@ -73,12 +73,19 @@ function Dashboard() {
         company: {id: null, name: null}
     });
 
+    const [dateMessage, setDateMessage] = useState("");
+
     function handleValidSubmit(event, values) {
-        addComputer();
+
+        if (values.introduced && values.discontinued && new Date(values.introduced) >= new Date(values.discontinued)) {
+            setDateMessage("Discontinued date must be after introduced date");
+        } else {
+            addComputer();
+        }
     }
 
     function handleInvalidSubmit(event, errors, values) {
-        console.log("Invalid form submission");
+        console.log("Invalid form submission:");
         console.log(event);
         console.log(errors);
         console.log(values);
@@ -106,7 +113,6 @@ function Dashboard() {
 
     // Deleting logic
     function deleteComputer(id) {
-        console.log(id);
         executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
@@ -139,7 +145,6 @@ function Dashboard() {
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
     useEffect(() => setComputersCount(count_data), [count_data]);
-
 
     return (
 
@@ -180,12 +185,12 @@ function Dashboard() {
 
                         <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
                             <AvField name="name" label={translate("Name")} type="text"
+                                     placeholder="Fancy Computer #15"
+                                     onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
                                      validate={{
                                          required: {value: true, errorMessage: 'This field is required'},
                                          maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
                                      }}
-                                     placeholder="Fancy Computer #15"
-                                     onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
                             />
 
                             <AvField name="introduced" label={translate("Introduced")} type="date"
@@ -197,6 +202,7 @@ function Dashboard() {
                                      placeholder="2011-12-31"
                                      onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
                             />
+                            {dateMessage}
 
                             <AvField name="company" label={translate("Company")} type="select"
                                      onChange={elt => setNewComputer({
