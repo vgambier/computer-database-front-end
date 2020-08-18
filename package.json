@@ -11,8 +11,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^5.4.8",
+    "react-modal": "^3.11.2",
     "react-native-elements": "^2.2.1",
     "react-scripts": "3.4.1",
+    "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.5.1"
   },
   "scripts": {

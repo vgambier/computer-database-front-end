@@ -2,7 +2,7 @@ import {LOCALES} from "../locales";
 
 export default {
     [LOCALES.FRENCH]: {
-        'CDB': 'CDB !',
+        'CDB': 'CDB',
         'Name': 'Nom',
         'Introduced': 'Début',
         'Discontinued': 'Fin',
@@ -31,6 +31,7 @@ export default {
         'Password': 'Mot de passe',
         'State': 'Etat',
         'Authority': 'Autorité',
-        'Secondary': 'Secondaire'
+        'Secondary': 'Secondaire',
+        'Add a user': 'Ajouter un utilisateur'
     }
 }

@@ -37,8 +37,8 @@ function Homepage() {
                 <div id="navigation">
                     <div align="center">
                         <div id="center">
-                            <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
-                            {translate("CDB")},<br/>
+                            <img src={home} width="320"/><br/>
+                            {translate("CDB")}<br/>
                             <p><i>{translate("desc")}</i></p>
                         </div>
                     </div>

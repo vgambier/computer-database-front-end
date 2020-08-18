@@ -7,7 +7,8 @@ import {Table, Input, Label, Form, FormGroup} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
-import Buttons from "./Buttons"
+import Buttons from "./Buttons";
+
 
 function Dashboard(props) {
 
@@ -114,7 +115,6 @@ function Dashboard(props) {
         setResult(string);
     }
 
-
     // Use effects
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
@@ -198,61 +198,68 @@ function Dashboard(props) {
                                 </select>
                             </FormGroup>
 
-                            <button onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm</button>
+                            <button
+                                onClick={() => addComputer() & setComputersCount(computersCount + 1) & setPage(countPages())}>Confirm
+                            </button>
                         </Form>
                     }
 
                 </div>
                 <br/> <br/>
 
-                    <Table>
+                <Table>
 
-                        <thead>
-                        <tr>
+                    <thead>
+                    <tr>
 
-                            <td>
-                                <button className="button6"
-                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇</button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇</button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇</button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇</button>
-                            </td>
-                            <td>
-                                <button className="button6"
-                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇</button>
-                            </td>
-                            <td><b>{translate("Actions")}</b></td>
-                        </tr>
-                        </thead>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇
+                            </button>
+                        </td>
+                        <td>
+                            <button className="button6"
+                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇
+                            </button>
+                        </td>
+                        <td><b>{translate("Actions")}</b></td>
+                    </tr>
+                    </thead>
 
-                        <tbody>
+                    <tbody>
 
-                        {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                            computer =>
-                                <tr key={computer.id}>
-                                    <Computer
-                                        computer={computer}
-                                        companies={companies}
-                                        delete={deleteComputer}
-                                        edit={editComputer}
-                                        locale={props.locale}
-                                        count={computersCount}
-                                        set={setComputersCount}
-                                    /></tr>
-                        )}
+                    {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                        computer =>
+                            <tr key={computer.id}>
+                                <Computer
+                                    computer={computer}
+                                    companies={companies}
+                                    delete={deleteComputer}
+                                    edit={editComputer}
+                                    locale={props.locale}
+                                    count={computersCount}
+                                    set={setComputersCount}
+                                /></tr>
+                    )}
 
-                        </tbody>
+                    </tbody>
 
-                    </Table>
+                </Table>
 
             </div>
 

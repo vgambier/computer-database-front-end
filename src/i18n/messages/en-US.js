@@ -2,7 +2,7 @@ import {LOCALES} from "../locales";
 
 export default {
     [LOCALES.ENGLISH]: {
-        'CDB': 'ComputerDataBase!',
+        'CDB': 'ComputerDataBase',
         'Name': 'Name',
         'Introduced': 'Introduced',
         'Discontinued': 'Discontinued',
@@ -31,7 +31,8 @@ export default {
         'Password': 'Password',
         'State': 'State',
         'Authority': 'Authority',
-        'Secondary': 'Secondary'
+        'Secondary': 'Secondary',
+        'Add a user': 'Add a user'
 
     }
 }

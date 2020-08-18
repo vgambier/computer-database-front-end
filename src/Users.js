@@ -86,7 +86,7 @@ function Users(props) {
             {!addMode ?
 
                 <button className="button3"
-                        onClick={() => setAddMode(!addMode)}><b>{translate("Add a User")}</b></button>
+                        onClick={() => setAddMode(!addMode)}><b>{translate("Add a user")}</b></button>
 
                 :
 
