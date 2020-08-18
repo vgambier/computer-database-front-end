@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input, Label, Form, FormGroup} from "reactstrap";
+import {Table, Input, Label, Button} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
 import Buttons from "./Buttons"
+import {AvForm, AvField} from 'availity-reactstrap-validation';
 
 function Dashboard() {
 
@@ -72,6 +73,16 @@ function Dashboard() {
         company: {id: null, name: null}
     });
 
+    function handleValidSubmit(event, values) {
+        addComputer();
+    }
+
+    function handleInvalidSubmit(event, errors, values) {
+        console.log("Invalid form submission");
+        console.log(event);
+        console.log(errors);
+        console.log(values);
+    }
 
     function addComputer() {
         setAddMode(!addMode);
@@ -159,6 +170,7 @@ function Dashboard() {
                     <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
                     <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
                     <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
+
                     {!addMode ?
 
                         <button className="button3"
@@ -166,50 +178,49 @@ function Dashboard() {
 
                         :
 
-                        <Form>
-                            <FormGroup>
-                                <Label>{translate("Name")}</Label>
-                                <Input placeholder="Fancy Computer #15"
-                                       onChange={elt => setNewComputer(
-                                           {
-                                               ...newComputer,
-                                               name: elt.target.value
-                                           })}/>
-                            </FormGroup>
+                        <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+                            <AvField name="name" label={translate("Name")} type="text"
+                                     validate={{
+                                         required: {value: true, errorMessage: 'This field is required'},
+                                         maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
+                                     }}
+                                     placeholder="Fancy Computer #15"
+                                     onChange={elt => setNewComputer(
+                                         {
+                                             ...newComputer,
+                                             name: elt.target.value
+                                         })}
+                            />
 
-                            <FormGroup>
-                                <Label>{translate("Introduced")}</Label>
-                                <Input type="datetime"
-                                       placeholder="2001-12-31"
-                                       onChange={elt => setNewComputer(
-                                           {
-                                               ...newComputer,
-                                               introduced: elt.target.value
-                                           }
-                                       )}/>
-                            </FormGroup>
+                            <AvField name="introduced" label={translate("Introduced")} type="date"
+                                     placeholder="2001-12-31"
+                                     onChange={elt => setNewComputer(
+                                         {
+                                             ...newComputer,
+                                             introduced: elt.target.value
+                                         })}
+                            />
 
-                            <FormGroup>
-                                <Label>{translate("Discontinued")}</Label>
-                                <Input type="datetime" placeholder="2011-12-31" onChange={elt => setNewComputer(
-                                    {...newComputer, discontinued: elt.target.value}
-                                )}/>
-                            </FormGroup>
+                            <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                                     placeholder="2011-12-31"
+                                     onChange={elt => setNewComputer(
+                                         {
+                                             ...newComputer, discontinued: elt.target.value
+                                         })}
+                            />
 
-                            <FormGroup>
-                                <Label>{translate("Company")}</Label>
-                                <select onChange={elt => setNewComputer({
-                                    ...newComputer, company: companyToJSON(elt.target.value)
-                                })}>
-                                    <option value="">--</option>
-                                    {companies && companies.map(elt =>
-                                        <option key={elt.id}
-                                                value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                                </select>
-                            </FormGroup>
+                            <AvField name="company" label={translate("Company")} type="select"
+                                     onChange={elt => setNewComputer({
+                                         ...newComputer, company: companyToJSON(elt.target.value)
+                                     })}>
+                            <option value="">--</option>
+                                {companies && companies.map(elt =>
+                                    <option key={elt.id}
+                                            value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                            </AvField>
+                            <Button>Confirm</Button>
 
-                            <button onClick={() => addComputer()}>Confirm</button>
-                        </Form>
+                        </AvForm>
                     }
 
                 </div>
@@ -224,23 +235,28 @@ function Dashboard() {
 
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.id") & setPage(1)}>{translate("Id")}⬆⬇
+                                </button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.name") & setPage(1)}>{translate("Name")}⬆⬇
+                                </button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇</button>
+                                        onClick={() => setOrderBy("introduced") & setPage(1)}>{translate("Introduced")}⬆⬇
+                                </button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇</button>
+                                        onClick={() => setOrderBy("discontinued") & setPage(1)}>{translate("Discontinued")}⬆⬇
+                                </button>
                             </td>
                             <td>
                                 <button className="button6"
-                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇</button>
+                                        onClick={() => setOrderBy("computer.company.name") & setPage(1)}>{translate("Company")}⬆⬇
+                                </button>
                             </td>
                             <td><b>{translate("Actions")}</b></td>
                         </tr>
@@ -259,7 +275,8 @@ function Dashboard() {
                                         locale={locale}
                                         count={computersCount}
                                         set={setComputersCount}
-                                    /></tr>
+                                    />
+                                </tr>
                         )}
 
                         </tbody>
