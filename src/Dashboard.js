@@ -26,8 +26,6 @@ function Dashboard(props) {
     const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
     const [computersCount, setComputersCount] = useState(count_data);
 
-    // Count companies
-    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
     const [{data}] = useAxios(

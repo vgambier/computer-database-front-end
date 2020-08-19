@@ -22,8 +22,6 @@ function Homepage() {
     const [locale, setLocale] = useState(LOCALES.ENGLISH);
 
     const [authenticated, setAuthenticated] = useState(false);
-    const [mode, setMode] = useState(true);
-    const [betterMode, setBetterMode] = useState(true);
 
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
@@ -37,77 +35,76 @@ function Homepage() {
         <I18nProvider locale={locale}>
             <Router>
 
-            <div id="page">
-                {loginIfTokenExists()}
-                <div id="navigation">
-                    <div align="center">
-                        <div id="center">
-                            <img alt="home" src={home} width="320"/><br/>
-                            {translate("CDB")}<br/>
-                            <p><i>{translate("site_description")}</i></p>
+                <div id="page">
+                    {loginIfTokenExists()}
+                    <div id="navigation">
+                        <div align="center">
+                            <div id="center">
+                                <img alt="home" src={home} width="320"/><br/>
+                                {translate("CDB")}<br/>
+                                <p><i>{translate("site_description")}</i></p>
+                            </div>
+                        </div>
+
+                        <div id="vertical-menu">
+                            <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
+                            <li><Link to="/Dashboard"
+                                      className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
+                            <li><Link to="/CompanyDashboard"
+                                      className={!authenticated ? "" : "active"}>{translate("Companies")}</Link></li>
+                            <li><Link to="/Users">{translate("Users")}</Link></li>
                         </div>
                     </div>
 
-                    <div id="vertical-menu">
-                        <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
-                        <li><Link to="/Dashboard" className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
-                        <li>{translate("Companies")}</li>
-                        <li><Link to="/Users">{translate("Users")}</Link></li>
-                        <button onClick={() => setMode(!mode)}> SWITCH</button>
-                        <button onClick={() => { setMode(false); setBetterMode(!betterMode) }}> BETTER SWITCH
-                        </button>
+                    <div id="main-page">
 
-                    </div>
-                </div>
+                        <div className="content">
 
-                <div id="main-page">
+                            <header>
 
-                    <div className="content">
-
-                        <header>
-
-                            <div id="drapeau">
-                                <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
-                                    <img src={english} alt="english" width="58"/></button>
-                                <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
-                                    <img src={french} alt="french" width="50"/></button>
-                            </div>
-
-                            <ul className="write">
-                                <div className="Authentication">
-                                    <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
-
-                                    {authenticated ?
-
-                                        <Switch>
-                                            <Route path="/HomePage"><Dashboard/></Route>
-                                            <Route path="/Dashboard"><Dashboard/></Route>
-                                            <Route path="/CompanyDashboard"><Dashboard/></Route>
-                                            <Route path="/Users"><Users/></Route>
-                                        </Switch>
-
-                                        :
-
-                                        <></>}
+                                <div id="drapeau">
+                                    <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                                        <img src={english} alt="english" width="58"/></button>
+                                    <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
+                                        <img src={french} alt="french" width="50"/></button>
                                 </div>
-                            </ul>
 
-                        </header>
+                                <ul className="write">
+                                    <div className="Authentication">
+                                        <Authentication authenticated={authenticated}
+                                                        setAuthenticated={setAuthenticated}/>
 
-                        <div className="Homepage">
+                                        {authenticated ?
 
-                            <div id="moncadre" hidden={authenticated}>
-                                <div className="slider">
-                                    <div className="slides">
-                                        <div className="slide"><img src={dashboard} alt="dashboard"/></div>
-                                        <div className="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                                            <Switch>
+                                                <Route path="/HomePage"><Dashboard/></Route>
+                                                <Route path="/Dashboard"><Dashboard/></Route>
+                                                <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
+                                                <Route path="/Users"><Users/></Route>
+                                            </Switch>
+
+                                            :
+
+                                            <></>}
+                                    </div>
+                                </ul>
+
+                            </header>
+
+                            <div className="Homepage">
+
+                                <div id="moncadre" hidden={authenticated}>
+                                    <div className="slider">
+                                        <div className="slides">
+                                            <div className="slide"><img src={dashboard} alt="dashboard"/></div>
+                                            <div className="slide"><img src={dashboard2} alt="dashboard2"/></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </Router>
         </I18nProvider>
     );

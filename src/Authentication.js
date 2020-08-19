@@ -1,5 +1,5 @@
 import {Button, Input, Label} from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
@@ -8,7 +8,6 @@ import './Dashboard.css';
 
 function Authentication(props) {
 
-    //useEffect(() => setAuthenticated(authenticated), [authenticated]);
     const [errorMessage, setErrorMessage] = useState("");
 
     // HTTP request to get a token with a given username/password pair
@@ -30,11 +29,7 @@ function Authentication(props) {
     //const [login, setLogin] = useState("");
     // Get the User authority
     const [{data: user_data}, executeLoad] = useAxios(`${server_url}/users/` + login, {useCache: false});
-/*    useEffect(() => bidon(), [login]);
 
-    function bidon() {
-        executeLoad();
-    }*/
 
     const Roles = {
         ROLE_ADMIN: 2,
