@@ -26,7 +26,7 @@ function Dashboard(props) {
     const [computersCount, setComputersCount] = useState(count_data);
 
     // Count companies
-    const [{data: companiesCount}] = useAxios(`${server_url}/companies/count`);
+    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`);
 
     // Get all computers
     const [{data}] = useAxios(
@@ -177,7 +177,7 @@ function Dashboard(props) {
                 <Buttons page={page} countPages={countPages} setPage={setPage} locale={props.locale}/>
                 <br/>
 
-                <h2> {computersCount} {translate("Computers")} {translate("inside_db")}</h2>
+                <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>
                 <br/>
 
                 <div id="searchbar">

@@ -9,6 +9,7 @@ export default {
         'Id': "ID",
         'Company': 'Company',
         'Delete': 'Delete a computer',
+        'Delete_company': 'Delete a company',
         'Edit': 'Edit a computer',
         'Add': 'Add a computer',
         'Welcome': 'Welcome to',
@@ -18,6 +19,7 @@ export default {
         'Last Page': 'Last Page',
         'inside_db': 'inside the database',
         'Computers': 'Computers',
+        'computers': 'computers',
         'Search': 'Search: ',
         'Login': 'Login',
         'Logout': 'Logout',
@@ -26,13 +28,16 @@ export default {
         'Dashboard': 'Dashboard',
         'Users': 'Users',
         'Companies': 'Companies',
-        'desc': 'Application of computer databases',
+        'companies': 'companies',
+        'site_description': 'Application of computer databases',
         'Username': 'Username',
         'Password': 'Password',
         'State': 'State',
         'Authority': 'Authority',
         'Secondary': 'Secondary',
-        'Add a user': 'Add a user'
+        'Add a user': 'Add a user',
+        'Cancel': 'Cancel',
+        'Confirm': 'Confirm'
 
     }
 }

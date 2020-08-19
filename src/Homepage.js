@@ -11,6 +11,7 @@ import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
+import CompanyDashboard from "./CompanyDashboard";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -21,6 +22,7 @@ function Homepage() {
 
     const [authenticated, setAuthenticated] = useState(false);
     const [mode, setMode] = useState(true);
+    const [betterMode, setBetterMode] = useState(true);
 
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
@@ -39,18 +41,20 @@ function Homepage() {
                         <div id="center">
                             <img alt="home" src={home} width="320"/><br/>
                             {translate("CDB")}<br/>
-                            <p><i>{translate("desc")}</i></p>
+                            <p><i>{translate("site_description")}</i></p>
                         </div>
                     </div>
 
 
-
-
                     <div id="vertical-menu">
                         <li><a className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
-                        <li><a className={!authenticated ? "" : "active"}>{translate("Dashboard")}</a></li>
+                        <li>{translate("Computers")}</li>
+                        <li>{translate("Companies")}</li>
                         <li><a className={authenticated ? "" : "active"}>{translate("Users")}</a></li>
                         <button onClick={() => setMode(!mode)}> SWITCH</button>
+                        <button onClick={() => { setMode(false); setBetterMode(!betterMode) }}> BETTER SWITCH
+                        </button>
+
                     </div>
                 </div>
 
@@ -73,9 +77,12 @@ function Homepage() {
 
                                     {authenticated ?
                                         mode ?
-                                            <Dashboard  locale={locale}/>
+                                            <Dashboard locale={locale}/>
                                             :
-                                            <Users  locale={locale}/>
+                                            betterMode ?
+                                                <CompanyDashboard locale={locale}/>
+                                                :
+                                                <Users locale={locale}/>
                                         : <></>}
 
                                 </div>
