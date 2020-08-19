@@ -20,21 +20,15 @@ function Authentication(props) {
     }, {manual: true});
 
 
-    let login = "";
+   /* let login = "";
 
     function setLogin(string) {
         login = string;
-    }
-
-
-    //const [login, setLogin] = useState("");
-    // Get the User authority
-    const [{data: user_data}, executeLoad] = useAxios(`${server_url}/users/` + login, {useCache: false});
-/*    useEffect(() => bidon(), [login]);
-
-    function bidon() {
-        executeLoad();
     }*/
+    const[login,setLogin]=useState("");
+    // Get the User authority
+    const [{data: user_data}, executeLoad] = useAxios( {manual: true});
+
 
     const Roles = {
         ROLE_ADMIN: 2,
@@ -47,8 +41,8 @@ function Authentication(props) {
     }
 
 
-    function maxAuthority(user) {
-        let temp = user.authorityList.map(elt => getValue(elt));
+    function maxAuthority(response) {
+        let temp = response.authorityList.map(elt => getValue(elt));
         temp = Math.max.apply(Math, temp);
         console.log(temp);
         return temp;
@@ -57,14 +51,14 @@ function Authentication(props) {
     function checkAuthority() {
         let state;
         const mockUser = {username: "admin", enabled: "1", authorityList: ["ROLE_USER", "ROLE_ADMIN"]};
-        console.log(user_data);
         setLogin(user.username);
-        console.log(user.username);
-        console.log(login);
-        console.log(user_data);
-        state = maxAuthority(mockUser);
-        console.log(user_data);
-        console.log(state);
+        executeLoad({url: `${server_url}/users/` + user.username}).then(response => {
+            console.log(user.username);
+            console.log(login);
+            console.log(response.data);
+            state = maxAuthority(response.data);
+            console.log(state);
+        });
         return state;
     }
 
