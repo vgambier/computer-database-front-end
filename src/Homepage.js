@@ -11,6 +11,7 @@ import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -32,6 +33,9 @@ function Homepage() {
     return (
 
         <I18nProvider locale={locale}>
+            <Router>
+            <div id="root"></div>
+
             <div id="page">
                 {loginIfTokenExists()}
                 <div id="navigation">
@@ -44,9 +48,9 @@ function Homepage() {
                     </div>
 
                     <div id="vertical-menu">
-                        <li><a path="/Homepage" className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
-                        <li><a className={!authenticated ? "" : "active"}>{translate("Dashboard")}</a></li>
-                        <li><a>{translate("Users")}</a></li>
+                        <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
+                        <li><Link to="/Dashboard" className={!authenticated ? "" : "active"}>{translate("Dashboard")}</Link></li>
+                        <li><Link to="/Users">{translate("Users")}</Link></li>
                         <button onClick={() => setMode(!mode)}> SWITCH</button>
                     </div>
                 </div>
@@ -69,11 +73,16 @@ function Homepage() {
                                     <Authentication authenticated={authenticated} setAuthenticated={setAuthenticated}/>
 
                                     {authenticated ?
-                                        mode ?
-                                            <Dashboard  locale={locale}/>
-                                            :
-                                            <Users  locale={locale}/>
-                                        : <></>}
+
+                                        <Switch>
+                                            <Route path="/HomePage"><Dashboard/></Route>
+                                            <Route path="/Dashboard"><Dashboard/></Route>
+                                            <Route path="/Users"><Users/></Route>
+                                        </Switch>
+
+                                        :
+
+                                        <></>}
                                 </div>
                             </ul>
 
@@ -94,6 +103,7 @@ function Homepage() {
                     </div>
                 </div>
             </div>
+            </Router>
         </I18nProvider>
     );
 }

@@ -54,7 +54,6 @@ function Authentication(props) {
                     <Button className="button6" onClick={() => onLogin()}>{translate("Login")}</Button>&nbsp;
                     {errorMessage}&nbsp;&nbsp;
                 </div>
-
                 :
                 <div id="login">
                     <Button className="button6" onClick={() => onLogout()}>{translate("Logout")}</Button>
