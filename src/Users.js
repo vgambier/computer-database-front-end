@@ -1,9 +1,7 @@
 import './Dashboard.css';
 import translate from "./i18n/messages/translate";
 import React, {useEffect, useState} from "react";
-import {I18nProvider, LOCALES} from "./i18n";
-import english from "./images/english.jpg";
-import french from "./images/french.jpg";
+import {I18nProvider} from "./i18n";
 import {Form, FormGroup, Input, Label, Table} from "reactstrap";
 import useAxios from "axios-hooks";
 import {server_url} from "./Homepage";
@@ -83,23 +81,12 @@ function Users(props) {
     }
 
     return (
-        < I18nProvider
-            locale={props.locale}>
-            <div
-                className="Users">
-
-                <div id="drapeau">
-                    <button className="english" onClick={() => props.setLocale(LOCALES.ENGLISH)}>
-                        <img src={english} alt="english" width="20"/></button>
-                    <button className="french" onClick={() => props.setLocale(LOCALES.FRENCH)}>
-                        <img src={french} alt="french" width="20"/></button>
-                </div>
-            </div>
+        < I18nProvider locale={props.locale}>
 
             {!addMode ?
 
                 <button className="button3"
-                        onClick={() => setAddMode(!addMode)}><b>{translate("Add a User")}</b></button>
+                        onClick={() => setAddMode(!addMode)}><b>{translate("Add a user")}</b></button>
 
                 :
 
@@ -126,10 +113,23 @@ function Users(props) {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label>{translate("authorityList")}</Label>
+                        <Label>{translate("Authority")}</Label>
                         <select onChange={elt => setNewUser({
                             ...newUser, authorityList: elt.target.value
                         })}>
+                            <option value="2">{Roles.ADMIN}</option>
+                            <option value="1">{Roles.USER}</option>
+                            <option value="0">{Roles.TEST}</option>
+
+                        </select>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label>{translate("Secondary")}</Label>
+                        <select onChange={elt => setNewUser({
+                            ...newUser, authorityList: elt.target.value
+                        })}>
+                            <option selected="selected" value="">--</option>
                             <option value="2">{Roles.ADMIN}</option>
                             <option value="1">{Roles.USER}</option>
                             <option value="0">{Roles.TEST}</option>
@@ -149,16 +149,16 @@ function Users(props) {
                     <thead>
                     <tr>
                         <td>
-                            Username
+                            {translate('Username')}
                         </td>
                         <td>
-                            State
+                            {translate('State')}
                         </td>
                         <td>
-                            Authority
+                            {translate('Authority')}
                         </td>
                         <td>
-                            Secondary Authority
+                            {translate('Secondary')}
                         </td>
                     </tr>
                     </thead>

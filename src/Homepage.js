@@ -12,6 +12,7 @@ import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import CompanyDashboard from "./CompanyDashboard";
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -22,6 +23,7 @@ function Homepage() {
 
     const [authenticated, setAuthenticated] = useState(false);
     const [mode, setMode] = useState(true);
+    const [betterMode, setBetterMode] = useState(true);
 
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
@@ -34,24 +36,27 @@ function Homepage() {
 
         <I18nProvider locale={locale}>
             <Router>
-            <div id="root"></div>
 
             <div id="page">
                 {loginIfTokenExists()}
                 <div id="navigation">
                     <div align="center">
                         <div id="center">
-                            <img src={home} alt="Application de bases de données d’ordinateurs" width="320"/><br/>
-                            {translate("CDB")},<br/>
-                            <p><i>{translate("desc")}</i></p>
+                            <img alt="home" src={home} width="320"/><br/>
+                            {translate("CDB")}<br/>
+                            <p><i>{translate("site_description")}</i></p>
                         </div>
                     </div>
 
                     <div id="vertical-menu">
                         <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
-                        <li><Link to="/Dashboard" className={!authenticated ? "" : "active"}>{translate("Dashboard")}</Link></li>
+                        <li><Link to="/Dashboard" className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
+                        <li>{translate("Companies")}</li>
                         <li><Link to="/Users">{translate("Users")}</Link></li>
                         <button onClick={() => setMode(!mode)}> SWITCH</button>
+                        <button onClick={() => { setMode(false); setBetterMode(!betterMode) }}> BETTER SWITCH
+                        </button>
+
                     </div>
                 </div>
 
@@ -77,6 +82,7 @@ function Homepage() {
                                         <Switch>
                                             <Route path="/HomePage"><Dashboard/></Route>
                                             <Route path="/Dashboard"><Dashboard/></Route>
+                                            <Route path="/CompanyDashboard"><Dashboard/></Route>
                                             <Route path="/Users"><Users/></Route>
                                         </Switch>
 
@@ -87,7 +93,6 @@ function Homepage() {
                             </ul>
 
                         </header>
-
 
                         <div className="Homepage">
 

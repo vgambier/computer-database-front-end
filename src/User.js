@@ -4,8 +4,8 @@ import {I18nProvider} from "./i18n";
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
-import {printAuthority, authorityToJSON, displayAuthorityOption1,displayAuthorityOption2, displayEnabledOption } from './AuthorityHelper';
-import {displayCompanyOption} from "./CompanyHelper";
+import {authorityToJSON, displayAuthorityOption1,displayAuthorityOption2, displayEnabledOption } from './AuthorityHelper';
+
 
 function User(props) {
 
