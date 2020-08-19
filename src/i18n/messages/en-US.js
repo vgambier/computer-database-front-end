@@ -37,7 +37,9 @@ export default {
         'Secondary': 'Secondary',
         'Add a user': 'Add a user',
         'Cancel': 'Cancel',
-        'Confirm': 'Confirm'
+        'Confirm': 'Confirm',
+        'Delete confirm':'You are about to delete a company and all associated computers! Do you want to continue?'
+
 
     }
 }

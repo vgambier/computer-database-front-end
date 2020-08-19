@@ -1,5 +1,5 @@
 import {Button, Input, Label} from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
@@ -8,7 +8,6 @@ import './Dashboard.css';
 
 function Authentication(props) {
 
-    //useEffect(() => setAuthenticated(authenticated), [authenticated]);
     const [errorMessage, setErrorMessage] = useState("");
 
     // HTTP request to get a token with a given username/password pair
@@ -20,11 +19,6 @@ function Authentication(props) {
     }, {manual: true});
 
 
-   /* let login = "";
-
-    function setLogin(string) {
-        login = string;
-    }*/
     const[login,setLogin]=useState("");
     // Get the User authority
     const [{data: user_data}, executeLoad] = useAxios( {manual: true});
@@ -50,7 +44,6 @@ function Authentication(props) {
 
     function checkAuthority() {
         let state;
-        const mockUser = {username: "admin", enabled: "1", authorityList: ["ROLE_USER", "ROLE_ADMIN"]};
         setLogin(user.username);
         executeLoad({url: `${server_url}/users/` + user.username}).then(response => {
             console.log(user.username);
@@ -91,17 +84,17 @@ function Authentication(props) {
                 <div id="login">
                     <Label>{translate("Username")}</Label>
                     <Input type="text" placeholder="Gaëtan"
-                           onChange={elt => setUser({...user, username: elt.target.value})}/>
+                           onChange={elt => setUser({...user, username: elt.target.value})}/>&nbsp;
                     <Label>{translate("Password")}</Label>
                     <Input type="password" placeholder="123456"
-                           onChange={elt => setUser({...user, password: elt.target.value})}/>
-                    <Button onClick={() => onLogin() & checkAuthority()}>{translate("Login")}</Button>
-                    {errorMessage}
+                           onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
+                    <Button onClick={() => onLogin() & checkAuthority()}>{translate("Login")}</Button>&nbsp;
+                    {errorMessage}&nbsp;&nbsp;
                 </div>
 
                 :
                 <div id="login">
-                    <Button onClick={() => onLogout()}>{translate("Logout")}</Button>
+                    <Button className="button6" onClick={() => onLogout()}>{translate("Logout")}</Button>
                 </div>
             }
 

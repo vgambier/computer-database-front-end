@@ -1,12 +1,7 @@
 import React, {useState} from 'react';
-import {Button} from 'reactstrap';
-import {I18nProvider} from "./i18n";
-import {printCompany, companyToJSON, displayCompanyOption, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
-import edit from "./images/edit.png";
 import Modal from 'react-modal';
-import {AvForm, AvField} from 'availity-reactstrap-validation';
 import translate from "./i18n/messages/translate";
 
 function Company(props) {
@@ -44,8 +39,7 @@ function Company(props) {
     }
 
     return (
-        <I18nProvider locale={props.locale}>
-
+        <div>
             <td> {id} </td>
             <td> {name} </td>
             <td>
@@ -59,12 +53,12 @@ function Company(props) {
                     contentLabel="Example Modal"
                 >
                     <h2>{translate("Delete_company")}</h2>
-                    <h3 ref={_subtitle => (subtitle = _subtitle)}>You are about to delete a company and all associated computers! Do you want to continue?</h3>
+                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
                     <button onClick={() => closeDeleteModal()}>Cancel</button>
                     <button onClick={() => closeDeleteModal() & confirm(id)}>Delete</button>
                 </Modal>
             </td>
-        </I18nProvider>
+        </div>
     );
 }
 
