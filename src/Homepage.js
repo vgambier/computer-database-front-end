@@ -37,7 +37,7 @@ function Homepage() {
                 <div id="navigation">
                     <div align="center">
                         <div id="center">
-                            <img src={home} width="320"/><br/>
+                            <img alt="home" src={home} width="320"/><br/>
                             {translate("CDB")}<br/>
                             <p><i>{translate("desc")}</i></p>
                         </div>
