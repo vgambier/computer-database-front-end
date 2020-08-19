@@ -85,14 +85,10 @@ function Computer(props) {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <h2 ref={_subtitle => (subtitle = _subtitle)}>You are about to delete a computer! Do you want to continue?</h2>
-                    <button onClick={() => closeDeleteModal()}>CANCEL</button>
-                    <button onClick={() => closeDeleteModal() & confirm(id)}>DELETE</button>
-                    <div>I am a modal</div>
-                    <form>
-                        <input/>
-                        <button>WOW!</button>
-                    </form>
+                    <h2>{translate("Delete")}</h2>
+                    <h3 ref={_subtitle => (subtitle = _subtitle)}>You are about to delete a computer! Do you want to continue?</h3>
+                    <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
                 </Modal>
 
                 <Modal
@@ -132,11 +128,11 @@ function Computer(props) {
 
                         </AvField>
 
-                        <Button className="button">Confirm</Button>
+                        <Button className="button">{translate("Confirm")}</Button>
 
                     </AvForm>
 
-                    <Button className="button" onClick={() => closeEditModal()}>Cancel</Button>
+                    <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
 
                 </Modal>
             </td>
