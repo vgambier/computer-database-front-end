@@ -90,13 +90,19 @@ function ComputerDashboard(props) {
 
     // Form submission and validation
 
-    const [newComputer, setNewComputer] = useState({
+    const newComputerInit = {
         id: "",
         name: "",
         introduced: "",
         discontinued: "",
         company: {id: null, name: null}
-    });
+    }
+
+    const [newComputer, setNewComputer] = useState(newComputerInit);
+
+    function resetValues() {
+        setNewComputer(newComputerInit);
+    }
 
     const [dateMessage, setDateMessage] = useState("");
 
@@ -146,7 +152,6 @@ function ComputerDashboard(props) {
 
     // Deleting logic
     function deleteComputer(id) {
-        console.log(id);
         executeDelete({url: `${server_url}/computers/${id}`}).then(() => {
             const newComputers = computers.filter(computer => computer.id !== id);
             setComputers(newComputers);
@@ -211,6 +216,7 @@ function ComputerDashboard(props) {
                         onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
 
                 <Modal isOpen={isAddModalOpen}
+                       onAfterOpen={resetValues}
                        onRequestClose={closeAddModal}
                        style={customStyles}
                        contentLabel="Add a computer">
@@ -244,7 +250,7 @@ function ComputerDashboard(props) {
                                  onChange={elt => setNewComputer({
                                      ...newComputer, company: companyToJSON(elt.target.value)
                                  })}>
-                            <option value="" selected="selected">--</option>
+                            <option value="">--</option>
                             {companies && companies.map(elt =>
                                 <option key={elt.id}
                                         value={getCompanyJsonString(elt)}> {elt.name} </option>)}
