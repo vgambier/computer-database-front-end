@@ -1,5 +1,3 @@
-import React from "react";
-
 export function printCompany(company) {
     return company.company !== null ? company.company.name : "";
 }

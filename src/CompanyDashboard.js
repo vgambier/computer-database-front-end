@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import {Table} from "reactstrap";
-import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Company from "./Company";
 
