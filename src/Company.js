@@ -39,7 +39,8 @@ function Company(props) {
     }
 
     return (
-        <div>
+
+        <>
             <td> {id} </td>
             <td> {name} </td>
             <td>
@@ -58,7 +59,7 @@ function Company(props) {
                     <button onClick={() => closeDeleteModal() & confirm(id)}>Delete</button>
                 </Modal>
             </td>
-        </div>
+        </>
     );
 }
 

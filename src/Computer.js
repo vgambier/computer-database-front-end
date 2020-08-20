@@ -67,6 +67,7 @@ function Computer(props) {
     }
 
     return (
+
         <I18nProvider locale={props.locale}>
 
             <td> {id} </td>
