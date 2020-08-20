@@ -1,9 +1,11 @@
 import './Dashboard.css';
 import translate from "./i18n/messages/translate";
 import React, {useEffect, useState} from "react";
-import {Form, FormGroup, Input, Label, Table} from "reactstrap";
+import {Button, Form, FormGroup, Input, Label, Table} from "reactstrap";
 import useAxios from "axios-hooks";
 import {server_url} from "./Homepage";
+import {AvForm, AvField} from 'availity-reactstrap-validation';
+import Modal from "react-modal";
 import User from "./User";
 
 function UserDashboard(props) {
@@ -13,14 +15,31 @@ function UserDashboard(props) {
         `${server_url}/users/`);
     const [users, setUsers] = useState(data); // Grabbing data from the dataset
 
-    const [addMode, setAddMode] = useState(false);
-
     const [newUser, setNewUser] = useState({
         username: "",
         password: "",
         enabled: "0",
         authorityList: [],
     });
+
+    // Modal / Pop-up
+
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    function closeAddModal() {
+        setIsAddModalOpen(false);
+    }
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
 
 
     // Add a user
@@ -53,30 +72,30 @@ function UserDashboard(props) {
 
 
     function addUser() {
-        setAddMode(!addMode);
         console.log(newUser);
         executeAdd({data: newUser}).then(
             () => {
                 setUsers(users => [...users, newUser]);
             });
+        closeAddModal()
     }
 
     // Editing logic
     function editUser(updatedUser) {
         const indexOfEntryOfId = users.map(user => user.username).indexOf(updatedUser.username);
-       /* executeEdit({data: updatedUser}).then(() => {
-            const newUsers = [...users];
-            newUsers[indexOfEntryOfId] = updatedUser;
-            setUsers(newUsers);
-        });*/
-        if (updatedUser.enabled ==="0") {
-            executeDisable(  { url: `${server_url}/users/disable/`+updatedUser.username}).then(() => {
+        /* executeEdit({data: updatedUser}).then(() => {
+             const newUsers = [...users];
+             newUsers[indexOfEntryOfId] = updatedUser;
+             setUsers(newUsers);
+         });*/
+        if (updatedUser.enabled === "0") {
+            executeDisable({url: `${server_url}/users/disable/` + updatedUser.username}).then(() => {
                 const newUsers = [...users];
                 newUsers[indexOfEntryOfId] = updatedUser;
                 setUsers(newUsers);
             });
         } else {
-            executeEnable({ url: `${server_url}/users/enable/`+updatedUser.username}).then(() => {
+            executeEnable({url: `${server_url}/users/enable/` + updatedUser.username}).then(() => {
                 const newUsers = [...users];
                 newUsers[indexOfEntryOfId] = updatedUser;
                 setUsers(newUsers);
@@ -104,69 +123,72 @@ function UserDashboard(props) {
 
     return (
         <div>
-            {!addMode ?
-
-                <button className="button3"
-                        onClick={() => setAddMode(!addMode)}><b>{translate("Add a user")}</b></button>
-
-                :
-
-                <Form>
-                    <FormGroup>
-                        <Label>{translate("Username")}</Label>
-                        <Input placeholder="Fancy User #15"
-                               onChange={elt => setNewUser(
-                                   {
-                                       ...newUser,
-                                       username: elt.target.value
-                                   })}/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label>{translate("Password")}</Label>
-                        <Input placeholder="123456"
-                               onChange={elt => setNewUser(
-                                   {
-                                       ...newUser,
-                                       password: elt.target.value
-                                   })}/>
-                    </FormGroup>
 
 
-                    <FormGroup>
-                        <Label>{translate("Authority")}</Label>
-                        <select onChange={elt => {
+            <button className="button3"
+                    onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add a user")}</b></button>
+
+            <Modal isOpen={isAddModalOpen}
+                   onRequestClose={closeAddModal}
+                   style={customStyles}
+                   contentLabel="Add a user">
+                <h2> {translate("Add a user")}</h2>
+
+                <AvForm>
+                    <AvField name="name"
+                             label={translate("Username")} type="text"
+                             placeholder="Fancy User #15"
+                             onChange={elt => setNewUser(
+                                 {
+                                     ...newUser,
+                                     username: elt.target.value
+                                 })}/>
+
+                    <AvField
+                        name="password" type="text"
+                        label={translate("Password")}
+                        placeholder="123456"
+                        onChange={elt => setNewUser(
+                            {
+                                ...newUser,
+                                password: elt.target.value
+                            })}
+                    />
+
+
+                    <AvField
+                        name="authority" type="select"
+                        label={translate("Authority")}
+                        onChange={elt => {
                             newUser.authorityList.push(elt.target.value);
-     /*                       setNewUser({
-                                ...newUser, {newUser.authorityList}
-                            })*/
+                            /*                       setNewUser({
+                                                       ...newUser, {newUser.authorityList}
+                                                   })*/
                         }}>
-                            <option selected="selected" value="">--</option>
-                            <option value={Roles.TEST}>{Roles.TEST}</option>
-                            <option value={Roles.USER}>{Roles.USER}</option>
-                            <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
+                        <option selected="selected" value="">--</option>
+                        <option value={Roles.TEST}>{Roles.TEST}</option>
+                        <option value={Roles.USER}>{Roles.USER}</option>
+                        <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
 
-                        </select>
-                    </FormGroup>
+                    </AvField>
 
-                    <FormGroup>
-                        <Label>{translate("Secondary")}</Label>
-                        <select onChange={elt => {
+                    <AvField
+                        name="secondary" label={translate("Secondary")}type="select"
+                        onChange={elt => {
                             newUser.authorityList.push(elt.target.value);
-                         /*   setNewUser({
-                                ...newUser, newUser.authorityList
-                            })*/
+                            /*   setNewUser({
+                                   ...newUser, newUser.authorityList
+                               })*/
                         }}>
-                            <option selected="selected" value="">--</option>
-                            <option value={Roles.TEST}>{Roles.TEST}</option>
-                            <option value={Roles.USER}>{Roles.USER}</option>
+                        <option selected="selected" value="">--</option>
+                        <option value={Roles.TEST}>{Roles.TEST}</option>
+                        <option value={Roles.USER}>{Roles.USER}</option>
+                    </AvField>
 
-                        </select>
-                    </FormGroup>
-
-                    <button onClick={() => addUser()}>Confirm</button>
-                </Form>
-            }
+                    <button onClick={() => addUser()}>{translate("Confirm")}</button>
+                </AvForm>
+                <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
+            </Modal>
 
 
             <div id="table">

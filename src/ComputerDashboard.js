@@ -249,11 +249,11 @@ function ComputerDashboard(props) {
                                 <option key={elt.id}
                                         value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                         </AvField>
-                        <Button className="button">Confirm</Button>
+                        <Button className="button">{translate("Confirm")}</Button>
 
                     </AvForm>
 
-                    <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
+                    <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
                 </Modal>
 
             </div>

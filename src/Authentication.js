@@ -47,8 +47,6 @@ function Authentication(props) {
     function checkAuthority() {
         setLogin(user.username);
         executeLoad({url: `${server_url}/users/` + user.username}).then(response => {
-            console.log(user.username);
-            console.log(response.data);
             props.setStatus(maxAuthority(response.data));
             props.setEnabled(response.data.enabled);
         });
