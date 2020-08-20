@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import translate from "./i18n/messages/translate";
 
 function Company(props) {
-    const [company, setCompany] = useState(props.company);
+    const [company] = useState(props.company);
     const {id, name} = company;
 
     const customStyles = {
@@ -39,7 +39,8 @@ function Company(props) {
     }
 
     return (
-        <div>
+
+        <>
             <td> {id} </td>
             <td> {name} </td>
             <td>
@@ -58,7 +59,7 @@ function Company(props) {
                     <button onClick={() => closeDeleteModal() & confirm(id)}>Delete</button>
                 </Modal>
             </td>
-        </div>
+        </>
     );
 }
 
