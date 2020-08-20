@@ -85,7 +85,7 @@ function Homepage() {
                                                         setEnabled={setEnabled}
                                         />
 
-                                        {(authenticated & enabled==="1") ?
+                                        {(authenticated && enabled==="1") ?
                                             (authority === 2) ?
 
 

@@ -50,7 +50,7 @@ function Authentication(props) {
             console.log(user.username);
             console.log(response.data);
             props.setStatus(maxAuthority(response.data));
-            props.setStatus(response.data.enabled);
+            props.setEnabled(response.data.enabled);
         });
     }
 
