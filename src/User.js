@@ -5,6 +5,8 @@ import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
 import {authorityToJSON, displayAuthorityOption, displayEnabledOption} from './AuthorityHelper';
+import translate from "./i18n/messages/translate";
+import Modal from "react-modal";
 
 const Roles = {
     ROLE_ADMIN: 2,
@@ -44,6 +46,37 @@ function User(props) {
         } else return "";
     }
 
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
+
+    // Edition modal
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    function closeEditModal() {
+        setIsEditModalOpen(false);
+    }
+
+    let subtitle;
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    function afterOpenDeleteModal() {
+        // references are now synchronized and can be accessed.
+        subtitle.style.color = '#ff0000';
+    }
+
+    function closeDeleteModal() {
+        setIsDeleteModalOpen(false);
+    }
+
 
     return (
         <I18nProvider locale={props.locale}>
@@ -57,9 +90,22 @@ function User(props) {
                     <td>
                         <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit"
                                                                                                height="28" width="25"/></Button>
-                        <Button className="button" onClick={() => props.delete(username)}><img src={deletes}
+                        <Button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes}
                                                                                                alt="delete" height="28"
                                                                                                width="25"/></Button>
+
+                        <Modal
+                            isOpen={isDeleteModalOpen}
+                            onAfterOpen={afterOpenDeleteModal}
+                            onRequestClose={closeDeleteModal}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <h2>{translate("Delete")}</h2>
+                            <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete Confirm")}</h3>
+                            <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                            <button onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
+                        </Modal>
                     </td>
                 </>
                 :
