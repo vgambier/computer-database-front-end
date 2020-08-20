@@ -26,7 +26,7 @@ function Homepage() {
     const [authority, setAuthority] = useState(-1);
     useEffect(() => setAuthority(authority), [authority]);
 
-    const [enabled, setEnabled] = useState(-1);
+    const [enabled, setEnabled] = useState("-1");
     useEffect(() => setEnabled(enabled), [enabled]);
 
 
@@ -85,7 +85,7 @@ function Homepage() {
                                                         setEnabled={setEnabled}
                                         />
 
-                                        {(authenticated /*& enabled===1*/) ?
+                                        {(authenticated & enabled==="1") ?
                                             (authority === 2) ?
 
 
