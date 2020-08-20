@@ -12,11 +12,13 @@ function CompanyDashboard(props) {
     /* HTTP requests */
 
     // Count companies
-    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`);
+    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`,
+        {useCache: false});
     const [companiesCount, setCompaniesCount] = useState(company_count_data);
 
     // Get all companies
-    const [{data: company_data}] = useAxios(`${server_url}/companies`);
+    const [{data: company_data}] = useAxios(`${server_url}/companies`,
+        {useCache: false});
     const [companies, setCompanies] = useState(company_data);
 
     // Delete one company
