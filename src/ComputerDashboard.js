@@ -323,7 +323,6 @@ function ComputerDashboard(props) {
                 </tbody>
             </Table>
         </div>
-
     );
 }
 

@@ -52,10 +52,10 @@ function CompanyDashboard(props) {
                 <tr>
 
                     <td>
-                        <button className="button6">{translate("Id")} </button>
+                        {translate("Id")}
                     </td>
                     <td>
-                        <button className="button6">{translate("Name")} </button>
+                        {translate("Name")}
                     </td>
                     <td>
                         {translate("Actions")}
