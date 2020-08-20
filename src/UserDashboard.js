@@ -1,7 +1,6 @@
 import './Dashboard.css';
 import translate from "./i18n/messages/translate";
 import React, {useEffect, useState} from "react";
-import {I18nProvider} from "./i18n";
 import {Form, FormGroup, Input, Label, Table} from "reactstrap";
 import useAxios from "axios-hooks";
 import {server_url} from "./Homepage";
@@ -18,52 +17,75 @@ function UserDashboard(props) {
 
     const [newUser, setNewUser] = useState({
         username: "",
-        enabled: "",
-        authorityList: "",
+        password: "",
+        enabled: "0",
+        authorityList: [],
     });
 
 
-    // Add one computer
+    // Add a user
     const [{}, executeAdd] = useAxios({
-        url: `${server_url}/users`,
+        url: `${server_url}/users/add`,
         method: "POST"
     }, {manual: true});
 
-    // Delete one computer
+    // Delete a user
     const [{}, executeDelete] = useAxios({
         method: "DELETE"
     }, {manual: true});
 
-    // Edit one computer
+    // Edit user ROLES
     const [{}, executeEdit] = useAxios({
         url: `${server_url}/users`,
         method: "PUT"
     }, {manual: true});
 
+    // ENABLE User
+    const [{}, executeEnable] = useAxios({
+        method: "POST"
+    }, {manual: true});
+
+    // DISABLE  User
+    const [{}, executeDisable] = useAxios({
+        url: `${server_url}/users/disable`,
+        method: "POST"
+    }, {manual: true});
+
 
     function addUser() {
         setAddMode(!addMode);
+        console.log(newUser);
         executeAdd({data: newUser}).then(
-            response => {
-                newUser.id = response.data.toString();
+            () => {
                 setUsers(users => [...users, newUser]);
             });
     }
 
     // Editing logic
     function editUser(updatedUser) {
-
         const indexOfEntryOfId = users.map(user => user.username).indexOf(updatedUser.username);
-        executeEdit({data: updatedUser}).then(() => {
+       /* executeEdit({data: updatedUser}).then(() => {
             const newUsers = [...users];
             newUsers[indexOfEntryOfId] = updatedUser;
             setUsers(newUsers);
-        });
+        });*/
+        if (updatedUser.enabled ==="0") {
+            executeDisable(  { url: `${server_url}/users/disable/`+updatedUser.username}).then(() => {
+                const newUsers = [...users];
+                newUsers[indexOfEntryOfId] = updatedUser;
+                setUsers(newUsers);
+            });
+        } else {
+            executeEnable({ url: `${server_url}/users/enable/`+updatedUser.username}).then(() => {
+                const newUsers = [...users];
+                newUsers[indexOfEntryOfId] = updatedUser;
+                setUsers(newUsers);
+            });
+        }
     }
 
     // Deleting logic
     function deleteUser(username) {
-        console.log(username);
         executeDelete({url: `${server_url}/users/${username}`}).then(() => {
             const newUsers = users.filter(user => user.username !== username);
             setUsers(newUsers);
@@ -81,8 +103,7 @@ function UserDashboard(props) {
     }
 
     return (
-        < I18nProvider locale={props.locale}>
-
+        <div>
             {!addMode ?
 
                 <button className="button3"
@@ -102,37 +123,43 @@ function UserDashboard(props) {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label>{translate("State")}</Label>
-                        <Input placeholder="0"
+                        <Label>{translate("Password")}</Label>
+                        <Input placeholder="123456"
                                onChange={elt => setNewUser(
                                    {
                                        ...newUser,
-                                       enabled: elt.target.value
-                                   }
-                               )}/>
+                                       password: elt.target.value
+                                   })}/>
                     </FormGroup>
+
 
                     <FormGroup>
                         <Label>{translate("Authority")}</Label>
-                        <select onChange={elt => setNewUser({
-                            ...newUser, authorityList: elt.target.value
-                        })}>
-                            <option value="2">{Roles.ADMIN}</option>
-                            <option value="1">{Roles.USER}</option>
-                            <option value="0">{Roles.TEST}</option>
+                        <select onChange={elt => {
+                            newUser.authorityList.push(elt.target.value);
+     /*                       setNewUser({
+                                ...newUser, {newUser.authorityList}
+                            })*/
+                        }}>
+                            <option selected="selected" value="">--</option>
+                            <option value={Roles.TEST}>{Roles.TEST}</option>
+                            <option value={Roles.USER}>{Roles.USER}</option>
+                            <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
 
                         </select>
                     </FormGroup>
 
                     <FormGroup>
                         <Label>{translate("Secondary")}</Label>
-                        <select onChange={elt => setNewUser({
-                            ...newUser, authorityList: elt.target.value
-                        })}>
+                        <select onChange={elt => {
+                            newUser.authorityList.push(elt.target.value);
+                         /*   setNewUser({
+                                ...newUser, newUser.authorityList
+                            })*/
+                        }}>
                             <option selected="selected" value="">--</option>
-                            <option value="2">{Roles.ADMIN}</option>
-                            <option value="1">{Roles.USER}</option>
-                            <option value="0">{Roles.TEST}</option>
+                            <option value={Roles.TEST}>{Roles.TEST}</option>
+                            <option value={Roles.USER}>{Roles.USER}</option>
 
                         </select>
                     </FormGroup>
@@ -181,8 +208,7 @@ function UserDashboard(props) {
                 </Table>}
 
             </div>
-
-        </I18nProvider>
+        </div>
     )
 }
 

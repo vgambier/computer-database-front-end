@@ -32,7 +32,7 @@ export default {
         'Username': 'Username',
         'Password': 'Password',
         'State': 'State',
-        'Authority': 'Authority',
+        'Authority': 'Main Authority',
         'Secondary': 'Secondary',
         'Add a user': 'Add a user',
         'Cancel': 'Cancel',

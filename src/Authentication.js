@@ -50,6 +50,7 @@ function Authentication(props) {
             console.log(user.username);
             console.log(response.data);
             props.setStatus(maxAuthority(response.data));
+            props.setStatus(response.data.enabled);
         });
     }
 
@@ -74,6 +75,7 @@ function Authentication(props) {
         localStorage.removeItem('bearerToken');
         localStorage.clear();
         props.setStatus(-1);
+        props.setEnabled(-1);
         props.setAuthenticated(false);
     }
 

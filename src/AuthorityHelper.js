@@ -1,8 +1,5 @@
 import React from "react";
 
-export function printAuthority(authorityList) {
-    return authorityList[0] !== null ? authorityList[0] : "";
-}
 
 export function authorityToJSON(authorityList) {
 
@@ -13,11 +10,11 @@ export function authorityToJSON(authorityList) {
     }
 }
 
-export function displayAuthorityOption1(authorityList, elt) {
+export function displayAuthorityOption(authorityList, elt) {
 
     if (authorityList && elt === authorityList[0]) {
         return (
-            <option selected="selected" value={elt} > {elt} </option>
+            <option selected="selected" value={elt}> {elt} </option>
         )
     } else {
         return (
@@ -26,24 +23,14 @@ export function displayAuthorityOption1(authorityList, elt) {
     }
 }
 
-export function displayAuthorityOption2(authorityList, elt) {
 
-    if (authorityList && elt === authorityList[1]) {
-        return (
-            <option selected="selected" value={elt} > {elt} </option>
-        )
-    } else {
-        return (
-            <option value={elt}> {elt} </option>
-        )
-    }
-}
+
 
 export function displayEnabledOption(enabled, elt) {
 
-    if (enabled && elt === enabled) {
+    if (elt === enabled) {
         return (
-            <option selected="selected" value={elt} > {elt} </option>
+            <option selected="selected" value={elt}> {elt} </option>
         )
     } else {
         return (
@@ -52,6 +39,3 @@ export function displayEnabledOption(enabled, elt) {
     }
 }
 
-/*export function getAuthorityJsonString(elt) {
-    return '{"authority":"' + elt.authorityList[0] + '"}';
-}*/

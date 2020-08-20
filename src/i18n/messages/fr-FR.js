@@ -33,7 +33,7 @@ export default {
         'Username': "Nom d'utilisateur",
         'Password': 'Mot de passe',
         'State': 'Etat',
-        'Authority': 'Autorité',
+        'Authority': 'Autorité Majeure',
         'Secondary': 'Secondaire',
         'Add a user': 'Ajouter un utilisateur',
         'Cancel': 'Annuler',

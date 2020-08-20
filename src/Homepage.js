@@ -26,6 +26,9 @@ function Homepage() {
     const [authority, setAuthority] = useState(-1);
     useEffect(() => setAuthority(authority), [authority]);
 
+    const [enabled, setEnabled] = useState(-1);
+    useEffect(() => setEnabled(enabled), [enabled]);
+
 
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
@@ -78,9 +81,11 @@ function Homepage() {
                                     <div className="Authentication">
                                         <Authentication authenticated={authenticated}
                                                         setAuthenticated={setAuthenticated}
-                                                        setStatus={setAuthority}/>
+                                                        setStatus={setAuthority}
+                                                        setEnabled={setEnabled}
+                                        />
 
-                                        {authenticated ?
+                                        {(authenticated /*& enabled===1*/) ?
                                             (authority === 2) ?
 
 
