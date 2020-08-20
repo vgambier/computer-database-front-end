@@ -87,7 +87,7 @@ function Computer(props) {
                     contentLabel="Example Modal"
                 >
                     <h2>{translate("Delete")}</h2>
-                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete Confirm")}</h3>
+                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
                     <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                     <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
                 </Modal>

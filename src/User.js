@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
-import {I18nProvider} from "./i18n";
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
@@ -56,14 +55,7 @@ function User(props) {
             transform: 'translate(-50%, -50%)'
         }
     };
-
-    // Edition modal
-
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-    function closeEditModal() {
-        setIsEditModalOpen(false);
-    }
+    
 
     let subtitle;
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -79,8 +71,7 @@ function User(props) {
 
 
     return (
-        <I18nProvider locale={props.locale}>
-
+        <>
             {!editMode ?
                 <>
                     <td> {username} </td>
@@ -102,7 +93,7 @@ function User(props) {
                             contentLabel="Example Modal"
                         >
                             <h2>{translate("Delete")}</h2>
-                            <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete Confirm")}</h3>
+                            <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
                             <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                             <button onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
                         </Modal>
@@ -132,7 +123,7 @@ function User(props) {
                     </td>
                 </>
             }
-        </I18nProvider>
+        </>
     );
 }
 

@@ -15,14 +15,21 @@ function UserDashboard(props) {
         `${server_url}/users/`);
     const [users, setUsers] = useState(data); // Grabbing data from the dataset
 
-    const [newUser, setNewUser] = useState({
+    const newUserInit = {
         username: "",
         password: "",
         enabled: "0",
         authorityList: [],
-    });
+    };
+
+    const [newUser, setNewUser] = useState(newUserInit);
+
+    function resetValues() {
+        setNewUser(newUserInit);
+    }
 
     // Modal / Pop-up
+
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
@@ -129,6 +136,7 @@ function UserDashboard(props) {
                     onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add a user")}</b></button>
 
             <Modal isOpen={isAddModalOpen}
+                   onAfterOpen={resetValues}
                    onRequestClose={closeAddModal}
                    style={customStyles}
                    contentLabel="Add a user">
@@ -165,7 +173,6 @@ function UserDashboard(props) {
                                                        ...newUser, {newUser.authorityList}
                                                    })*/
                         }}>
-                        <option selected="selected" value="">--</option>
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
                         <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
@@ -180,7 +187,6 @@ function UserDashboard(props) {
                                    ...newUser, newUser.authorityList
                                })*/
                         }}>
-                        <option selected="selected" value="">--</option>
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
                     </AvField>
