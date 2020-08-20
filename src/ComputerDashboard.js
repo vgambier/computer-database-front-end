@@ -16,19 +16,16 @@ function ComputerDashboard(props) {
 
     const [page, setPage] = useState(1);
     const [nbEntries, setNbEntries] = useState(25);
-    const [orderBy, setOrderBy] = useState("ID");
+    const [orderBy, setOrderBy] = useState("id");
     const [search, setSearch] = useState("");
     const [order, setOrder] = useState("ASC");
 
     // Ordering logic
 
-    const [currentColumn, setCurrentColumn] = useState("id");
-
     function editOrder(column_name) {
 
-        if (currentColumn !== column_name) {
+        if (orderBy !== column_name) {
             setOrder("ASC");
-            setCurrentColumn(column_name);
         } else {
             setOrder( order === "ASC" ? "DESC" : "ASC");
         }
@@ -173,6 +170,7 @@ function ComputerDashboard(props) {
     }
 
     // Use effects
+
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
