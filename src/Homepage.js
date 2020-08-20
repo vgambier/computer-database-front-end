@@ -5,8 +5,8 @@ import dashboard from './images/dashboard.jpg'
 import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
 import axios from "axios";
-import Dashboard from "./Dashboard";
-import Users from "./Users";
+import ComputerDashboard from "./ComputerDashboard";
+import UserDashboard from "./UserDashboard";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
@@ -48,11 +48,11 @@ function Homepage() {
 
                         <div id="vertical-menu">
                             <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
-                            <li><Link to="/Dashboard"
+                            <li><Link to="/ComputerDashboard"
                                       className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
                             <li><Link to="/CompanyDashboard"
                                       className={!authenticated ? "" : "active"}>{translate("Companies")}</Link></li>
-                            <li><Link to="/Users">{translate("Users")}</Link></li>
+                            <li><Link to="/UserDashboard">{translate("Users")}</Link></li>
                         </div>
                     </div>
 
@@ -77,10 +77,10 @@ function Homepage() {
                                         {authenticated ?
 
                                             <Switch>
-                                                <Route path="/HomePage"><Dashboard/></Route>
-                                                <Route path="/Dashboard"><Dashboard/></Route>
+                                                <Route path="/HomePage"><ComputerDashboard/></Route>
+                                                <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
                                                 <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
-                                                <Route path="/Users"><Users/></Route>
+                                                <Route path="/UserDashboard"><UserDashboard/></Route>
                                             </Switch>
 
                                             :

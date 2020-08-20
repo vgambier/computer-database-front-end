@@ -11,7 +11,7 @@ import Buttons from "./Buttons"
 import {AvForm, AvField} from 'availity-reactstrap-validation';
 import Modal from "react-modal";
 
-function Dashboard(props) {
+function ComputerDashboard(props) {
 
 
     // For pagination
@@ -312,4 +312,4 @@ function Dashboard(props) {
     );
 }
 
-export default Dashboard;
+export default ComputerDashboard;

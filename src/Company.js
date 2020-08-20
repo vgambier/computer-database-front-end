@@ -1,16 +1,12 @@
 import React, {useState} from 'react';
-import {Button} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import {printCompany, companyToJSON, displayCompanyOption, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
-import edit from "./images/edit.png";
 import Modal from 'react-modal';
-import {AvForm, AvField} from 'availity-reactstrap-validation';
 import translate from "./i18n/messages/translate";
 
 function Company(props) {
-    const [company, setCompany] = useState(props.company);
+    const [company] = useState(props.company);
     const {id, name} = company;
 
     const customStyles = {

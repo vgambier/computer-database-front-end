@@ -25,7 +25,6 @@ export default {
         'Logout': 'Logout',
         'Actions': 'Actions',
         'Home': 'Home',
-        'Dashboard': 'Dashboard',
         'Users': 'Users',
         'Companies': 'Companies',
         'companies': 'companies',

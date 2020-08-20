@@ -41,7 +41,7 @@ function CompanyDashboard(props) {
 
     return (
 
-        <I18nProvider locale={props.locale}>
+        <I18nProvider>
             <div className="CompanyDashboard">
 
                 <br/>
