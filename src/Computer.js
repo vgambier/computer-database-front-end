@@ -124,7 +124,8 @@ function Computer(props) {
                                  onChange={elt => setUpdatedComputer({...updatedComputer, company: companyToJSON(elt.target.value)})}>
                             <option value="">--</option>
 
-                            {companies && companies.map(elt => displayCompanyOption({company}, elt))}
+                            {companies && companies.map(elt =>
+                                <option value={getCompanyJsonString(elt)} key={elt.id}> {elt.name} </option>)}
 
                         </AvField>
 

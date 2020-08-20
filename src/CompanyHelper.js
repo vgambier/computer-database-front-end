@@ -13,21 +13,6 @@ export function companyToJSON(company) {
     }
 }
 
-export function displayCompanyOption(companyObject, elt) {
-
-    const jsonString = getCompanyJsonString(elt);
-
-    if (companyObject.company && elt.id === companyObject.company.id) {
-        return (
-            <option value={jsonString} key={elt.id}> {elt.name} </option>
-        )
-    } else {
-        return (
-            <option value={jsonString} key={elt.id}> {elt.name} </option>
-        )
-    }
-}
-
 export function getCompanyJsonString(elt) {
     return '{"id":"' + elt.id + '","name":"' + elt.name + '"}';
 }
