@@ -5,7 +5,6 @@ import useAxios from "axios-hooks";
 import Computer from "./Computer";
 import {Table, Input, Label, Button} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
-import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
 import {AvForm, AvField} from 'availity-reactstrap-validation';
@@ -17,8 +16,25 @@ function ComputerDashboard(props) {
     // For pagination
     const [page, setPage] = useState(1);
     const [nbEntries, setNbEntries] = useState(25);
-    const [orderBy, setOrderBy] = useState("computer.id");
+    const [orderBy, setOrderBy] = useState("ID");
     const [search, setSearch] = useState("");
+    const [order, setOrder] = useState("ASC");
+    
+    let counter=0;
+    function editOrder()
+    {
+        counter++;
+        console.log(counter);
+        if(counter%2===0)
+        {
+            setOrder("DESC");
+        }
+        else
+        {
+            setOrder("ASC");
+        }
+    }
+
 
     /* HTTP requests */
 
@@ -29,7 +45,7 @@ function ComputerDashboard(props) {
 
     // Get all computers
     const [{data}] = useAxios(
-        `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + search,
+        `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + order + `/` + search,
         {useCache: false});
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
@@ -167,148 +183,147 @@ function ComputerDashboard(props) {
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
     useEffect(() => setSearch(search), [search]);
+    useEffect(() => setOrder(order), [order]);
     useEffect(() => setComputersCount(count_data), [count_data]);
 
 
     return (
 
-        <I18nProvider locale={props.locale}>
-            <div className="Dashboard">
+        <div className="Dashboard">
 
-                <Buttons page={page} countPages={countPages} setPage={setPage} locale={props.locale}/>
-                <br/>
+            <Buttons page={page} countPages={countPages} setPage={setPage} locale={props.locale}/>
+            <br/>
 
-                <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>
-                <br/>
+            <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>
+            <br/>
 
-                <div id="searchbar">
-                    <Label>
-                        <h8>{translate("Search")}</h8>
-                    </Label>
-                    <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
-                    <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
-                </div>
+            <div id="searchbar">
+                <Label>
+                    <h8>{translate("Search")}</h8>
+                </Label>
+                <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
+                <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
+            </div>
+            &nbsp;
+
+            <div id="buttons">
+                <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
+                <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
+                <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                 &nbsp;
 
-                <div id="buttons">
-                    <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
-                    <button onClick={() => setNbEntries(25) & setPage(1)}>25</button>
-                    <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
-                    &nbsp;
 
+                <button className="button3"
+                        onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
 
-                    <button className="button3"
-                            onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
+                <Modal isOpen={isAddModalOpen}
+                       onRequestClose={closeAddModal}
+                       style={customStyles}
+                       contentLabel="Add a computer">
+                    <h2> {translate("Add")}</h2>
 
-                    <Modal isOpen={isAddModalOpen}
-                           onRequestClose={closeAddModal}
-                           style={customStyles}
-                           contentLabel="Add a computer">
-                        <h2> {translate("Add")}</h2>
+                    <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+                        <AvField name="name" label={translate("Name")} type="text"
+                                 placeholder="Fancy Computer #15"
+                                 onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
+                                 validate={{
+                                     required: {value: true, errorMessage: 'This field is required'},
+                                     maxlength: {
+                                         value: 100,
+                                         errorMessage: 'Names must be fewer than 100 characters'
+                                     }
+                                 }}
+                        />
 
-                        <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
-                            <AvField name="name" label={translate("Name")} type="text"
-                                     placeholder="Fancy Computer #15"
-                                     onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
-                                     validate={{
-                                         required: {value: true, errorMessage: 'This field is required'},
-                                         maxlength: {
-                                             value: 100,
-                                             errorMessage: 'Names must be fewer than 100 characters'
-                                         }
-                                     }}
-                            />
+                        <AvField name="introduced" label={translate("Introduced")} type="date"
+                                 placeholder="2001-12-31"
+                                 onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
+                        />
 
-                            <AvField name="introduced" label={translate("Introduced")} type="date"
-                                     placeholder="2001-12-31"
-                                     onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
-                            />
+                        <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                                 placeholder="2011-12-31"
+                                 onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
+                        />
+                        {dateMessage}
 
-                            <AvField name="discontinued" label={translate("Discontinued")} type="date"
-                                     placeholder="2011-12-31"
-                                     onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
-                            />
-                            {dateMessage}
+                        <AvField name="company" label={translate("Company")} type="select"
+                                 onChange={elt => setNewComputer({
+                                     ...newComputer, company: companyToJSON(elt.target.value)
+                                 })}>
+                            <option value="" selected="selected">--</option>
+                            {companies && companies.map(elt =>
+                                <option key={elt.id}
+                                        value={getCompanyJsonString(elt)}> {elt.name} </option>)}
+                        </AvField>
+                        <Button className="button">Confirm</Button>
 
-                            <AvField name="company" label={translate("Company")} type="select"
-                                     onChange={elt => setNewComputer({
-                                         ...newComputer, company: companyToJSON(elt.target.value)
-                                     })}>
-                                <option value="" selected="selected">--</option>
-                                {companies && companies.map(elt =>
-                                    <option key={elt.id}
-                                            value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                            </AvField>
-                            <Button className="button">Confirm</Button>
+                    </AvForm>
 
-                        </AvForm>
+                    <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
+                </Modal>
 
-                        <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
-                    </Modal>
-
-                </div>
-                <br/> <br/>
-
-                <Table>
-
-                    <thead>
-                    <tr>
-
-                        <td>
-                            <button className="button6"
-                                    onClick={() => setOrderBy("computer.id") & setPage(1)}>
-                                <h7><b>{translate("Id")}⬆⬇</b></h7>
-                            </button>
-                        </td>
-                        <td>
-                            <button className="button6"
-                                    onClick={() => setOrderBy("computer.name") & setPage(1)}>
-                                <h7>{translate("Name")}⬆⬇</h7>
-                            </button>
-                        </td>
-                        <td>
-                            <button className="button6"
-                                    onClick={() => setOrderBy("introduced") & setPage(1)}>
-                                <h7>{translate("Introduced")}⬆⬇</h7>
-                            </button>
-                        </td>
-                        <td>
-                            <button className="button6"
-                                    onClick={() => setOrderBy("discontinued") & setPage(1)}>
-                                <h7>{translate("Discontinued")}⬆⬇</h7>
-                            </button>
-                        </td>
-                        <td>
-                            <button className="button6"
-                                    onClick={() => setOrderBy("computer.company.name") & setPage(1)}>
-                                <h7>{translate("Company")}⬆⬇</h7>
-                            </button>
-                        </td>
-                        <td>{translate("Actions")}</td>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
-                        computer =>
-                            <tr key={computer.id}>
-                                <Computer
-                                    computer={computer}
-                                    companies={companies}
-                                    delete={deleteComputer}
-                                    edit={editComputer}
-                                    locale={props.locale}
-                                    count={computersCount}
-                                    set={setComputersCount}
-                                />
-                            </tr>
-                    )}
-                    </tbody>
-                </Table>
             </div>
+            <br/> <br/>
 
-        </I18nProvider>
+            <Table>
+
+                <thead>
+                <tr>
+
+                    <td>
+                        <button className="button6"
+                                onClick={() => editOrder() & setOrderBy("id") & setPage(1)}>
+                            <h7><b>{translate("Id")}⬆⬇</b></h7>
+                        </button>
+                    </td>
+                    <td>
+                        <button className="button6"
+                                onClick={() => editOrder() & setOrderBy("name") & setPage(1)}>
+                            <h7>{translate("Name")}⬆⬇</h7>
+                        </button>
+                    </td>
+                    <td>
+                        <button className="button6"
+                                onClick={() => editOrder() & setOrderBy("introduced") & setPage(1)}>
+                            <h7>{translate("Introduced")}⬆⬇</h7>
+                        </button>
+                    </td>
+                    <td>
+                        <button className="button6"
+                                onClick={() => editOrder() & setOrderBy("discontinued") & setPage(1)}>
+                            <h7>{translate("Discontinued")}⬆⬇</h7>
+                        </button>
+                    </td>
+                    <td>
+                        <button className="button6"
+                                onClick={() => editOrder() & setOrderBy("company") & setPage(1)}>
+                            <h7>{translate("Company")}⬆⬇</h7>
+                        </button>
+                    </td>
+                    <td>{translate("Actions")}</td>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {computers && companies && computers.map( // We need to check that `computers` is not undefined because of asynchronicity
+                    computer =>
+                        <tr key={computer.id}>
+                            <Computer
+                                computer={computer}
+                                companies={companies}
+                                delete={deleteComputer}
+                                edit={editComputer}
+                                locale={props.locale}
+                                count={computersCount}
+                                set={setComputersCount}
+                            />
+                        </tr>
+                )}
+                </tbody>
+            </Table>
+        </div>
+
     );
 }
 

@@ -47,7 +47,7 @@ function Homepage() {
                         </div>
 
                         <div id="vertical-menu">
-                            <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
+                            <li><a className={authenticated ? "" : "active"}>{translate("Home")}</a></li>
                             <li><Link to="/ComputerDashboard"
                                       className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
                             <li><Link to="/CompanyDashboard"

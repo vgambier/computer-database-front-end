@@ -41,48 +41,46 @@ function CompanyDashboard(props) {
 
     return (
 
-        <I18nProvider>
-            <div className="CompanyDashboard">
+        <div className="CompanyDashboard">
 
-                <br/>
-                <h2> {companiesCount} {translate("companies")} {translate("inside_db")}</h2>
-                <br/>
-                <Table>
+            <br/>
+            <h2> {companiesCount} {translate("companies")} {translate("inside_db")}</h2>
+            <br/>
+            <Table>
 
-                    <thead>
-                    <tr>
+                <thead>
+                <tr>
 
-                        <td>
-                            <button className="button6">{translate("Id")} </button>
-                        </td>
-                        <td>
-                            <button className="button6">{translate("Name")} </button>
-                        </td>
-                        <td>
-                            {translate("Actions")}
-                        </td>
+                    <td>
+                        <button className="button6">{translate("Id")} </button>
+                    </td>
+                    <td>
+                        <button className="button6">{translate("Name")} </button>
+                    </td>
+                    <td>
+                        {translate("Actions")}
+                    </td>
 
-                    </tr>
-                    </thead>
+                </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
 
-                    {companies && companies.map(
-                        company =>
-                            <tr key={company.id}>
-                                <Company
-                                    company={company}
-                                    delete={deleteCompany}
-                                    locale={props.locale}
-                                    count={companiesCount}
-                                    set={setCompaniesCount}
-                                />
-                            </tr>
-                    )}
-                    </tbody>
-                </Table>
-            </div>
-        </I18nProvider>
+                {companies && companies.map(
+                    company =>
+                        <tr key={company.id}>
+                            <Company
+                                company={company}
+                                delete={deleteCompany}
+                                locale={props.locale}
+                                count={companiesCount}
+                                set={setCompaniesCount}
+                            />
+                        </tr>
+                )}
+                </tbody>
+            </Table>
+        </div>
     );
 }
 
