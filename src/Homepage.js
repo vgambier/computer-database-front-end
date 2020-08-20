@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SERVER_INFO} from "./server_info";
 import home from "./images/home.jpg";
 import dashboard from './images/dashboard.jpg'
@@ -23,12 +23,17 @@ function Homepage() {
 
     const [authenticated, setAuthenticated] = useState(false);
 
+    const [authority, setAuthority] = useState(-1);
+    useEffect(() => setAuthority(authority), [authority]);
+
+
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
             axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
             setAuthenticated(true);
         }
     }
+
 
     return (
 
@@ -72,17 +77,24 @@ function Homepage() {
                                 <ul className="write">
                                     <div className="Authentication">
                                         <Authentication authenticated={authenticated}
-                                                        setAuthenticated={setAuthenticated}/>
+                                                        setAuthenticated={setAuthenticated}
+                                                        setStatus={setAuthority}/>
 
                                         {authenticated ?
+                                            (authority === 2) ?
 
-                                            <Switch>
-                                                <Route path="/HomePage"><ComputerDashboard/></Route>
-                                                <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
-                                                <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
-                                                <Route path="/UserDashboard"><UserDashboard/></Route>
-                                            </Switch>
 
+                                                <Switch>
+                                                    <Route path="/HomePage"><ComputerDashboard/></Route>
+                                                    <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
+                                                    <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
+                                                    <Route path="/UserDashboard"><UserDashboard/></Route>
+                                                </Switch>
+                                                :
+                                                <Switch>
+                                                    <Route path="/HomePage"><ComputerDashboard/></Route>
+                                                    <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
+                                                </Switch>
                                             :
 
                                             <></>}
