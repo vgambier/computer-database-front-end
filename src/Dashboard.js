@@ -278,7 +278,7 @@ function Dashboard(props) {
                     </td>
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("computer.name") & setPage(1)}>
+                                onClick={() => editOrder() & setOrderBy("name") & setPage(1)}>
                             <h7>{translate("Name")}⬆⬇</h7>
                         </button>
                     </td>
