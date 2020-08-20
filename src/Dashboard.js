@@ -174,7 +174,6 @@ function Dashboard(props) {
         setResult(string);
     }
 
-
     // Use effects
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
@@ -185,7 +184,6 @@ function Dashboard(props) {
     useEffect(() => setSearch(search), [search]);
     useEffect(() => setOrder(order), [order]);
     useEffect(() => setComputersCount(count_data), [count_data]);
-
 
     return (
 

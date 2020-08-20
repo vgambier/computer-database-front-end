@@ -1,5 +1,5 @@
 import {Button, Input, Label} from "reactstrap";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
@@ -9,6 +9,8 @@ import './Dashboard.css';
 function Authentication(props) {
 
     const [errorMessage, setErrorMessage] = useState("");
+    const [authority, setAuthority]=useState("");
+    useEffect(() => setAuthority(authority), [authority]);
 
     // HTTP request to get a token with a given username/password pair
     const [user, setUser] = useState({username: "", password: ""});
@@ -43,17 +45,14 @@ function Authentication(props) {
     }
 
     function checkAuthority() {
-        let state;
         setLogin(user.username);
         executeLoad({url: `${server_url}/users/` + user.username}).then(response => {
             console.log(user.username);
-            console.log(login);
             console.log(response.data);
-            state = maxAuthority(response.data);
-            console.log(state);
+            props.setStatus(maxAuthority(response.data));
         });
-        return state;
     }
+
 
     function onLogin() {
 
@@ -63,6 +62,7 @@ function Authentication(props) {
                     localStorage.setItem('bearerToken', response.data.token);
                     axios.defaults.headers.common = {'Authorization': `Bearer ${response.data.token}`};
                     props.setAuthenticated(true);
+                    checkAuthority();
                 })
             .catch(() => {
                 setErrorMessage("Incorrect credentials. Please try again.");
@@ -73,6 +73,7 @@ function Authentication(props) {
 
         localStorage.removeItem('bearerToken');
         localStorage.clear();
+        props.setStatus(-1);
         props.setAuthenticated(false);
     }
 
@@ -88,7 +89,7 @@ function Authentication(props) {
                     <Label>{translate("Password")}</Label>
                     <Input type="password" placeholder="123456"
                            onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
-                    <Button onClick={() => onLogin() & checkAuthority()}>{translate("Login")}</Button>&nbsp;
+                    <Button onClick={() => onLogin() }>{translate("Login")}</Button>&nbsp;
                     {errorMessage}&nbsp;&nbsp;
                 </div>
 
