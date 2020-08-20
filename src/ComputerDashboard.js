@@ -12,36 +12,31 @@ import Modal from "react-modal";
 
 function ComputerDashboard(props) {
 
-
     // For pagination
+
     const [page, setPage] = useState(1);
     const [nbEntries, setNbEntries] = useState(25);
-    const [orderBy, setOrderBy] = useState("ID");
+    const [orderBy, setOrderBy] = useState("id");
     const [search, setSearch] = useState("");
     const [order, setOrder] = useState("ASC");
-    
-    let counter=0;
-    function editOrder()
-    {
-        counter++;
-        console.log(counter);
-        if(counter%2===0)
-        {
-            setOrder("DESC");
-        }
-        else
-        {
+
+    // Ordering logic
+
+    function editOrder(column_name) {
+
+        if (orderBy !== column_name) {
             setOrder("ASC");
+        } else {
+            setOrder( order === "ASC" ? "DESC" : "ASC");
         }
     }
-
 
     /* HTTP requests */
 
     // Count computers
-    const [{data: count_data}] = useAxios(`${server_url}/computers/count`);
+    const [{data: count_data}] = useAxios(`${server_url}/computers/count`,
+        {useCache: false});
     const [computersCount, setComputersCount] = useState(count_data);
-
 
     // Get all computers
     const [{data}] = useAxios(
@@ -175,6 +170,7 @@ function ComputerDashboard(props) {
     }
 
     // Use effects
+
     useEffect(() => setComputers(data), [data]);
     useEffect(() => setCompanies(company_data), [company_data]);
     useEffect(() => setPage(page), [page]);
@@ -270,31 +266,31 @@ function ComputerDashboard(props) {
 
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("id") & setPage(1)}>
+                                onClick={() => editOrder("id") & setOrderBy("id") & setPage(1)}>
                             <h7><b>{translate("Id")}⬆⬇</b></h7>
                         </button>
                     </td>
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("name") & setPage(1)}>
+                                onClick={() => editOrder("name") & setOrderBy("name") & setPage(1)}>
                             <h7>{translate("Name")}⬆⬇</h7>
                         </button>
                     </td>
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("introduced") & setPage(1)}>
+                                onClick={() => editOrder("introduced") & setOrderBy("introduced") & setPage(1)}>
                             <h7>{translate("Introduced")}⬆⬇</h7>
                         </button>
                     </td>
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("discontinued") & setPage(1)}>
+                                onClick={() => editOrder("discontinued") & setOrderBy("discontinued") & setPage(1)}>
                             <h7>{translate("Discontinued")}⬆⬇</h7>
                         </button>
                     </td>
                     <td>
                         <button className="button6"
-                                onClick={() => editOrder() & setOrderBy("company") & setPage(1)}>
+                                onClick={() => editOrder("company") & setOrderBy("company") & setPage(1)}>
                             <h7>{translate("Company")}⬆⬇</h7>
                         </button>
                     </td>
@@ -321,7 +317,6 @@ function ComputerDashboard(props) {
                 </tbody>
             </Table>
         </div>
-
     );
 }
 

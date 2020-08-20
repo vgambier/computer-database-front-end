@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import {Table} from "reactstrap";
-import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Company from "./Company";
 
@@ -12,11 +11,13 @@ function CompanyDashboard(props) {
     /* HTTP requests */
 
     // Count companies
-    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`);
+    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`,
+        {useCache: false});
     const [companiesCount, setCompaniesCount] = useState(company_count_data);
 
     // Get all companies
-    const [{data: company_data}] = useAxios(`${server_url}/companies`);
+    const [{data: company_data}] = useAxios(`${server_url}/companies`,
+        {useCache: false});
     const [companies, setCompanies] = useState(company_data);
 
     // Delete one company
@@ -52,10 +53,10 @@ function CompanyDashboard(props) {
                 <tr>
 
                     <td>
-                        <button className="button6">{translate("Id")} </button>
+                        {translate("Id")}
                     </td>
                     <td>
-                        <button className="button6">{translate("Name")} </button>
+                        {translate("Name")}
                     </td>
                     <td>
                         {translate("Actions")}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import {printCompany, companyToJSON, displayCompanyOption, getCompanyJsonString} from './CompanyHelper';
+import {printCompany, companyToJSON, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
