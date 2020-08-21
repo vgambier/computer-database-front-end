@@ -29,7 +29,7 @@ export default {
         'Users': 'Utilisateurs',
         'Companies': 'Entreprises',
         'companies': 'entreprises',
-        'site_description': 'Application de gestion de BDD',
+        'site_description': 'Application de gestion d\'ordinateurs',
         'Username': "Nom d'utilisateur",
         'Password': 'Mot de passe',
         'State': 'Etat',
