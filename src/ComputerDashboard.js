@@ -34,14 +34,16 @@ function ComputerDashboard(props) {
 
     /* HTTP requests */
 
-    // Count computers
-    /*const [{data: count_data},executeCount] = useAxios({
-        url:`${server_url}/computers/count`,
-        method: "POST",
-        data: searchTerm},
-        {useCache: false});*/
+    const [{data: countAllData}] = useAxios({
+            url: `${server_url}/computers/countAll`,
+            method: "get"
+        },
+        {useCache: false});
 
-    const [{data: count_data}, executeCount] = useAxios({
+    const [allCount, setAllCount] = useState(countAllData);
+
+
+    const [{data: count_data}] = useAxios({
             url: `${server_url}/computers/count/` + searchTerm,
             method: "get"
         },
@@ -150,18 +152,11 @@ function ComputerDashboard(props) {
     }
 
 
-    /* function countComputers() {
-         executeCount({data: searchTerm}).then(
-             response => {
-                 setComputersCount(response.data);
-             });
-     }*/
-
     function displayComputersCount() {
         if (searchTerm === "") {
-            return "Welcome!";
+            return allCount;
         } else {
-            return computersCount + " results for your research!"
+            return computersCount;
         }
 
     }
@@ -189,7 +184,6 @@ function ComputerDashboard(props) {
 
     // Count pages logic
     function countPages() {
-        console.log(searchTerm);
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
@@ -216,6 +210,7 @@ function ComputerDashboard(props) {
     useEffect(() => setSearchTerm(searchTerm), [searchTerm]);
     useEffect(() => setOrder(order), [order]);
     useEffect(() => setComputersCount(count_data), [count_data]);
+    useEffect(() => setAllCount(countAllData), [countAllData]);
 
 
     return (
@@ -226,7 +221,7 @@ function ComputerDashboard(props) {
             <br/>
 
 
-            <h2> {displayComputersCount()}</h2>
+            <h2> {displayComputersCount()} {translate("computers")}</h2>
             {/* <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>*/}
             <br/>
 

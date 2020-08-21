@@ -165,7 +165,7 @@ function UserDashboard(props) {
 
                     <br/>
                     <AvField
-                        name="authority" type="select" defaultValue={Roles.TEST}
+                        name="authority" type="select" defaultValue={Roles.USER}
                         label={translate("Authority")}
                         onChange={elt =>
                             newUser.authorityList.push(elt.target.value)
@@ -174,7 +174,7 @@ function UserDashboard(props) {
                                     ...newUser, authorityList: elt.target.value
                                 })*/}>
 
-                        <option value={Roles.TEST}>{Roles.TEST}</option>
+                       {/* <option value={Roles.TEST}>{Roles.TEST}</option>*/}
                         <option value={Roles.USER}>{Roles.USER}</option>
                         <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
 
@@ -190,7 +190,7 @@ function UserDashboard(props) {
                                 })*/
                         }}>
                         <option selected="selected" value="">--</option>
-                        <option value={Roles.TEST}>{Roles.TEST}</option>
+                        {/*<option value={Roles.TEST}>{Roles.TEST}</option>*/}
                         <option value={Roles.USER}>{Roles.USER}</option>
                     </AvField><br/>
 
