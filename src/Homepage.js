@@ -1,12 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SERVER_INFO} from "./server_info";
 import home from "./images/home.jpg";
 import dashboard from './images/dashboard.jpg'
 import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
 import axios from "axios";
-import Dashboard from "./Dashboard";
-import Users from "./Users";
+import ComputerDashboard from "./ComputerDashboard";
+import UserDashboard from "./UserDashboard";
 import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
@@ -24,12 +24,17 @@ function Homepage() {
 
     const [authenticated, setAuthenticated] = useState(false);
 
+    const [authority, setAuthority] = useState(-1);
+    useEffect(() => setAuthority(authority), [authority]);
+
+
     function loginIfTokenExists() {
         if (!authenticated && localStorage.getItem('bearerToken')) {
             axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
             setAuthenticated(true);
         }
     }
+
 
     return (
 
@@ -48,11 +53,11 @@ function Homepage() {
                         </div>
 
                         <div id="vertical-menu">
-                            <li><NavLink exact to="/Dashboard"
+                            <li><NavLink exact to="/ComputerDashboard"
                                          activeClassName={!authenticated ? "" : "main-nav-active"}  className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink></li>
                             <li><NavLink exact to="/CompanyDashboard"
                                          activeClassName={!authenticated ? "" : "main-nav-active"} className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink></li>
-                            <li><NavLink exact to="/Users"
+                            <li><NavLink exact to="/UserDashboard"
                                          activeClassName={!authenticated ? "" :"main-nav-active"} className={!authenticated ? "" :"main-nav"}>{translate("Users")}</NavLink></li>
                         </div>
                     </div>
@@ -73,17 +78,24 @@ function Homepage() {
                                 <ul className="write">
                                     <div className="Authentication">
                                         <Authentication authenticated={authenticated}
-                                                        setAuthenticated={setAuthenticated}/>
+                                                        setAuthenticated={setAuthenticated}
+                                                        setStatus={setAuthority}/>
 
                                         {authenticated ?
+                                            (authority === 2) ?
 
-                                            <Switch>
-                                                <Route path="/HomePage"><Dashboard/></Route>
-                                                <Route path="/Dashboard"><Dashboard/></Route>
-                                                <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
-                                                <Route path="/Users"><Users/></Route>
-                                            </Switch>
 
+                                                <Switch>
+                                                    <Route path="/HomePage"><ComputerDashboard/></Route>
+                                                    <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
+                                                    <Route path="/CompanyDashboard"><CompanyDashboard/></Route>
+                                                    <Route path="/UserDashboard"><UserDashboard/></Route>
+                                                </Switch>
+                                                :
+                                                <Switch>
+                                                    <Route path="/HomePage"><ComputerDashboard/></Route>
+                                                    <Route path="/ComputerDashboard"><ComputerDashboard/></Route>
+                                                </Switch>
                                             :
 
                                             <></>}

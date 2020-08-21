@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
 import {I18nProvider} from "./i18n";
-import {printCompany, companyToJSON, displayCompanyOption, getCompanyJsonString} from './CompanyHelper';
+import {printCompany, companyToJSON, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
@@ -67,6 +67,7 @@ function Computer(props) {
     }
 
     return (
+
         <I18nProvider locale={props.locale}>
 
             <td> {id} </td>
@@ -124,7 +125,8 @@ function Computer(props) {
                                  onChange={elt => setUpdatedComputer({...updatedComputer, company: companyToJSON(elt.target.value)})}>
                             <option value="">--</option>
 
-                            {companies && companies.map(elt => displayCompanyOption({company}, elt))}
+                            {companies && companies.map(elt =>
+                                <option value={getCompanyJsonString(elt)} key={elt.id}> {elt.name} </option>)}
                         </AvField>
 
                     </AvForm>

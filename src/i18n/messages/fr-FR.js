@@ -24,7 +24,7 @@ export default {
         'Login': 'Connexion',
         'Logout': 'Déconnexion',
         'Actions': 'Actions',
-        'Home': 'Menu',
+        'Home': 'Accueil',
         'Dashboard': 'Collection',
         'Users': 'Utilisateurs',
         'Companies': 'Entreprises',
@@ -37,6 +37,7 @@ export default {
         'Secondary': 'Secondaire',
         'Add a user': 'Ajouter un utilisateur',
         'Cancel': 'Annuler',
-        'Confirm': 'Confirmer'
+        'Confirm': 'Confirmer',
+        'Delete confirm': "Vous êtes sur le point de supprimer une entreprise et tous ses ordinateurs de la base! C'est votre dernier mot?"
     }
 }

@@ -12,7 +12,6 @@ function Buttons(props) {
 
     if (props.page === 1) {
         return (
-            <I18nProvider locale={props.locale}>
                 <div>
                     <button className="button4">{props.page}</button>
                     &nbsp;
@@ -23,7 +22,6 @@ function Buttons(props) {
                             onClick={() => props.setPage(props.countPages())}>{translate("Last Page")} <img alt="double right arrow" src={last} width="20"/></button>
                     &nbsp;
                 </div>
-            </I18nProvider>
         )
     } else {
         if (props.page === props.countPages()) {

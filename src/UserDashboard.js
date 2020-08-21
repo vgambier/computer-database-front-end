@@ -7,7 +7,7 @@ import useAxios from "axios-hooks";
 import {server_url} from "./Homepage";
 import User from "./User";
 
-function Users(props) {
+function UserDashboard(props) {
 
     // Get all users
     const [{data}] = useAxios(
@@ -186,4 +186,4 @@ function Users(props) {
     )
 }
 
-export default Users;
+export default UserDashboard;

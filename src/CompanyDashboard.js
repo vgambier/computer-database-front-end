@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import {Table} from "reactstrap";
-import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Company from "./Company";
 
@@ -12,11 +11,13 @@ function CompanyDashboard(props) {
     /* HTTP requests */
 
     // Count companies
-    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`);
+    const [{data: company_count_data}] = useAxios(`${server_url}/companies/count`,
+        {useCache: false});
     const [companiesCount, setCompaniesCount] = useState(company_count_data);
 
     // Get all companies
-    const [{data: company_data}] = useAxios(`${server_url}/companies`);
+    const [{data: company_data}] = useAxios(`${server_url}/companies`,
+        {useCache: false});
     const [companies, setCompanies] = useState(company_data);
 
     // Delete one company
@@ -41,48 +42,46 @@ function CompanyDashboard(props) {
 
     return (
 
-        <I18nProvider locale={props.locale}>
-            <div className="CompanyDashboard">
+        <div className="CompanyDashboard">
 
-                <br/>
-                <h2> {companiesCount} {translate("companies")} {translate("inside_db")}</h2>
-                <br/>
-                <Table>
+            <br/>
+            <h2> {companiesCount} {translate("companies")} {translate("inside_db")}</h2>
+            <br/>
+            <Table>
 
-                    <thead>
-                    <tr>
+                <thead>
+                <tr>
 
-                        <td>
-                            <button className="button6">{translate("Id")} </button>
-                        </td>
-                        <td>
-                            <button className="button6">{translate("Name")} </button>
-                        </td>
-                        <td>
-                            {translate("Actions")}
-                        </td>
+                    <td>
+                        {translate("Id")}
+                    </td>
+                    <td>
+                        {translate("Name")}
+                    </td>
+                    <td>
+                        {translate("Actions")}
+                    </td>
 
-                    </tr>
-                    </thead>
+                </tr>
+                </thead>
 
-                    <tbody>
+                <tbody>
 
-                    {companies && companies.map(
-                        company =>
-                            <tr key={company.id}>
-                                <Company
-                                    company={company}
-                                    delete={deleteCompany}
-                                    locale={props.locale}
-                                    count={companiesCount}
-                                    set={setCompaniesCount}
-                                />
-                            </tr>
-                    )}
-                    </tbody>
-                </Table>
-            </div>
-        </I18nProvider>
+                {companies && companies.map(
+                    company =>
+                        <tr key={company.id}>
+                            <Company
+                                company={company}
+                                delete={deleteCompany}
+                                locale={props.locale}
+                                count={companiesCount}
+                                set={setCompaniesCount}
+                            />
+                        </tr>
+                )}
+                </tbody>
+            </Table>
+        </div>
     );
 }
 
