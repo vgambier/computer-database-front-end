@@ -20,7 +20,6 @@ function ComputerDashboard(props) {
     const [searchTerm, setSearchTerm] = useState("");
     const [order, setOrder] = useState("ASC");
 
-
     // Ordering logic
 
     function editOrder(column_name) {
@@ -36,16 +35,15 @@ function ComputerDashboard(props) {
 
     const [{data: countAllData}] = useAxios({
             url: `${server_url}/computers/countAll`,
-            method: "get"
+            method: "GET"
         },
         {useCache: false});
 
     const [allCount, setAllCount] = useState(countAllData);
 
-
     const [{data: count_data}] = useAxios({
             url: `${server_url}/computers/count/` + searchTerm,
-            method: "get"
+            method: "GET"
         },
         {useCache: false});
 
@@ -151,14 +149,15 @@ function ComputerDashboard(props) {
             });
     }
 
-
     function displayComputersCount() {
         if (searchTerm === "") {
+            console.log("vide!")
+            console.log(allCount)
             return allCount;
         } else {
+            console.log("pô vide!")
             return computersCount;
         }
-
     }
 
     /* End of adding logic */
@@ -184,10 +183,22 @@ function ComputerDashboard(props) {
 
     // Count pages logic
     function countPages() {
-        if (computersCount % nbEntries === 0) {
-            return computersCount / nbEntries;
+
+        if (searchTerm === "") {
+
+            if (allCount % nbEntries === 0) {
+                return allCount / nbEntries;
+            } else {
+                return (Math.floor(allCount / nbEntries)) + 1;
+            }
+
         } else {
-            return (Math.floor(computersCount / nbEntries)) + 1;
+
+            if (computersCount % nbEntries === 0) {
+                return computersCount / nbEntries;
+            } else {
+                return (Math.floor(computersCount / nbEntries)) + 1;
+            }
         }
     }
 

@@ -9,7 +9,6 @@ import last from "./images/next.png";
 
 function Buttons(props) {
 
-
     if (props.page === 1) {
         return (
                 <div>
