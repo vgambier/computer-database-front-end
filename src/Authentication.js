@@ -9,21 +9,21 @@ import './Dashboard.css';
 function Authentication(props) {
 
     const [errorMessage, setErrorMessage] = useState("");
-    const [authority, setAuthority]=useState("");
+    const [authority, setAuthority] = useState("");
     useEffect(() => setAuthority(authority), [authority]);
 
     // HTTP request to get a token with a given username/password pair
-    const [user, setUser] = useState({username: "", password: ""});
+    const userInit = {username: "", password: ""};
+    const [user, setUser] = useState(userInit);
     const [{}, executeLogin] = useAxios({
         url: `${server_url}/authenticate`,
         method: "POST",
         data: user
     }, {manual: true});
 
-
-    const[login,setLogin]=useState("");
+    const [login, setLogin] = useState("");
     // Get the User authority
-    const [{data: user_data}, executeLoad] = useAxios( {manual: true});
+    const [{data: user_data}, executeLoad] = useAxios({manual: true});
 
 
     const Roles = {
@@ -35,7 +35,6 @@ function Authentication(props) {
     function getValue(key) {
         return Roles[key];
     }
-
 
     function maxAuthority(response) {
         let temp = response.authorityList.map(elt => getValue(elt));
@@ -71,10 +70,15 @@ function Authentication(props) {
 
     function onLogout() {
 
+        // Cleaning local storage
         localStorage.removeItem('bearerToken');
         localStorage.clear();
+
         props.setStatus(-1);
         props.setAuthenticated(false);
+
+        // Resetting form
+        setUser(userInit);
     }
 
     return (
@@ -89,7 +93,7 @@ function Authentication(props) {
                     {translate("Password")}
                     <Input type="password" placeholder="123456"
                            onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
-                    <Button onClick={() => onLogin() }>{translate("Login")}</Button>&nbsp;
+                    <Button onClick={() => onLogin()}>{translate("Login")}</Button>&nbsp;
                     {errorMessage}&nbsp;&nbsp;
                 </div>
 
