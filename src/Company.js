@@ -55,8 +55,8 @@ function Company(props) {
                 >
                     <h2>{translate("Delete_company")}</h2>
                     <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
+                    <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
                     <button onClick={() => closeDeleteModal()}>Cancel</button>
-                    <button onClick={() => closeDeleteModal() & confirm(id)}>Delete</button>
                 </Modal>
             </td>
         </>
