@@ -43,6 +43,8 @@ export default {
         'Computer confirm': "Vous êtes sur le point de supprimer un ordinateur du système!  C'est votre dernier mot ?",
         'Edit user': 'Modifier un utilisateur',
         'Delete user': 'Supprimer un utilisateur',
-        "Results": "résultats pour votre recherche!"
+        "Results": "résultats pour votre recherche!",
+        "logged_as": "Connecté en tant que"
+
     }
 }

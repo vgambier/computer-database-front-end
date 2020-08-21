@@ -42,8 +42,8 @@ export default {
         'Computer confirm': 'You are about to delete a computer from the system! Do you want to continue?',
         'Edit user': 'Edit a user',
         'Delete user': 'Delete a user',
-        "Results": "results for your research!"
-
+        "Results": "results for your research!",
+        "logged_as": "Logged in as"
 
     }
 }

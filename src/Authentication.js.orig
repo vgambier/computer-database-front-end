@@ -31,8 +31,10 @@ function Authentication(props) {
 
     const [login, setLogin] = useState("");
     // Get the User authority
-    const [, executeLoad] = useAxios({manual: true});
+    const [{data: user_data}, executeLoad] = useAxios({manual: true});
 
+<<<<<<< HEAD
+=======
     const newUserInit = {
         username: "",
         password: "",
@@ -44,6 +46,7 @@ function Authentication(props) {
         setNewUser(newUserInit);
     }
 
+
     const customStyles = {
         content: {
             top: '50%',
@@ -54,6 +57,8 @@ function Authentication(props) {
             transform: 'translate(-50%, -50%)'
         }
     };
+
+
 
     // Modal / Pop-up
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -75,6 +80,7 @@ function Authentication(props) {
     }
 
 
+>>>>>>> d76d90922d2c59bd18bcc11e8f3e595070d9ed41
     const Roles = {
         ROLE_ADMIN: 2,
         ROLE_USER: 1,
@@ -212,7 +218,6 @@ function Authentication(props) {
 
                 :
                 <div id="login">
-                    {translate("logged_as")} {login}
                     <Button className="button6" onClick={() => onLogout()}>{translate("Logout")}</Button>
                 </div>
             }
