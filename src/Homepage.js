@@ -11,9 +11,9 @@ import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import CompanyDashboard from "./CompanyDashboard";
-import { NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -27,13 +27,8 @@ function Homepage() {
     const [authority, setAuthority] = useState(-1);
     useEffect(() => setAuthority(authority), [authority]);
 
-
-    function loginIfTokenExists() {
-        if (!authenticated && localStorage.getItem('bearerToken')) {
-            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
-            setAuthenticated(true);
-        }
-    }
+    const [enabled, setEnabled] = useState("-1");
+    useEffect(() => setEnabled(enabled), [enabled]);
 
 
     return (
@@ -42,7 +37,7 @@ function Homepage() {
             <Router>
 
                 <div id="page">
-                    {loginIfTokenExists()}
+
                     <div id="navigation">
 
                         <div id="drapeau">
@@ -62,11 +57,17 @@ function Homepage() {
 
                         <div id="vertical-menu">
                             <li><NavLink exact to="/ComputerDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"}  className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink>
+                            </li>
                             <li><NavLink exact to="/CompanyDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"} className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink>
+                            </li>
                             <li><NavLink exact to="/UserDashboard"
-                                         activeClassName={!authenticated ? "" :"main-nav-active"} className={!authenticated ? "" :"main-nav"}>{translate("Users")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Users")}</NavLink>
+                            </li>
                         </div>
                     </div>
 
@@ -80,9 +81,11 @@ function Homepage() {
                                     <div className="Authentication">
                                         <Authentication authenticated={authenticated}
                                                         setAuthenticated={setAuthenticated}
-                                                        setStatus={setAuthority}/>
+                                                        setStatus={setAuthority}
+                                                        setEnabled={setEnabled}
+                                        />
 
-                                        {authenticated ?
+                                        {(authenticated && enabled === "1") ?
                                             (authority === 2) ?
 
 

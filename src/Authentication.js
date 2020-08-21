@@ -46,12 +46,17 @@ function Authentication(props) {
     function checkAuthority() {
         setLogin(user.username);
         executeLoad({url: `${server_url}/users/` + user.username}).then(response => {
-            console.log(user.username);
-            console.log(response.data);
             props.setStatus(maxAuthority(response.data));
+            props.setEnabled(response.data.enabled);
         });
     }
 
+    function loginIfTokenExists() {
+        if (!props.authenticated && localStorage.getItem('bearerToken')) {
+            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
+            props.setAuthenticated(true);
+        }
+    }
 
     function onLogin() {
 
@@ -75,6 +80,7 @@ function Authentication(props) {
         localStorage.clear();
 
         props.setStatus(-1);
+        props.setEnabled(-1);
         props.setAuthenticated(false);
 
         // Resetting form
@@ -84,6 +90,8 @@ function Authentication(props) {
     return (
 
         <div className="Authentication">
+
+            {loginIfTokenExists()}
 
             {!props.authenticated ?
                 <div id="login">
