@@ -132,7 +132,6 @@ function UserDashboard(props) {
     return (
         <div>
 
-
             <button className="button3"
                     onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add a user")}</b></button>
 
@@ -141,7 +140,7 @@ function UserDashboard(props) {
                    onRequestClose={closeAddModal}
                    style={customStyles}
                    contentLabel="Add a user">
-                <h2> {translate("Add a user")}</h2>
+                <h3> {translate("Add a user")}</h3>
 
                 <AvForm>
                     <AvField name="name"
@@ -152,7 +151,7 @@ function UserDashboard(props) {
                                      ...newUser,
                                      username: elt.target.value
                                  })}/>
-
+                    <br/>
                     <AvField
                         name="password" type="text"
                         label={translate("Password")}
@@ -164,7 +163,7 @@ function UserDashboard(props) {
                             })}
                     />
 
-
+                    <br/>
                     <AvField
                         name="authority" type="select" defaultValue={Roles.TEST}
                         label={translate("Authority")}
@@ -180,7 +179,7 @@ function UserDashboard(props) {
                         <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
 
                     </AvField>
-
+                    <br/>
                     <AvField
                         name="secondary" label={translate("Secondary")} type="select"
                         onChange={elt => {
@@ -193,11 +192,13 @@ function UserDashboard(props) {
                         <option selected="selected" value="">--</option>
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
-                    </AvField>
+                    </AvField><br/>
 
                     <button className="button3" onClick={() => addUser()}>{translate("Confirm")}</button>
+
+                    <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
+
                 </AvForm>
-                <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
             </Modal>
 
 

@@ -51,6 +51,12 @@ function Authentication(props) {
         });
     }
 
+    function loginIfTokenExists() {
+        if (!props.authenticated && localStorage.getItem('bearerToken')) {
+            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
+            props.setAuthenticated(true);
+        }
+    }
 
     function onLogin() {
 
@@ -84,6 +90,8 @@ function Authentication(props) {
     return (
 
         <div className="Authentication">
+
+            {loginIfTokenExists()}
 
             {!props.authenticated ?
                 <div id="login">

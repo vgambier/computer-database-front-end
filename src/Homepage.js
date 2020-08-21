@@ -31,21 +31,13 @@ function Homepage() {
     useEffect(() => setEnabled(enabled), [enabled]);
 
 
-    function loginIfTokenExists() {
-        if (!authenticated && localStorage.getItem('bearerToken')) {
-            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
-            setAuthenticated(true);
-        }
-    }
-
-
     return (
 
         <I18nProvider locale={locale}>
             <Router>
 
                 <div id="page">
-                    {loginIfTokenExists()}
+
                     <div id="navigation">
 
                         <div id="drapeau">
