@@ -17,8 +17,9 @@ function ComputerDashboard(props) {
     const [page, setPage] = useState(1);
     const [nbEntries, setNbEntries] = useState(25);
     const [orderBy, setOrderBy] = useState("id");
-    const [search, setSearch] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
     const [order, setOrder] = useState("ASC");
+
 
     // Ordering logic
 
@@ -27,21 +28,31 @@ function ComputerDashboard(props) {
         if (orderBy !== column_name) {
             setOrder("ASC");
         } else {
-            setOrder( order === "ASC" ? "DESC" : "ASC");
+            setOrder(order === "ASC" ? "DESC" : "ASC");
         }
     }
 
     /* HTTP requests */
 
     // Count computers
-    const [{data: count_data}] = useAxios(`${server_url}/computers/count`,
+    /*const [{data: count_data},executeCount] = useAxios({
+        url:`${server_url}/computers/count`,
+        method: "POST",
+        data: searchTerm},
+        {useCache: false});*/
+
+    const [{data: count_data}, executeCount] = useAxios({
+            url: `${server_url}/computers/count/` + searchTerm,
+            method: "get"
+        },
         {useCache: false});
+
     const [computersCount, setComputersCount] = useState(count_data);
 
 
     // Get all computers
     const [{data}] = useAxios(
-        `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + order + `/` + search,
+        `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + order + `/` + searchTerm,
         {useCache: false});
     const [computers, setComputers] = useState(data); // Grabbing data from the dataset
 
@@ -138,6 +149,23 @@ function ComputerDashboard(props) {
             });
     }
 
+
+    /* function countComputers() {
+         executeCount({data: searchTerm}).then(
+             response => {
+                 setComputersCount(response.data);
+             });
+     }*/
+
+    function displayComputersCount() {
+        if (searchTerm === "") {
+            return "Welcome!";
+        } else {
+            return computersCount + " results for your research!"
+        }
+
+    }
+
     /* End of adding logic */
 
     // Editing logic
@@ -161,6 +189,7 @@ function ComputerDashboard(props) {
 
     // Count pages logic
     function countPages() {
+        console.log(searchTerm);
         if (computersCount % nbEntries === 0) {
             return computersCount / nbEntries;
         } else {
@@ -168,10 +197,10 @@ function ComputerDashboard(props) {
         }
     }
 
-    // Search logic
+    // searchTerm logic
     const [result, setResult] = useState("");
 
-    function editSearch(string) {
+    function editSearchTerm(string) {
         setResult(string);
     }
 
@@ -184,7 +213,7 @@ function ComputerDashboard(props) {
     useEffect(() => setNewComputer(newComputer), [newComputer]);
     useEffect(() => setNbEntries(nbEntries), [nbEntries]);
     useEffect(() => setOrderBy(orderBy), [orderBy]);
-    useEffect(() => setSearch(search), [search]);
+    useEffect(() => setSearchTerm(searchTerm), [searchTerm]);
     useEffect(() => setOrder(order), [order]);
     useEffect(() => setComputersCount(count_data), [count_data]);
 
@@ -196,15 +225,18 @@ function ComputerDashboard(props) {
             <Buttons page={page} countPages={countPages} setPage={setPage} locale={props.locale}/>
             <br/>
 
-            <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>
+
+            <h2> {displayComputersCount()}</h2>
+            {/* <h2> {computersCount} {translate("computers")} {translate("inside_db")}</h2>*/}
             <br/>
 
             <div id="searchbar">
 
                 {translate("Search")}
 
-                <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
-                <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
+                <Input placeholder={"Powerbook..."} onChange={elt => editSearchTerm(elt.target.value)}/>
+                <button className="button2" onClick={() => setSearchTerm(result) & countPages() & setPage(1)}><b>OK</b>
+                </button>
             </div>
             &nbsp;
 
@@ -224,7 +256,7 @@ function ComputerDashboard(props) {
                        onRequestClose={closeAddModal}
                        style={customStyles}
                        contentLabel="Add a computer">
-                       <h3>{translate("Add")}</h3>
+                    <h3>{translate("Add")}</h3>
 
                     <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
                         <br/>
