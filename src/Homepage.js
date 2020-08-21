@@ -55,18 +55,33 @@ function Homepage() {
                         </div>
 
                         <div id="vertical-menu">
-                            <li><NavLink exact to="/ComputerDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"}
-                                         className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink>
-                            </li>
-                            <li><NavLink exact to="/CompanyDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"}
-                                         className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink>
-                            </li>
-                            <li><NavLink exact to="/UserDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"}
-                                         className={!authenticated ? "" : "main-nav"}>{translate("Users")}</NavLink>
-                            </li>
+
+
+                            {(authenticated && enabled === "1") ?
+                                (authority === 2) ?
+
+                                    <>
+                                        <li><NavLink exact to="/ComputerDashboard"
+                                                     activeClassName={!authenticated ? "" : "main-nav-active"}
+                                                     className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink>
+                                        </li>
+                                        <li><NavLink exact to="/CompanyDashboard"
+                                                     activeClassName={!authenticated ? "" : "main-nav-active"}
+                                                     className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink>
+                                        </li>
+                                        <li><NavLink exact to="/UserDashboard"
+                                                     activeClassName={!authenticated ? "" : "main-nav-active"}
+                                                     className={!authenticated ? "" : "main-nav"}>{translate("Users")}</NavLink>
+                                        </li>
+                                    </>
+                                    :
+                                    <li><NavLink exact to="/ComputerDashboard"
+                                                 activeClassName={!authenticated ? "" : "main-nav-active"}
+                                                 className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink>
+                                    </li>
+                                :
+                                <></>}
+
                         </div>
                     </div>
 
