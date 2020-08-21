@@ -42,6 +42,7 @@ export default {
         'User confirm': "Vous êtes sur le point de supprimer un utilisateur du système!  C'est votre dernier mot ?",
         'Computer confirm': "Vous êtes sur le point de supprimer un ordinateur du système!  C'est votre dernier mot ?",
         'Edit user': 'Modifier un utilisateur',
-        'Delete user': 'Supprimer un utilisateur'
+        'Delete user': 'Supprimer un utilisateur',
+        "Results": "résultats pour votre recherche!"
     }
 }

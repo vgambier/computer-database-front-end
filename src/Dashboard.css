@@ -26,6 +26,11 @@ h6 {
   text-align: center;
 }
 
+h6 {
+  color: green;
+}
+
+
 /* tableau */
 
 Table {

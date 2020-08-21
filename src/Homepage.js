@@ -4,7 +4,6 @@ import home from "./images/home.jpg";
 import dashboard from './images/dashboard.jpg'
 import dashboard2 from './images/dashboard2.jpg'
 import Authentication from "./Authentication";
-import axios from "axios";
 import ComputerDashboard from "./ComputerDashboard";
 import UserDashboard from "./UserDashboard";
 import {I18nProvider, LOCALES} from "./i18n";

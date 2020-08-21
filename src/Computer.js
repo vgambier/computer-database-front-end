@@ -95,7 +95,7 @@ function Computer(props) {
                     <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Computer confirm")}</h3>
                     <button className="button3"
                             onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
-                    <button className="button3" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <button className="button" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                 </Modal>
 
                 <Modal

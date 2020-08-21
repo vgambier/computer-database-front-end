@@ -42,3 +42,7 @@ select {
 label {
     display: block;
 }
+
+.invalid-feedback {
+    color: red;
+}

@@ -1,10 +1,12 @@
-import {Button, Input, Label} from "reactstrap";
+import {Button, Input} from "reactstrap";
 import React, {useEffect, useState} from "react";
 import useAxios from "axios-hooks";
 import axios from "axios";
 import {server_url} from "./Homepage";
 import translate from "./i18n/messages/translate";
 import './Dashboard.css';
+import Modal from "react-modal";
+import {AvField, AvForm} from "availity-reactstrap-validation";
 
 function Authentication(props) {
 
@@ -30,6 +32,51 @@ function Authentication(props) {
     const [login, setLogin] = useState("");
     // Get the User authority
     const [{data: user_data}, executeLoad] = useAxios({manual: true});
+
+    const newUserInit = {
+        username: "",
+        password: "",
+    };
+
+    const [newUser, setNewUser] = useState(newUserInit);
+
+    function resetValues() {
+        setNewUser(newUserInit);
+    }
+
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
+
+
+
+    // Modal / Pop-up
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    function closeAddModal() {
+        setIsAddModalOpen(false);
+    }
+
+    // Add a user
+    const [, executeAdd] = useAxios({
+        url: `${server_url}/users/add`,
+        method: "POST"
+    }, {manual: true});
+
+    function addUser() {
+        console.log(newUser);
+        executeAdd({data: newUser});
+        closeAddModal();
+    }
+
 
     const Roles = {
         ROLE_ADMIN: 2,
@@ -123,7 +170,48 @@ function Authentication(props) {
                            onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
                     <Button onClick={() => onLogin()}>{translate("Login")}</Button>&nbsp;
                     {errorMessage}&nbsp;&nbsp;
+
+
+                    <button className="button3"
+                            onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add a user")}</b></button>
+
+                    <Modal isOpen={isAddModalOpen}
+                           onAfterOpen={resetValues}
+                           onRequestClose={closeAddModal}
+                           style={customStyles}
+                           contentLabel="Add a user">
+                        <h3> {translate("Add a user")}</h3>
+
+                        <AvForm>
+                            <AvField name="name"
+                                     label={translate("Username")} type="text"
+                                     placeholder="Fancy User #15"
+                                     onChange={elt => setNewUser(
+                                         {
+                                             ...newUser,
+                                             username: elt.target.value
+                                         })}/>
+                            <br/>
+                            <AvField
+                                name="password" type="text"
+                                label={translate("Password")}
+                                placeholder="123456"
+                                onChange={elt => setNewUser(
+                                    {
+                                        ...newUser,
+                                        password: elt.target.value
+                                    })}
+                            />
+
+
+                            <button className="button3" onClick={() => addUser()}>{translate("Confirm")}</button>
+
+                            <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
+
+                        </AvForm>
+                    </Modal>
                 </div>
+
 
                 :
                 <div id="login">
