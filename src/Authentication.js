@@ -15,16 +15,21 @@ function Authentication(props) {
     // HTTP request to get a token with a given username/password pair
     const userInit = {username: "", password: ""};
     const [user, setUser] = useState(userInit);
-    const [{}, executeLogin] = useAxios({
+    const [, executeLogin] = useAxios({
         url: `${server_url}/authenticate`,
         method: "POST",
         data: user
     }, {manual: true});
 
+    // HTTP request to get user info from token
+    const [, getUserFromToken] = useAxios({
+        url: `${server_url}/users/userFromToken`,
+        method: "POST"
+    }, {manual: true});
+
     const [login, setLogin] = useState("");
     // Get the User authority
     const [{data: user_data}, executeLoad] = useAxios({manual: true});
-
 
     const Roles = {
         ROLE_ADMIN: 2,
@@ -52,11 +57,28 @@ function Authentication(props) {
     }
 
     function loginIfTokenExists() {
-        if (!props.authenticated && localStorage.getItem('bearerToken')) {
-            axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('bearerToken')}`};
-            props.setAuthenticated(true);
+        
+        if (localStorage.getItem('bearerToken')) {
+            const bearerToken = localStorage.getItem('bearerToken');
+
+            axios.defaults.headers.common = {'Authorization': `Bearer ${bearerToken}`}; // All axios calls now use the bearer token as a header
+            props.setAuthenticated(true); // The website now displays whatever an authenticated should be able to see
+
+            const json = {jwtToken: bearerToken};
+
+            getUserFromToken({data: json}).then(response => {
+                    setLogin(response.data.username);
+                    props.setStatus(maxAuthority(response.data));
+                    props.setEnabled(response.data.enabled);
+                }
+            ).catch(e => {
+                console.log("An error occurred:");
+                console.log(e);
+            });
         }
     }
+
+    useEffect(() => loginIfTokenExists(), []);
 
     function onLogin() {
 
@@ -90,8 +112,6 @@ function Authentication(props) {
     return (
 
         <div className="Authentication">
-
-            {loginIfTokenExists()}
 
             {!props.authenticated ?
                 <div id="login">

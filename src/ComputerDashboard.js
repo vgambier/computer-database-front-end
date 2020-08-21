@@ -50,18 +50,18 @@ function ComputerDashboard(props) {
     const [companies, setCompanies] = useState(company_data);
 
     // Add one computer
-    const [{}, executeAdd] = useAxios({
+    const [, executeAdd] = useAxios({
         url: `${server_url}/computers`,
         method: "POST"
     }, {manual: true});
 
     // Delete one computer
-    const [{}, executeDelete] = useAxios({
+    const [, executeDelete] = useAxios({
         method: "DELETE"
     }, {manual: true});
 
     // Edit one computer
-    const [{}, executeEdit] = useAxios({
+    const [, executeEdit] = useAxios({
         url: `${server_url}/computers`,
         method: "PUT"
     }, {manual: true});
