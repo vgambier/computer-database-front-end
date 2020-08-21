@@ -164,10 +164,16 @@ function Authentication(props) {
         console.log(values);
     }
 
+    function handleKeypress (event) {
+        if(event.keyCode === 13){
+            onLogin()
+        }
+    }
 
     return (
 
         <div className="Authentication">
+
 
             {!props.authenticated ?
                 <div id="login">
@@ -176,7 +182,8 @@ function Authentication(props) {
                            onChange={elt => setUser({...user, username: elt.target.value})}/>&nbsp;
                     {translate("Password")}
                     <Input type="password" placeholder="123456"
-                           onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
+                           onChange={elt => setUser({...user, password: elt.target.value})}
+                           onKeyDown={handleKeypress}/>&nbsp;
                     <Button onClick={() => onLogin()}>{translate("Login")}</Button>&nbsp;
                     {errorMessage}&nbsp;&nbsp;
 
