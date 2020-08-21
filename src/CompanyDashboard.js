@@ -21,7 +21,7 @@ function CompanyDashboard(props) {
     const [companies, setCompanies] = useState(company_data);
 
     // Delete one company
-    const [{}, executeDelete] = useAxios({
+    const [ executeDelete] = useAxios({
         method: "DELETE"
     }, {manual: true});
 

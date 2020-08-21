@@ -17,23 +17,23 @@ function UserDashboard(props) {
 
 
     // Delete a user
-    const [{}, executeDelete] = useAxios({
+    const [, executeDelete] = useAxios({
         method: "DELETE"
     }, {manual: true});
 
     // Edit user ROLES
-    const [{}, executeEdit] = useAxios({
+    const [, executeEdit] = useAxios({
         url: `${server_url}/users`,
         method: "PUT"
     }, {manual: true});
 
     // ENABLE User
-    const [{}, executeEnable] = useAxios({
+    const [, executeEnable] = useAxios({
         method: "POST"
     }, {manual: true});
 
     // DISABLE  User
-    const [{}, executeDisable] = useAxios({
+    const [, executeDisable] = useAxios({
         url: `${server_url}/users/disable`,
         method: "POST"
     }, {manual: true});
