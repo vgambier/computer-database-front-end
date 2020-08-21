@@ -119,8 +119,9 @@ function User(props) {
                         <h2>{translate("Edit user")}</h2>
                         <h2>{username}</h2>
                         <AvForm>
-                            <AvField name="state" label={translate("State")} type="select" defaultValue={0}
+                            <AvField name="state" label={translate("State")} type="select"
                                      onChange={elt => setUser({...user, enabled: elt.target.value})}>
+                                <option value="0">--</option>
                                 <option value={state[0]}>{state[0]}</option>
                                 <option value={state[1]}>{state[1]}</option>
 

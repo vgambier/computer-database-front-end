@@ -68,8 +68,7 @@ function Computer(props) {
 
     return (
 
-        <I18nProvider locale={props.locale}>
-
+        <>
             <td> {id} </td>
             <td> {name} </td>
             <td> {introduced} </td>
@@ -94,9 +93,9 @@ function Computer(props) {
                     contentLabel="Example Modal"
                 >
                     <h2>{translate("Delete")}</h2>
-                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
-                    <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Computer confirm")}</h3>
                     <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
+                    <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                 </Modal>
 
                 <Modal
@@ -109,7 +108,7 @@ function Computer(props) {
 
                     <AvForm onValidSubmit={handleValidEdit} onInvalidSubmit={handleInvalidEdit}>
 
-                        <AvField name="name" label={translate("Name")} type="text" defaultValue={name}
+                        <AvField class="form" name="name" label={translate("Name")} type="text" defaultValue={name}
                                  validate={{
                                      required: {value: true, errorMessage: 'This field is required'},
                                      maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
@@ -148,14 +147,13 @@ function Computer(props) {
                         </AvField>
 
                         <Button className="button">{translate("Confirm")}</Button>
+                        <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>
 
-                    <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
-
                 </Modal>
             </td>
-        </I18nProvider>
+        </>
     );
 }
 

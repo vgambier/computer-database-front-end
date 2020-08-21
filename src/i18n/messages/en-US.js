@@ -39,6 +39,7 @@ export default {
         'Confirm': 'Confirm',
         'Delete confirm':'You are about to delete a company and all associated computers! Do you want to continue?',
         'User confirm': 'You are about to delete a user from the system! Do you want to continue?',
+        'Computer confirm': 'You are about to delete a computer from the system! Do you want to continue?',
         'Edit user': 'Edit a user',
 
 

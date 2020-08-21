@@ -21,6 +21,11 @@ h2 {
   color:white;
 }
 
+h6 {
+  font-size: 140%;
+  text-align: center;
+}
+
 h8 {
   color:white;
 }
@@ -80,20 +85,26 @@ td, th {
 
 #vertical-menu li {
   margin-top: 55px;
-}
-
-#vertical-menu a {
-  color: white;
-  display: block;
-  font-size: 120%;
-  text-decoration: none;
-  text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;
   text-align: center;
 }
 
-#vertical-menu a.active {
-  font-size: 160%;
-  font-weight:bold;
+#vertical-menu a {
+  display: block;
+  font-size: 156%;
+  text-decoration: none;
+  text-shadow: 2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, -2px 0 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px 2px 0 black, -2px -2px 0 black;
+  text-align: center;
+  color: white;
+}
+
+.main-nav-active {
+  font-weight: bolder;
+  font-family: "MutatorSans";
+  text-transform: uppercase;
+}
+
+.main-nav:hover {
+  color: green !important;
 }
 
 /* CONTENT*/

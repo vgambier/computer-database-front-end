@@ -16,10 +16,10 @@ function Buttons(props) {
                     <button className="button4">{props.page}</button>
                     &nbsp;
                     <button className="button"
-                            onClick={() => props.setPage(Math.min(props.countPages(), props.page + 1))}><h9> {translate("Next Page")} <img alt="right arrow" src={rightArrow} width="20"/></h9></button>
+                            onClick={() => props.setPage(Math.min(props.countPages(), props.page + 1))}>{translate("Next Page")} <img alt="right arrow" src={rightArrow} width="20"/></button>
                     &nbsp;
                     <button className="button"
-                            onClick={() => props.setPage(props.countPages())}> <h9> {translate("Last Page")} <img alt="double right arrow" src={last} width="20"/></h9></button>
+                            onClick={() => props.setPage(props.countPages())}>{translate("Last Page")} <img alt="double right arrow" src={last} width="20"/></button>
                     &nbsp;
                 </div>
         )
@@ -28,12 +28,12 @@ function Buttons(props) {
             return (
                 <I18nProvider locale={props.locale}>
                     <div>
-                        <button className="button" onClick={() => props.setPage(1)}><img alt="double left arrow" src={first} width="20"/><h9> {translate("First Page")}</h9></button>
+                        <button className="button" onClick={() => props.setPage(1)}><img alt="double left arrow" src={first} width="20"/>{translate("First Page")}</button>
                         &nbsp;
                         <button className="button"
-                                onClick={() => props.setPage(Math.max(1, props.page - 1))}><img alt="left arrow" src={leftArrow} width="20"/><h9> {translate("Previous Page")}</h9></button>
+                                onClick={() => props.setPage(Math.max(1, props.page - 1))}><img alt="left arrow" src={leftArrow} width="20"/>{translate("Previous Page")}</button>
                         &nbsp;
-                        <button className="button4"><h9>{props.page}</h9></button>
+                        <button className="button4">{props.page}</button>
                         &nbsp;
                     </div>
                 </I18nProvider>
@@ -43,14 +43,14 @@ function Buttons(props) {
             return (
                 <I18nProvider locale={props.locale}>
                     <div>
-                        <button className="button" onClick={() => props.setPage(1)}><h9>  {translate("First Page")} </h9><img alt="double left arrow" src={first} width="20"/></button>
+                        <button className="button" onClick={() => props.setPage(1)}>{translate("First Page")}<img alt="double left arrow" src={first} width="20"/></button>
                         <button className="button"
-                                onClick={() => props.setPage(Math.max(1, props.page - 1))}><h9>  {translate("Previous Page")}</h9> <img alt="left arrow" src={leftArrow} width="20"/></button>
+                                onClick={() => props.setPage(Math.max(1, props.page - 1))}>{translate("Previous Page")}<img alt="left arrow" src={leftArrow} width="20"/></button>
                         <button className="button4">{props.page}</button>
                         <button className="button"
-                                onClick={() => props.setPage(Math.min(props.countPages(), props.page + 1))}><img alt="right arrow" src={rightArrow} width="20"/><h9> {translate("Next Page")}</h9></button>
+                                onClick={() => props.setPage(Math.min(props.countPages(), props.page + 1))}><img alt="right arrow" src={rightArrow} width="20"/>{translate("Next Page")}</button>
                         <button className="button"
-                                onClick={() => props.setPage(props.countPages())}><img alt="double right arrow" src={last} width="20"/><h9> {translate("Last Page")}</h9></button>
+                                onClick={() => props.setPage(props.countPages())}><img alt="double right arrow" src={last} width="20"/>{translate("Last Page")}</button>
                     </div>
                 </I18nProvider>
             )

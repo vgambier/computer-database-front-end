@@ -38,6 +38,7 @@ function ComputerDashboard(props) {
         {useCache: false});
     const [computersCount, setComputersCount] = useState(count_data);
 
+
     // Get all computers
     const [{data}] = useAxios(
         `${server_url}/computers/page/` + page + `/` + nbEntries + `/` + orderBy + `/` + order + `/` + search,
@@ -87,19 +88,6 @@ function ComputerDashboard(props) {
             transform: 'translate(-50%, -50%)'
         }
     };
-
-    // Edition modal
-
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-    function closeEditModal() {
-        setIsEditModalOpen(false);
-    }
-
-
-
-
-
 
     // Form submission and validation
 
@@ -187,6 +175,7 @@ function ComputerDashboard(props) {
         setResult(string);
     }
 
+
     // Use effects
 
     useEffect(() => setComputers(data), [data]);
@@ -199,6 +188,7 @@ function ComputerDashboard(props) {
     useEffect(() => setOrder(order), [order]);
     useEffect(() => setComputersCount(count_data), [count_data]);
 
+
     return (
 
         <div className="Dashboard">
@@ -210,13 +200,14 @@ function ComputerDashboard(props) {
             <br/>
 
             <div id="searchbar">
-                <Label>
-                    <h8>{translate("Search")}</h8>
-                </Label>
+
+                <h8>{translate("Search")}</h8>
+
                 <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
                 <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
             </div>
             &nbsp;
+
 
             <div id="buttons">
                 <button onClick={() => setNbEntries(10) & setPage(1)}>10</button>
@@ -236,6 +227,7 @@ function ComputerDashboard(props) {
                     <h2> {translate("Add")}</h2>
 
                     <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
+                        <br/>
                         <AvField name="name" label={translate("Name")} type="text"
                                  placeholder="Fancy Computer #15"
                                  onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
@@ -246,18 +238,19 @@ function ComputerDashboard(props) {
                                          errorMessage: 'Names must be fewer than 100 characters'
                                      }
                                  }}
-                        />
+                        /><br/>
 
                         <AvField name="introduced" label={translate("Introduced")} type="date"
                                  placeholder="2001-12-31"
                                  onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
-                        />
+                        /><br/>
 
                         <AvField name="discontinued" label={translate("Discontinued")} type="date"
                                  placeholder="2011-12-31"
                                  onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
                         />
                         {dateMessage}
+                        <br/><br/>
 
                         <AvField name="company" label={translate("Company")} type="select"
                                  onChange={elt => setNewComputer({
@@ -268,11 +261,11 @@ function ComputerDashboard(props) {
                                 <option key={elt.id}
                                         value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                         </AvField>
+
                         <Button className="button">{translate("Confirm")}</Button>
+                        <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>
-
-                    <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
                 </Modal>
 
             </div>
