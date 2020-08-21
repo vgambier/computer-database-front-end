@@ -44,6 +44,14 @@ function Homepage() {
                 <div id="page">
                     {loginIfTokenExists()}
                     <div id="navigation">
+
+                        <div id="drapeau">
+                            <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                                <img src={english} alt="english" width="50"/></button>
+                            <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
+                                <img src={french} alt="french" width="44"/></button>
+                        </div>
+
                         <div align="center">
                             <div id="center">
                                 <img alt="home" src={home} width="320"/><br/>
@@ -67,13 +75,6 @@ function Homepage() {
                         <div className="content">
 
                             <header>
-
-                                <div id="drapeau">
-                                    <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
-                                        <img src={english} alt="english" width="58"/></button>
-                                    <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
-                                        <img src={french} alt="french" width="50"/></button>
-                                </div>
 
                                 <ul className="write">
                                     <div className="Authentication">

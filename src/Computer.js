@@ -86,10 +86,10 @@ function Computer(props) {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <h2>{translate("Delete")}</h2>
+                    <h3>{translate("Delete")}</h3>
                     <h3 ref={_subtitle => (subtitle = _subtitle)}>You are about to delete a computer! Do you want to continue?</h3>
-                    <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
-                    <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <button className="button3" onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
+                    <button className="button" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                 </Modal>
 
                 <Modal
@@ -98,7 +98,7 @@ function Computer(props) {
                     style={customStyles}
                     contentLabel="Edit Computer"
                 >
-                    <h2>{translate("Edit")}</h2>
+                    <h3>{translate("Edit")}</h3>
 
                     <AvForm onValidSubmit={handleValidEdit} onInvalidSubmit={handleInvalidEdit}>
 
@@ -127,9 +127,9 @@ function Computer(props) {
 
                             {companies && companies.map(elt =>
                                 <option value={getCompanyJsonString(elt)} key={elt.id}> {elt.name} </option>)}
-                        </AvField>
+                        </AvField><br/>
 
-                        <Button className="button">{translate("Confirm")}</Button>
+                        <Button className="button3">{translate("Confirm")}</Button>
                         <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>

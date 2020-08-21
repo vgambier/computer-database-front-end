@@ -47,10 +47,10 @@ function User(props) {
                     </select></td>
 
                     <td>
-                        <Button className="button" onClick={() => {
+                        <Button className="button3" onClick={() => {
                             setEditMode(!editMode);
                             props.edit(user);
-                        }}>Confirm</Button>
+                        }}>Confirms</Button>
                     </td>
                 </>
             }

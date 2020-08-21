@@ -137,7 +137,7 @@ function UserDashboard(props) {
                         </select>
                     </FormGroup>
 
-                    <button onClick={() => addUser()}>Confirm</button>
+                    <button className="button3" onClick={() => addUser()}>Confirm</button>
                 </Form>
             }
 
