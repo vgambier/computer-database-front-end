@@ -53,10 +53,10 @@ function Company(props) {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <h2>{translate("Delete_company")}</h2>
+                    <h3>{translate("Delete_company")}</h3>
                     <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
-                    <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
-                    <button onClick={() => closeDeleteModal()}>Cancel</button>
+                    <button className="button3" onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
+                    <button className="button" onClick={() => closeDeleteModal()}>Cancel</button>
                 </Modal>
             </td>
         </>
