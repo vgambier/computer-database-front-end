@@ -3,9 +3,9 @@ import {Button} from 'reactstrap';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
 import edit from "./images/edit.png";
-import {authorityToJSON, displayAuthorityOption, displayEnabledOption} from './AuthorityHelper';
 import translate from "./i18n/messages/translate";
 import Modal from "react-modal";
+import {AvField, AvForm} from "availity-reactstrap-validation";
 
 const Roles = {
     ROLE_ADMIN: 2,
@@ -26,7 +26,6 @@ export function maxAuthority(user) {
 function User(props) {
 
     const [user, setUser] = useState(props.user);
-    const [editMode, setEditMode] = useState(false);
     const {username, enabled, authorityList} = user;
 
     const authorities = ["ROLE_TEST", "ROLE_USER", "ROLE_ADMIN"];
@@ -55,7 +54,15 @@ function User(props) {
             transform: 'translate(-50%, -50%)'
         }
     };
-    
+
+    // Edition modal
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    function closeEditModal() {
+        setIsEditModalOpen(false);
+    }
+
 
     let subtitle;
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -72,42 +79,65 @@ function User(props) {
 
     return (
         <>
-            {!editMode ?
-                <>
-                    <td> {username} </td>
-                    <td> {enabled} </td>
-                    <td> {authorities[(maxAuthority(user))]} </td>
-                    <td> {minAuthority(user)} </td>
-                    <td>
-                        <Button className="button" onClick={() => setEditMode(!editMode)}><img src={edit} alt="edit"
-                                                                                               height="28" width="25"/></Button>
-                        <Button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes}
-                                                                                               alt="delete" height="28"
-                                                                                               width="25"/></Button>
+            <>
+                <td> {username} </td>
+                <td> {enabled} </td>
+                <td> {authorities[(maxAuthority(user))]} </td>
+                <td> {minAuthority(user)} </td>
+                <td>
+                    <Button className="button" onClick={() => setIsEditModalOpen(!isEditModalOpen)}><img src={edit}
+                                                                                                         alt="edit"
+                                                                                                         height="28"
+                                                                                                         width="25"/></Button>
+                    <Button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img
+                        src={deletes}
+                        alt="delete" height="28"
+                        width="25"/></Button>
 
-                        <Modal
-                            isOpen={isDeleteModalOpen}
-                            onAfterOpen={afterOpenDeleteModal}
-                            onRequestClose={closeDeleteModal}
-                            style={customStyles}
-                            contentLabel="Example Modal"
-                        >
-                            <h2>{translate("Delete")}</h2>
-                            <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Delete confirm")}</h3>
-                            <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
-                            <button onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
-                        </Modal>
-                    </td>
-                </>
-                :
-                <>
-                    <td>{username}</td>
+                    <Modal
+                        isOpen={isDeleteModalOpen}
+                        onAfterOpen={afterOpenDeleteModal}
+                        onRequestClose={closeDeleteModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+                        <h2>{translate("Delete")}</h2>
+                        <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("User confirm")}</h3>
+                        <button
+                            onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
+                        <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
 
-                    <td><select onChange={elt => setUser({...user, enabled: elt.target.value})}>
-                        {state.map(elt => displayEnabledOption({enabled}, elt))}
-                    </select></td>
+                    </Modal>
 
-                    {/*<td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
+                    <Modal
+                        isOpen={isEditModalOpen}
+                        onRequestClose={closeEditModal}
+                        style={customStyles}
+                        contentLabel="Edit User"
+                    >
+
+                        <h2>{translate("Edit user")}</h2>
+                        <h2>{username}</h2>
+                        <AvForm>
+                            <AvField name="state" label={translate("State")} type="select" defaultValue={0}
+                                     onChange={elt => setUser({...user, enabled: elt.target.value})}>
+                                <option value={state[0]}>{state[0]}</option>
+                                <option value={state[1]}>{state[1]}</option>
+
+                            </AvField>
+                            <Button className="button" onClick={() => {
+                                closeEditModal()
+                                props.edit(user);
+                            }}>{translate("Confirm")}</Button>
+                            <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
+                        </AvForm>
+
+                    </Modal>
+                </td>
+            </>
+            <>
+
+                {/*<td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
                         {authorities.map(elt => displayAuthorityOption({authorityList}, elt))}
                     </select></td>
                     {<td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
@@ -115,13 +145,7 @@ function User(props) {
                         {authorities.map(elt => displayAuthorityOption({authorityList}, elt))}
                     </select></td>}*/}
 
-                    <td>
-                        <Button className="button" onClick={() => {
-                            setEditMode(!editMode);
-                            props.edit(user);
-                        }}>Confirm</Button>
-                    </td>
-                </>
+            </>
             }
         </>
     );

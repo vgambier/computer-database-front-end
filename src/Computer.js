@@ -76,8 +76,15 @@ function Computer(props) {
             <td> {discontinued} </td>
             <td> {printCompany({company})} </td>
             <td>
-                <Button className="button" onClick={() => setIsEditModalOpen(!isEditModalOpen)}><img src={edit} alt="edit" height="28" width="25"/></Button>
-                <button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes} alt="delete" height="28" width="25"/></button>
+                <Button className="button" onClick={() => setIsEditModalOpen(!isEditModalOpen)}><img src={edit}
+                                                                                                     alt="edit"
+                                                                                                     height="28"
+                                                                                                     width="25"/></Button>
+                <button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes}
+                                                                                                         alt="delete"
+                                                                                                         height="28"
+                                                                                                         width="25"/>
+                </button>
 
                 <Modal
                     isOpen={isDeleteModalOpen}
@@ -113,16 +120,26 @@ function Computer(props) {
 
 
                         <AvField name="introduced" label={translate("Introduced")} type="date" defaultValue={introduced}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, introduced: elt.target.value})}
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     introduced: elt.target.value
+                                 })}
                         />
 
-                        <AvField name="discontinued" label={translate("Discontinued")} type="date" defaultValue={discontinued}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, discontinued: elt.target.value})}
+                        <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                                 defaultValue={discontinued}
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     discontinued: elt.target.value
+                                 })}
                         />
 
                         <AvField name="company" label={translate("Company")} type="select"
                                  defaultValue={getCompanyJsonString(company)}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, company: companyToJSON(elt.target.value)})}>
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     company: companyToJSON(elt.target.value)
+                                 })}>
                             <option value="">--</option>
 
                             {companies && companies.map(elt =>

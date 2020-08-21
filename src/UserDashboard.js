@@ -1,7 +1,7 @@
 import './Dashboard.css';
 import translate from "./i18n/messages/translate";
 import React, {useEffect, useState} from "react";
-import {Button, Form, FormGroup, Input, Label, Table} from "reactstrap";
+import {Button, Table} from "reactstrap";
 import useAxios from "axios-hooks";
 import {server_url} from "./Homepage";
 import {AvForm, AvField} from 'availity-reactstrap-validation';
@@ -19,7 +19,7 @@ function UserDashboard(props) {
         username: "",
         password: "",
         enabled: "0",
-        authorityList: [],
+        authorityList: ["ROLE_TEST"],
     };
 
     const [newUser, setNewUser] = useState(newUserInit);
@@ -165,14 +165,15 @@ function UserDashboard(props) {
 
 
                     <AvField
-                        name="authority" type="select"
+                        name="authority" type="select" defaultValue={Roles.TEST}
                         label={translate("Authority")}
-                        onChange={elt => {
-                            newUser.authorityList.push(elt.target.value);
-                            /*                       setNewUser({
-                                                       ...newUser, {newUser.authorityList}
-                                                   })*/
-                        }}>
+                        onChange={elt =>
+                         newUser.authorityList.push(elt.target.value)
+                        /*setNewUser(
+                            {
+                                ...newUser, authorityList: elt.target.value
+                            })*/}>
+
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
                         <option value={Roles.ADMIN}>{Roles.ADMIN}</option>
@@ -180,13 +181,14 @@ function UserDashboard(props) {
                     </AvField>
 
                     <AvField
-                        name="secondary" label={translate("Secondary")}type="select"
+                        name="secondary" label={translate("Secondary")} type="select"
                         onChange={elt => {
                             newUser.authorityList.push(elt.target.value);
-                            /*   setNewUser({
-                                   ...newUser, newUser.authorityList
-                               })*/
-                        }}>
+                            /*setNewUser(
+                                {
+                                    ...newUser, authorityList: elt.target.value
+                                })*/}}>
+                        <option selected="selected" value="">--</option>
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
                     </AvField>
@@ -199,7 +201,7 @@ function UserDashboard(props) {
 
             <div id="table">
 
-                {<Table>
+                <Table>
 
                     <thead>
                     <tr>
@@ -233,7 +235,7 @@ function UserDashboard(props) {
 
                     </tbody>
 
-                </Table>}
+                </Table>
 
             </div>
         </div>

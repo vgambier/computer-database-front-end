@@ -88,6 +88,19 @@ function ComputerDashboard(props) {
         }
     };
 
+    // Edition modal
+
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    function closeEditModal() {
+        setIsEditModalOpen(false);
+    }
+
+
+
+
+
+
     // Form submission and validation
 
     const newComputerInit = {
