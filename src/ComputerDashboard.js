@@ -202,6 +202,14 @@ function ComputerDashboard(props) {
         }
     }
 
+    function handleKeypress (event) {
+        if(event.keyCode === 13){
+            setSearchTerm(result)
+            countPages()
+            setPage(1)
+        }
+    }
+
     // searchTerm logic
     const [result, setResult] = useState("");
 
@@ -240,7 +248,9 @@ function ComputerDashboard(props) {
 
                 {translate("Search")}
 
-                <Input placeholder={"Powerbook..."} onChange={elt => editSearchTerm(elt.target.value)}/>
+                <Input placeholder={"Powerbook..."}
+                       onChange={elt => editSearchTerm(elt.target.value)}
+                       onKeyDown={handleKeypress}/>
                 <button className="button2" onClick={() => setSearchTerm(result) & countPages() & setPage(1)}><b>OK</b>
                 </button>
             </div>
