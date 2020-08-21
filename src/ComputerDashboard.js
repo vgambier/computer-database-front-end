@@ -3,9 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input, Label, Button} from "reactstrap";
+import {Table, Input, Button} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
-import {I18nProvider} from "./i18n";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
 import {AvForm, AvField} from 'availity-reactstrap-validation';
@@ -28,7 +27,7 @@ function ComputerDashboard(props) {
         if (orderBy !== column_name) {
             setOrder("ASC");
         } else {
-            setOrder(order === "ASC" ? "DESC" : "ASC");
+            setOrder( order === "ASC" ? "DESC" : "ASC");
         }
     }
 
@@ -216,6 +215,7 @@ function ComputerDashboard(props) {
                 <button onClick={() => setNbEntries(50) & setPage(1)}>50</button>
                 &nbsp;
 
+
                 <button className="button3"
                         onClick={() => setIsAddModalOpen(!isAddModalOpen)}><b>{translate("Add")}</b></button>
 
@@ -262,8 +262,8 @@ function ComputerDashboard(props) {
                                         value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                         </AvField><br/><br/>
 
-                        <Button className="button3">Confirm</Button>
-                        <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
+                        <Button className="button3">{translate("Confirm")}</Button>
+                        <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>
 

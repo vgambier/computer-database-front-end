@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
-import {I18nProvider} from "./i18n";
 import {printCompany, companyToJSON, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
@@ -68,16 +67,22 @@ function Computer(props) {
 
     return (
 
-        <I18nProvider locale={props.locale}>
-
+        <>
             <td> {id} </td>
             <td> {name} </td>
             <td> {introduced} </td>
             <td> {discontinued} </td>
             <td> {printCompany({company})} </td>
             <td>
-                <Button className="button" onClick={() => setIsEditModalOpen(!isEditModalOpen)}><img src={edit} alt="edit" height="28" width="25"/></Button>
-                <button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes} alt="delete" height="28" width="25"/></button>
+                <Button className="button" onClick={() => setIsEditModalOpen(!isEditModalOpen)}><img src={edit}
+                                                                                                     alt="edit"
+                                                                                                     height="28"
+                                                                                                     width="25"/></Button>
+                <button className="button" onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}><img src={deletes}
+                                                                                                         alt="delete"
+                                                                                                         height="28"
+                                                                                                         width="25"/>
+                </button>
 
                 <Modal
                     isOpen={isDeleteModalOpen}
@@ -87,9 +92,10 @@ function Computer(props) {
                     contentLabel="Example Modal"
                 >
                     <h3>{translate("Delete")}</h3>
-                    <h3 ref={_subtitle => (subtitle = _subtitle)}>You are about to delete a computer! Do you want to continue?</h3>
-                    <button className="button3" onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
-                    <button className="button" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Computer confirm")}</h3>
+                    <button className="button3"
+                            onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
+                    <button className="button3" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                 </Modal>
 
                 <Modal
@@ -113,16 +119,26 @@ function Computer(props) {
 
 
                         <AvField name="introduced" label={translate("Introduced")} type="date" defaultValue={introduced}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, introduced: elt.target.value})}
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     introduced: elt.target.value
+                                 })}
                         />
 
-                        <AvField name="discontinued" label={translate("Discontinued")} type="date" defaultValue={discontinued}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, discontinued: elt.target.value})}
+                        <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                                 defaultValue={discontinued}
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     discontinued: elt.target.value
+                                 })}
                         />
 
                         <AvField name="company" label={translate("Company")} type="select"
                                  defaultValue={getCompanyJsonString(company)}
-                                 onChange={elt => setUpdatedComputer({...updatedComputer, company: companyToJSON(elt.target.value)})}>
+                                 onChange={elt => setUpdatedComputer({
+                                     ...updatedComputer,
+                                     company: companyToJSON(elt.target.value)
+                                 })}>
                             <option value="">--</option>
 
                             {companies && companies.map(elt =>
@@ -136,7 +152,7 @@ function Computer(props) {
 
                 </Modal>
             </td>
-        </I18nProvider>
+        </>
     );
 }
 

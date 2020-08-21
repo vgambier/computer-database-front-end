@@ -32,12 +32,16 @@ export default {
         'Username': 'Username',
         'Password': 'Password',
         'State': 'State',
-        'Authority': 'Authority',
-        'Secondary': 'Secondary',
+        'Authority': 'Main Authority',
+        'Secondary': 'Secondary Authority',
         'Add a user': 'Add a user',
         'Cancel': 'Cancel',
         'Confirm': 'Confirm',
-        'Delete confirm':'You are about to delete a company and all associated computers! Do you want to continue?'
+        'Delete confirm':'You are about to delete a company and all associated computers! Do you want to continue?',
+        'User confirm': 'You are about to delete a user from the system! Do you want to continue?',
+        'Computer confirm': 'You are about to delete a computer from the system! Do you want to continue?',
+        'Edit user': 'Edit a user',
+        'Delete user': 'Delete a user'
 
 
     }
