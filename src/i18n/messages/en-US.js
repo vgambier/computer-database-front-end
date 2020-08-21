@@ -34,7 +34,7 @@ export default {
         'State': 'State',
         'Authority': 'Main Authority',
         'Secondary': 'Secondary Authority',
-        'Add a user': 'Add a user',
+        'Add a user': 'Sign up',
         'Cancel': 'Cancel',
         'Confirm': 'Confirm',
         'Delete confirm':'You are about to delete a company and all associated computers! Do you want to continue?',

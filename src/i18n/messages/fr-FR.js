@@ -35,7 +35,7 @@ export default {
         'State': 'Etat',
         'Authority': 'Autorité Majeure',
         'Secondary': 'Autorité Secondaire',
-        'Add a user': 'Ajouter un utilisateur',
+        'Add a user': 'Inscription',
         'Cancel': 'Annuler',
         'Confirm': 'Confirmer',
         'Delete confirm': "Vous êtes sur le point de supprimer une entreprise et tous ses ordinateurs de la base! C'est votre dernier mot ?",

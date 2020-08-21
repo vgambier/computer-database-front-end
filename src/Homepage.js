@@ -56,7 +56,6 @@ function Homepage() {
 
                         <div id="vertical-menu">
 
-
                             {(authenticated && enabled === "1") ?
                                 (authority === 2) ?
 
