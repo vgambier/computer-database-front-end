@@ -133,6 +133,18 @@ function Authentication(props) {
         setUser(userInit);
     }
 
+    function handleValidEdit() {
+        addUser()
+    }
+
+    function handleInvalidEdit(event, errors, values) {
+        console.log("Invalid form submission");
+        console.log(event);
+        console.log(errors);
+        console.log(values);
+    }
+
+
     return (
 
         <div className="Authentication">
@@ -161,10 +173,14 @@ function Authentication(props) {
                            contentLabel="Add a user">
                         <h3> {translate("Add a user")}</h3>
 
-                        <AvForm>
+                        <AvForm onValidSubmit={handleValidEdit} onInvalidSubmit={handleInvalidEdit}>
                             <AvField name="name"
                                      label={translate("Username")} type="text"
                                      placeholder="Fancy User #15"
+                                     validate={{
+                                         required: {value: true, errorMessage: 'This field is required'},
+                                         maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
+                                     }}
                                      onChange={elt => setNewUser(
                                          {
                                              ...newUser,
@@ -172,9 +188,13 @@ function Authentication(props) {
                                          })}/>
                             <br/>
                             <AvField
-                                name="password" type="text"
+                                name="password" type="password"
                                 label={translate("Password")}
                                 placeholder="123456"
+                                validate={{
+                                    required: {value: true, errorMessage: 'This field is required'},
+                                    maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
+                                }}
                                 onChange={elt => setNewUser(
                                     {
                                         ...newUser,
@@ -183,7 +203,7 @@ function Authentication(props) {
                             />
 
 
-                            <button className="button3" onClick={() => addUser()}>{translate("Confirm")}</button>
+                            <button className="button3" >{translate("Confirm")}</button>
 
                             <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
 

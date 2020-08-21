@@ -18,9 +18,9 @@ function getValue(key) {
 }
 
 export function maxAuthority(user) {
-    let temp = user.authorityList.map(elt => getValue(elt));
-    temp = Math.max.apply(Math, temp);
-    return temp;
+        let temp = user.authorityList.map(elt => getValue(elt));
+        temp = Math.max.apply(Math, temp);
+        return temp;
 }
 
 function User(props) {
@@ -33,8 +33,6 @@ function User(props) {
 
 
     function minAuthority(user) {
-        console.log(user.username);
-        console.log(user.authorityList.length);
         if (user.authorityList.length > 1) {
             if (getValue(user.authorityList[0]) === maxAuthority(user)) {
                 return authorityList[1];
@@ -76,6 +74,12 @@ function User(props) {
         setIsDeleteModalOpen(false);
     }
 
+    const Authorities = {
+        ADMIN: "ROLE_ADMIN",
+        USER: "ROLE_USER",
+        TEST: "ROLE_TEST",
+    }
+
 
     return (
         <>
@@ -104,7 +108,7 @@ function User(props) {
                         <h3>{translate("Delete user")}</h3>
                         <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("User confirm")}</h3>
                         <button className="button3"
-                            onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
+                                onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
                         <button className="button" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
 
                     </Modal>
@@ -125,7 +129,28 @@ function User(props) {
                                 <option value={state[1]}>{state[1]}</option>
 
                             </AvField>
-                        <br/>
+
+                            <AvField
+                                name="authority" type="select" defaultValue={authorities[(maxAuthority(user))]}
+                                label={translate("Authority")}
+                                onChange={elt => setUser({...user, authorityList: [elt.target.value]})}>
+                                }>
+
+                                <option value={Authorities.USER}>{Authorities.USER}</option>
+                                <option value={Authorities.ADMIN}>{Authorities.ADMIN}</option>
+
+                            </AvField>
+                            <br/>
+                            <AvField
+                                name="secondary" label={translate("Secondary")} type="select" defaultValue={minAuthority(user)}
+                                onChange={elt => {
+                                    user.authorityList.push(elt.target.value);
+
+                                }}>
+                                <option selected="selected" value="">--</option>
+                                <option value={Authorities.USER}>{Authorities.USER}</option>
+                            </AvField><br/>
+                            <br/>
                             <Button className="button3" onClick={() => {
                                 closeEditModal()
                                 props.edit(user);
@@ -138,16 +163,7 @@ function User(props) {
             </>
             <>
 
-                {/*<td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
-                        {authorities.map(elt => displayAuthorityOption({authorityList}, elt))}
-                    </select></td>
-                    {<td><select onChange={elt => setUser({...user, authorityList: authorityToJSON(elt.target.value)})}>
-                        <option selected="selected" >--</option>
-                        {authorities.map(elt => displayAuthorityOption({authorityList}, elt))}
-                    </select></td>}*/}
-
             </>
-            }
         </>
     );
 }
