@@ -112,6 +112,7 @@ function UserDashboard(props) {
 
     // Deleting logic
     function deleteUser(username) {
+        console.log(username);
         executeDelete({url: `${server_url}/users/${username}`}).then(() => {
             const newUsers = users.filter(user => user.username !== username);
             setUsers(newUsers);
@@ -168,11 +169,11 @@ function UserDashboard(props) {
                         name="authority" type="select" defaultValue={Roles.TEST}
                         label={translate("Authority")}
                         onChange={elt =>
-                         newUser.authorityList.push(elt.target.value)
-                        /*setNewUser(
-                            {
-                                ...newUser, authorityList: elt.target.value
-                            })*/}>
+                            newUser.authorityList.push(elt.target.value)
+                            /*setNewUser(
+                                {
+                                    ...newUser, authorityList: elt.target.value
+                                })*/}>
 
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
@@ -187,13 +188,14 @@ function UserDashboard(props) {
                             /*setNewUser(
                                 {
                                     ...newUser, authorityList: elt.target.value
-                                })*/}}>
+                                })*/
+                        }}>
                         <option selected="selected" value="">--</option>
                         <option value={Roles.TEST}>{Roles.TEST}</option>
                         <option value={Roles.USER}>{Roles.USER}</option>
                     </AvField>
 
-                    <button onClick={() => addUser()}>{translate("Confirm")}</button>
+                    <button className="button3" onClick={() => addUser()}>{translate("Confirm")}</button>
                 </AvForm>
                 <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
             </Modal>

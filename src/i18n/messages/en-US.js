@@ -33,7 +33,7 @@ export default {
         'Password': 'Password',
         'State': 'State',
         'Authority': 'Main Authority',
-        'Secondary': 'Secondary',
+        'Secondary': 'Secondary Authority',
         'Add a user': 'Add a user',
         'Cancel': 'Cancel',
         'Confirm': 'Confirm',
@@ -41,6 +41,7 @@ export default {
         'User confirm': 'You are about to delete a user from the system! Do you want to continue?',
         'Computer confirm': 'You are about to delete a computer from the system! Do you want to continue?',
         'Edit user': 'Edit a user',
+        'Delete user': 'Delete a user'
 
 
     }

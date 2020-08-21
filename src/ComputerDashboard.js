@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {server_url} from "./Homepage";
 import useAxios from "axios-hooks";
 import Computer from "./Computer";
-import {Table, Input, Label, Button} from "reactstrap";
+import {Table, Input, Button} from "reactstrap";
 import {companyToJSON, getCompanyJsonString} from "./CompanyHelper";
 import translate from "./i18n/messages/translate";
 import Buttons from "./Buttons"
@@ -201,7 +201,7 @@ function ComputerDashboard(props) {
 
             <div id="searchbar">
 
-                <h8>{translate("Search")}</h8>
+                {translate("Search")}
 
                 <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
                 <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
@@ -224,7 +224,7 @@ function ComputerDashboard(props) {
                        onRequestClose={closeAddModal}
                        style={customStyles}
                        contentLabel="Add a computer">
-                    <h2> {translate("Add")}</h2>
+                       <h3>{translate("Add")}</h3>
 
                     <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
                         <br/>
@@ -260,12 +260,13 @@ function ComputerDashboard(props) {
                             {companies && companies.map(elt =>
                                 <option key={elt.id}
                                         value={getCompanyJsonString(elt)}> {elt.name} </option>)}
-                        </AvField>
+                        </AvField><br/><br/>
 
-                        <Button className="button">{translate("Confirm")}</Button>
+                        <Button className="button3">{translate("Confirm")}</Button>
                         <Button className="button" onClick={() => closeAddModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>
+
                 </Modal>
 
             </div>
@@ -279,31 +280,31 @@ function ComputerDashboard(props) {
                     <td>
                         <button className="button6"
                                 onClick={() => editOrder("id") & setOrderBy("id") & setPage(1)}>
-                            <h7><b>{translate("Id")}⬆⬇</b></h7>
+                            <b>{translate("Id")}⬆⬇</b>
                         </button>
                     </td>
                     <td>
                         <button className="button6"
                                 onClick={() => editOrder("name") & setOrderBy("name") & setPage(1)}>
-                            <h7>{translate("Name")}⬆⬇</h7>
+                            {translate("Name")}⬆⬇
                         </button>
                     </td>
                     <td>
                         <button className="button6"
                                 onClick={() => editOrder("introduced") & setOrderBy("introduced") & setPage(1)}>
-                            <h7>{translate("Introduced")}⬆⬇</h7>
+                            {translate("Introduced")}⬆⬇
                         </button>
                     </td>
                     <td>
                         <button className="button6"
                                 onClick={() => editOrder("discontinued") & setOrderBy("discontinued") & setPage(1)}>
-                            <h7>{translate("Discontinued")}⬆⬇</h7>
+                            {translate("Discontinued")}⬆⬇
                         </button>
                     </td>
                     <td>
                         <button className="button6"
                                 onClick={() => editOrder("company") & setOrderBy("company") & setPage(1)}>
-                            <h7>{translate("Company")}⬆⬇</h7>
+                            {translate("Company")}⬆⬇
                         </button>
                     </td>
                     <td>{translate("Actions")}</td>

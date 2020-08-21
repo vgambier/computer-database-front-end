@@ -34,13 +34,14 @@ export default {
         'Password': 'Mot de passe',
         'State': 'Etat',
         'Authority': 'Autorité Majeure',
-        'Secondary': 'Secondaire',
+        'Secondary': 'Autorité Secondaire',
         'Add a user': 'Ajouter un utilisateur',
         'Cancel': 'Annuler',
         'Confirm': 'Confirmer',
         'Delete confirm': "Vous êtes sur le point de supprimer une entreprise et tous ses ordinateurs de la base! C'est votre dernier mot ?",
         'User confirm': "Vous êtes sur le point de supprimer un utilisateur du système!  C'est votre dernier mot ?",
         'Computer confirm': "Vous êtes sur le point de supprimer un ordinateur du système!  C'est votre dernier mot ?",
-        'Edit user': 'Modifier un utilisateur'
+        'Edit user': 'Modifier un utilisateur',
+        'Delete user': 'Supprimer un utilisateur'
     }
 }

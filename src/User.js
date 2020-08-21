@@ -101,7 +101,7 @@ function User(props) {
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
-                        <h2>{translate("Delete")}</h2>
+                        <h2>{translate("Delete user")}</h2>
                         <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("User confirm")}</h3>
                         <button
                             onClick={() => closeDeleteModal() & props.delete(username)}>{translate("Confirm")}</button>
@@ -119,9 +119,8 @@ function User(props) {
                         <h2>{translate("Edit user")}</h2>
                         <h2>{username}</h2>
                         <AvForm>
-                            <AvField name="state" label={translate("State")} type="select"
+                            <AvField name="state" label={translate("State")} type="select" defaultValue={enabled}
                                      onChange={elt => setUser({...user, enabled: elt.target.value})}>
-                                <option value="0">--</option>
                                 <option value={state[0]}>{state[0]}</option>
                                 <option value={state[1]}>{state[1]}</option>
 

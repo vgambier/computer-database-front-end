@@ -26,10 +26,6 @@ h6 {
   text-align: center;
 }
 
-h8 {
-  color:white;
-}
-
 /* tableau */
 
 Table {
@@ -323,7 +319,6 @@ input[type="password"]::placeholder {
 
 #drapeau{
   margin-top: 18px;
-  float: right;
 }
 
 #buttons{

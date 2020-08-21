@@ -11,9 +11,9 @@ import {I18nProvider, LOCALES} from "./i18n";
 import translate from "./i18n/messages/translate";
 import english from "./images/english.jpg";
 import french from "./images/french.jpg";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import CompanyDashboard from "./CompanyDashboard";
-import { NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -47,6 +47,14 @@ function Homepage() {
                 <div id="page">
                     {loginIfTokenExists()}
                     <div id="navigation">
+
+                        <div id="drapeau">
+                            <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
+                                <img src={english} alt="english" width="50"/></button>
+                            <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
+                                <img src={french} alt="french" width="44"/></button>
+                        </div>
+
                         <div align="center">
                             <div id="center">
                                 <img alt="home" src={home} width="320"/><br/>
@@ -57,11 +65,17 @@ function Homepage() {
 
                         <div id="vertical-menu">
                             <li><NavLink exact to="/ComputerDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"}  className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink>
+                            </li>
                             <li><NavLink exact to="/CompanyDashboard"
-                                         activeClassName={!authenticated ? "" : "main-nav-active"} className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink>
+                            </li>
                             <li><NavLink exact to="/UserDashboard"
-                                         activeClassName={!authenticated ? "" :"main-nav-active"} className={!authenticated ? "" :"main-nav"}>{translate("Users")}</NavLink></li>
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}
+                                         className={!authenticated ? "" : "main-nav"}>{translate("Users")}</NavLink>
+                            </li>
                         </div>
                     </div>
 
@@ -71,13 +85,6 @@ function Homepage() {
 
                             <header>
 
-                                <div id="drapeau">
-                                    <button className="button7" onClick={() => setLocale(LOCALES.ENGLISH)}>
-                                        <img src={english} alt="english" width="58"/></button>
-                                    <button className="button7" onClick={() => setLocale(LOCALES.FRENCH)}>
-                                        <img src={french} alt="french" width="50"/></button>
-                                </div>
-
                                 <ul className="write">
                                     <div className="Authentication">
                                         <Authentication authenticated={authenticated}
@@ -86,7 +93,7 @@ function Homepage() {
                                                         setEnabled={setEnabled}
                                         />
 
-                                        {(authenticated && enabled==="1") ?
+                                        {(authenticated && enabled === "1") ?
                                             (authority === 2) ?
 
 

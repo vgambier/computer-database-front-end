@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Button} from 'reactstrap';
-import {I18nProvider} from "./i18n";
 import {printCompany, companyToJSON, getCompanyJsonString} from './CompanyHelper';
 import './Computer.css';
 import deletes from "./images/corbeille.png";
@@ -92,10 +91,11 @@ function Computer(props) {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <h2>{translate("Delete")}</h2>
+                    <h3>{translate("Delete")}</h3>
                     <h3 ref={_subtitle => (subtitle = _subtitle)}>{translate("Computer confirm")}</h3>
-                    <button onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
-                    <button onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
+                    <button className="button3"
+                            onClick={() => closeDeleteModal() & confirm(id)}>{translate("Confirm")}</button>
+                    <button className="button3" onClick={() => closeDeleteModal()}>{translate("Cancel")}</button>
                 </Modal>
 
                 <Modal
@@ -104,7 +104,7 @@ function Computer(props) {
                     style={customStyles}
                     contentLabel="Edit Computer"
                 >
-                    <h2>{translate("Edit")}</h2>
+                    <h3>{translate("Edit")}</h3>
 
                     <AvForm onValidSubmit={handleValidEdit} onInvalidSubmit={handleInvalidEdit}>
 
@@ -143,10 +143,9 @@ function Computer(props) {
 
                             {companies && companies.map(elt =>
                                 <option value={getCompanyJsonString(elt)} key={elt.id}> {elt.name} </option>)}
+                        </AvField><br/>
 
-                        </AvField>
-
-                        <Button className="button">{translate("Confirm")}</Button>
+                        <Button className="button3">{translate("Confirm")}</Button>
                         <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
 
                     </AvForm>
