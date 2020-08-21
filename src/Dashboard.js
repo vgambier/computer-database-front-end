@@ -182,9 +182,9 @@ function Dashboard(props) {
                 <br/>
 
                 <div id="searchbar">
-                    <Label>
+
                         <h8>{translate("Search")}</h8>
-                    </Label>
+
                     <Input placeholder={"Powerbook..."} onChange={elt => editSearch(elt.target.value)}/>
                     <button className="button2" onClick={() => setSearch(result) & setPage(1)}><b>OK</b></button>
                 </div>
@@ -204,10 +204,11 @@ function Dashboard(props) {
                            onRequestClose={closeAddModal}
                            style={customStyles}
                            contentLabel="Add a computer">
-                        <h2> {translate("Add")}</h2>
+                        <b>{translate("Add")}</b>
 
                         <AvForm onValidSubmit={handleValidSubmit} onInvalidSubmit={handleInvalidSubmit}>
-                            <AvField name="name" label={translate("Name")} type="text"
+                            <br/>
+                            <AvField name="name" label={translate(" Name ")} type="text"
                                      placeholder="Fancy Computer #15"
                                      onChange={elt => setNewComputer({...newComputer, name: elt.target.value})}
                                      validate={{
@@ -217,20 +218,21 @@ function Dashboard(props) {
                                              errorMessage: 'Names must be fewer than 100 characters'
                                          }
                                      }}
-                            />
+                            /><br/>
 
-                            <AvField name="introduced" label={translate("Introduced")} type="date"
+                            <AvField name="introduced" label={translate(" Introduced ")} type="date"
                                      placeholder="2001-12-31"
                                      onChange={elt => setNewComputer({...newComputer, introduced: elt.target.value})}
-                            />
+                            /><br/>
 
-                            <AvField name="discontinued" label={translate("Discontinued")} type="date"
+                            <AvField name="discontinued" label={translate(" Discontinued ")} type="date"
                                      placeholder="2011-12-31"
                                      onChange={elt => setNewComputer({...newComputer, discontinued: elt.target.value})}
                             />
+                           <br/>
                             {dateMessage}
 
-                            <AvField name="company" label={translate("Company")} type="select"
+                            <AvField name="company" label={translate(" Company ")} type="select"
                                      onChange={elt => setNewComputer({
                                          ...newComputer, company: companyToJSON(elt.target.value)
                                      })}>
@@ -239,11 +241,12 @@ function Dashboard(props) {
                                     <option key={elt.id}
                                             value={getCompanyJsonString(elt)}> {elt.name} </option>)}
                             </AvField>
-                            <Button className="button">Confirm</Button>
+                            <br/><br/>
 
-                        </AvForm>
+                            <Button className="button3">Confirm</Button>&nbsp;
 
                         <Button className="button" onClick={() => closeAddModal()}>Cancel</Button>
+                        </AvForm>
                     </Modal>
 
                 </div>
@@ -257,31 +260,31 @@ function Dashboard(props) {
                         <td>
                             <button className="button6"
                                     onClick={() => setOrderBy("computer.id") & setPage(1)}>
-                                <h7><b>{translate("Id")}⬆⬇</b></h7>
+                                    <b>{translate("Id")}⬆⬇</b>
                             </button>
                         </td>
                         <td>
                             <button className="button6"
                                     onClick={() => setOrderBy("computer.name") & setPage(1)}>
-                                <h7>{translate("Name")}⬆⬇</h7>
+                                    {translate("Name")}⬆⬇
                             </button>
                         </td>
                         <td>
                             <button className="button6"
                                     onClick={() => setOrderBy("introduced") & setPage(1)}>
-                                <h7>{translate("Introduced")}⬆⬇</h7>
+                                    {translate("Introduced")}⬆⬇
                             </button>
                         </td>
                         <td>
                             <button className="button6"
                                     onClick={() => setOrderBy("discontinued") & setPage(1)}>
-                                <h7>{translate("Discontinued")}⬆⬇</h7>
+                                    {translate("Discontinued")}⬆⬇
                             </button>
                         </td>
                         <td>
                             <button className="button6"
                                     onClick={() => setOrderBy("computer.company.name") & setPage(1)}>
-                                <h7>{translate("Company")}⬆⬇</h7>
+                                {translate("Company")}⬆⬇
                             </button>
                         </td>
                         <td>{translate("Actions")}</td>

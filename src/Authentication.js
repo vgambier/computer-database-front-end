@@ -90,10 +90,10 @@ function Authentication(props) {
 
             {!props.authenticated ?
                 <div id="login">
-                    <Label>{translate("Username")}</Label>
+                    {translate("Username")}
                     <Input type="text" placeholder="Gaëtan"
                            onChange={elt => setUser({...user, username: elt.target.value})}/>&nbsp;
-                    <Label>{translate("Password")}</Label>
+                    {translate("Password")}
                     <Input type="password" placeholder="123456"
                            onChange={elt => setUser({...user, password: elt.target.value})}/>&nbsp;
                     <Button onClick={() => onLogin() & checkAuthority()}>{translate("Login")}</Button>&nbsp;

@@ -101,7 +101,7 @@ function Computer(props) {
 
                     <AvForm onValidSubmit={handleValidEdit} onInvalidSubmit={handleInvalidEdit}>
 
-                        <AvField name="name" label={translate("Name")} type="text" defaultValue={name}
+                        <AvField class="form" name="name" label={translate("Name")} type="text" defaultValue={name}
                                  validate={{
                                      required: {value: true, errorMessage: 'This field is required'},
                                      maxlength: {value: 100, errorMessage: 'Names must be fewer than 100 characters'}
@@ -125,12 +125,13 @@ function Computer(props) {
                             <option value="">--</option>
 
                             {companies && companies.map(elt => displayCompanyOption({company}, elt))}
-
                         </AvField>
+
+                    </AvForm>
 
                         <Button className="button">{translate("Confirm")}</Button>
 
-                    </AvForm>
+
 
                     <Button className="button" onClick={() => closeEditModal()}>{translate("Cancel")}</Button>
 

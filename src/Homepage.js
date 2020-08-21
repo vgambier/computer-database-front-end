@@ -13,6 +13,7 @@ import english from "./images/english.jpg";
 import french from "./images/french.jpg";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import CompanyDashboard from "./CompanyDashboard";
+import { NavLink} from 'react-router-dom'
 
 export const server_url = "http://" + SERVER_INFO.ip_address + ":" + SERVER_INFO.port + "/" + SERVER_INFO.app_name;
 
@@ -47,12 +48,12 @@ function Homepage() {
                         </div>
 
                         <div id="vertical-menu">
-                            <li><a className={authenticated ? "" : "active"}>Sommaire</a></li>
-                            <li><Link to="/Dashboard"
-                                      className={!authenticated ? "" : "active"}>{translate("Computers")}</Link></li>
-                            <li><Link to="/CompanyDashboard"
-                                      className={!authenticated ? "" : "active"}>{translate("Companies")}</Link></li>
-                            <li><Link to="/Users">{translate("Users")}</Link></li>
+                            <li><NavLink exact to="/Dashboard"
+                                         activeClassName={!authenticated ? "" : "main-nav-active"}  className={!authenticated ? "" : "main-nav"}>{translate("Computers")}</NavLink></li>
+                            <li><NavLink exact to="/CompanyDashboard"
+                                         activeClassName={!authenticated ? "" : "main-nav-active"} className={!authenticated ? "" : "main-nav"}>{translate("Companies")}</NavLink></li>
+                            <li><NavLink exact to="/Users"
+                                         activeClassName={!authenticated ? "" :"main-nav-active"} className={!authenticated ? "" :"main-nav"}>{translate("Users")}</NavLink></li>
                         </div>
                     </div>
 

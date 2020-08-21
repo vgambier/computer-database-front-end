@@ -18,3 +18,27 @@
 .btn-group .button:hover {
     background-color: #3e8e41;
 }
+
+/* Formulaire */
+
+input {
+    border: 1px ridge #999;
+    border-radius: 10px;
+    border-color: white;
+    width: 400px;
+    height: 35px;
+    background-color: lightgrey;
+}
+
+select {
+    border: 0px ridge #999;
+    border-radius: 10px;
+    border-color: white;
+    width: 400px;
+    height: 35px;
+    background-color: lightgrey;
+}
+
+label {
+    display: block;
+}
